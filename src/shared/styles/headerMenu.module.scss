@@ -1,0 +1,29 @@
+.menuContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 5rem;
+  margin-left: 5rem;
+  margin-top: 0.5rem;
+
+  .menuLogo{
+    display: flex;
+    flex-direction: row;
+
+    img{
+      padding: 0.3rem;
+    }
+
+    .logoTitle{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 1rem;
+    }
+  }
+  .navMenuContainer{
+    display: flex;
+    flex-direction: row;
+  }
+}
