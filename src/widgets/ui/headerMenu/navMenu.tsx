@@ -9,12 +9,12 @@ import {
   navigationMenuTriggerStyle,
   NavigationMenuLink,
 } from '@/shared/ui/navigation-menu';
+import { Button } from '@/shared/ui/button';
+import { cn } from '@/lib/utils';
 import * as React from 'react';
 import Link from 'next/link';
-import { Button } from '@/shared/ui/button';
-import s from '@/shared/styles/navMenu.module.scss';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import s from '@/shared/styles/navMenu.module.scss';
 import { Github } from 'lucide-react';
 import LogoImage from '../../../../public/Logo.png';
 import BrainImage from '../../../../public/brain.svg';
@@ -68,7 +68,7 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, ListItemProps>(
                   width={widthImg}
                   height={heightImg}
                   className={
-                    'contrast-[103%]; pr-1 brightness-[103%] hue-rotate-[93deg] invert saturate-[0%] sepia-[0%]'
+                    'pr-1 dark:brightness-[103%] dark:contrast-[103%] dark:hue-rotate-[93deg] dark:invert dark:saturate-[0%] dark:sepia-[0%]'
                   }
                 />
               )}
@@ -90,25 +90,27 @@ export function NavMenu() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className={s.navMenuItem}>
+        <NavigationMenuItem className={'border-waikanaGrey'}>
+          <NavigationMenuTrigger
+            className={'bg-hash hover:bg-silentWhite text-white '}
+          >
             About Us
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul
               className={
-                'grid gap-3 p-6 md:w-[400px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]'
+                'bg-waikanaGrey grid gap-3 p-6 md:w-[400px] lg:w-[600px] lg:grid-cols-[.75fr_1fr] '
               }
             >
               <li className={'row-span-3'}>
                 <Link href={'/Introduction'}>
                   <NavigationMenuLink
-                    className={`${navigationMenuTriggerStyle()} ${'min-h-640 flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-black from-20% to-thunder outline-none'}`}
+                    className={`${navigationMenuTriggerStyle()} ${'min-h-640 to-froly flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-white from-20% outline-none dark:from-[#0A0A0A] dark:to-thunder'}`}
                   >
                     <div
-                      className={`${
-                        s.projectDescContainer
-                      } ${'flex min-h-full select-none flex-col justify-end '}`}
+                      className={
+                        'border-waikanaGrey flex min-h-full select-none flex-col justify-end pb-1'
+                      }
                     >
                       <Image
                         src={LogoImage}
@@ -116,13 +118,17 @@ export function NavMenu() {
                         height={150}
                         width={170}
                       />
-                      <div className={`${s.projectTitle} ${'mt-4'}`}>
+                      <div
+                        className={`${
+                          s.projectTitle
+                        } ${'text-blackcurrant mt-4'}`}
+                      >
                         DinoLanguage
                       </div>
                       <div
-                        className={`${
-                          s.projectDesc
-                        } ${'text-muted-foreground'}`}
+                        className={
+                          'text-denim min-w-[3rem] max-w-[12rem] text-muted-foreground'
+                        }
                       >
                         Unearth the Joy of Language Learning with Dinosaurs!
                       </div>
@@ -156,13 +162,28 @@ export function NavMenu() {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Trainers</NavigationMenuTrigger>
+          <NavigationMenuTrigger
+            className={'bg-hash hover:bg-silentWhite text-white'}
+          >
+            Trainers
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul
               className={
                 'grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]'
               }
             >
+              <ListItem
+                href={'/trainers'}
+                title={'All Trainers'}
+                className={'max-w-xs'}
+                imageSrc={ZapImage}
+                widthImg={24}
+                heightImg={24}
+              >
+                Discover the full range of DinoLanguage trainers!
+              </ListItem>
+
               <ListItem
                 href={'/trainers/flashcards'}
                 title={'Flashcards'}
@@ -214,7 +235,7 @@ export function NavMenu() {
         <NavigationMenuItem>
           <Link href={'/documentation'} legacyBehavior passHref>
             <NavigationMenuLink
-              className={`${navigationMenuTriggerStyle()} ${'mr-2'}`}
+              className={`${navigationMenuTriggerStyle()} ${'bg-hash hover:bg-silentWhite mr-2 text-white hover:text-black'}`}
             >
               Documentation
             </NavigationMenuLink>
@@ -222,13 +243,21 @@ export function NavMenu() {
         </NavigationMenuItem>
       </NavigationMenuList>
 
-      <Button variant={'outline'} className={s.navMenuButton}>
-        <Link href={'/'}>Sign In</Link>
+      <Button
+        variant={'outline'}
+        className={'bg-hash border-hash hover:bg-silentWhite mr-2'}
+      >
+        <Link href={'/sign-in'} className={'text-white hover:text-black'}>
+          Sign In
+        </Link>
       </Button>
 
-      <Button variant={'outline'} className={s.navMenuButton}>
+      <Button
+        variant={'outline'}
+        className={'bg-hash border-hash hover:bg-silentWhite mr-2'}
+      >
         <Link href={'https://github.com/rootwebn/DinoLanguage'}>
-          <Github />
+          <Github color={'#000000'} />
         </Link>
       </Button>
     </NavigationMenu>
