@@ -20,14 +20,16 @@ export function ModeToggle() {
         <Button
           variant="outline"
           size="icon"
-          className={'bg-hash border-hash hover:bg-silentWhite'}
+          className={
+            'border-hash bg-hash hover:border-silentWhite hover:bg-silentWhite dark:border-space dark:bg-space'
+          }
         >
           <Sun
             color={'#000000'}
             className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
           />
           <Moon
-            color={'#000000'}
+            color={'#ffffff'}
             className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
           />
           <span className="sr-only">Toggle theme</span>

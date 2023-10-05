@@ -10,11 +10,12 @@ import {
   NavigationMenuLink,
 } from '@/shared/ui/navigation-menu';
 import { Button } from '@/shared/ui/button';
+import { ModeToggle } from '@/features/themeSwitcher';
+import s from '@/shared/styles/navMenu.module.scss';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import s from '@/shared/styles/navMenu.module.scss';
 import { Github } from 'lucide-react';
 import LogoImage from '../../../../public/Logo.png';
 import BrainImage from '../../../../public/brain.svg';
@@ -55,7 +56,9 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, ListItemProps>(
             ref={ref}
             href={href}
             className={cn(
-              'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+              `${'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-thunder focus:bg-accent focus:text-thunder'} ${
+                s.navListMenu
+              }`,
               className,
             )}
             {...props}
@@ -74,7 +77,7 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, ListItemProps>(
               )}
               {title}
             </div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            <p className="line-clamp-2 text-sm leading-snug text-black dark:text-silentWhite">
               {children}
             </p>
           </a>
@@ -90,26 +93,28 @@ export function NavMenu() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <NavigationMenuItem className={'border-waikanaGrey'}>
+        <NavigationMenuItem>
           <NavigationMenuTrigger
-            className={'bg-hash hover:bg-silentWhite text-white '}
+            className={
+              'bg-silentWhite text-black dark:bg-space dark:text-white'
+            }
           >
             About Us
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul
               className={
-                'bg-waikanaGrey grid gap-3 p-6 md:w-[400px] lg:w-[600px] lg:grid-cols-[.75fr_1fr] '
+                'grid gap-3 bg-silentWhite p-6 dark:bg-woodsmoke md:w-[400px] lg:w-[600px] lg:grid-cols-[.75fr_1fr] '
               }
             >
               <li className={'row-span-3'}>
                 <Link href={'/Introduction'}>
                   <NavigationMenuLink
-                    className={`${navigationMenuTriggerStyle()} ${'min-h-640 to-froly flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-white from-20% outline-none dark:from-[#0A0A0A] dark:to-thunder'}`}
+                    className={`${navigationMenuTriggerStyle()} ${'min-h-640 flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-silentWhite from-20% to-froly outline-none dark:from-woodsmoke dark:to-thunder'}`}
                   >
                     <div
                       className={
-                        'border-waikanaGrey flex min-h-full select-none flex-col justify-end pb-1'
+                        'flex min-h-full select-none flex-col justify-end border-waikanaGrey pb-1'
                       }
                     >
                       <Image
@@ -121,13 +126,13 @@ export function NavMenu() {
                       <div
                         className={`${
                           s.projectTitle
-                        } ${'text-blackcurrant mt-4'}`}
+                        } ${'mt-4 text-lightSpace'}`}
                       >
                         DinoLanguage
                       </div>
                       <div
                         className={
-                          'text-denim min-w-[3rem] max-w-[12rem] text-muted-foreground'
+                          'min-w-[3rem] max-w-[12rem] text-darkSpace text-muted-foreground'
                         }
                       >
                         Unearth the Joy of Language Learning with Dinosaurs!
@@ -140,20 +145,24 @@ export function NavMenu() {
               <ListItem
                 href="/about-us"
                 title="Introduction"
-                className={''}
+                className={'text-lightSpace hover:text-flower'}
                 imageSrc={''}
               >
                 Explore DinoLanguage - Your Path to Language Mastery!
               </ListItem>
 
-              <ListItem href="/about-us#team" title="Our Team" className={''}>
+              <ListItem
+                href="/about-us#team"
+                title="Our Team"
+                className={'text-lightSpace hover:text-flower'}
+              >
                 Meet the Team: The Brains Behind DinoLanguage!
               </ListItem>
 
               <ListItem
                 href="/about-us#values"
                 title="Values of Project"
-                className={''}
+                className={'text-lightSpace hover:text-flower'}
               >
                 Explore DinoLanguage: Where Dinosaurs Meet Modern Values!
               </ListItem>
@@ -163,11 +172,13 @@ export function NavMenu() {
 
         <NavigationMenuItem>
           <NavigationMenuTrigger
-            className={'bg-hash hover:bg-silentWhite text-white'}
+            className={
+              'bg-silentWhite text-black dark:bg-space dark:text-white'
+            }
           >
             Trainers
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className={'bg-waikanaGrey dark:bg-woodsmoke'}>
             <ul
               className={
                 'grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]'
@@ -176,7 +187,7 @@ export function NavMenu() {
               <ListItem
                 href={'/trainers'}
                 title={'All Trainers'}
-                className={'max-w-xs'}
+                className={'max-w-xs text-lightSpace hover:text-flower'}
                 imageSrc={ZapImage}
                 widthImg={24}
                 heightImg={24}
@@ -187,7 +198,7 @@ export function NavMenu() {
               <ListItem
                 href={'/trainers/flashcards'}
                 title={'Flashcards'}
-                className={'max-w-xs'}
+                className={'max-w-xs text-lightSpace hover:text-flower'}
                 imageSrc={ZapImage}
                 widthImg={24}
                 heightImg={24}
@@ -199,7 +210,7 @@ export function NavMenu() {
               <ListItem
                 href={'/trainers/brainstorm'}
                 title={'Brainstorm'}
-                className={'max-w-xs'}
+                className={'max-w-xs text-lightSpace hover:text-flower'}
                 imageSrc={BrainImage}
                 widthImg={24}
                 heightImg={24}
@@ -210,7 +221,7 @@ export function NavMenu() {
               <ListItem
                 href={'/trainers/verbal-memory'}
                 title={'Verbal Memory'}
-                className={'max-w-xs'}
+                className={'max-w-xs text-lightSpace hover:text-flower'}
                 imageSrc={SpeechImage}
                 widthImg={24}
                 heightImg={24}
@@ -221,7 +232,7 @@ export function NavMenu() {
               <ListItem
                 href={'/trainers/grammar-test'}
                 title={'Grammar Test'}
-                className={'max-w-xs'}
+                className={'max-w-xs text-lightSpace hover:text-flower'}
                 imageSrc={PenImage}
                 widthImg={24}
                 heightImg={24}
@@ -235,7 +246,7 @@ export function NavMenu() {
         <NavigationMenuItem>
           <Link href={'/documentation'} legacyBehavior passHref>
             <NavigationMenuLink
-              className={`${navigationMenuTriggerStyle()} ${'bg-hash hover:bg-silentWhite mr-2 text-white hover:text-black'}`}
+              className={`${navigationMenuTriggerStyle()} ${'mr-1 bg-silentWhite text-black hover:text-black dark:bg-space dark:text-white'}`}
             >
               Documentation
             </NavigationMenuLink>
@@ -245,21 +256,30 @@ export function NavMenu() {
 
       <Button
         variant={'outline'}
-        className={'bg-hash border-hash hover:bg-silentWhite mr-2'}
+        className={
+          'mr-1 border-silentWhite bg-silentWhite dark:border-space dark:bg-space'
+        }
       >
-        <Link href={'/sign-in'} className={'text-white hover:text-black'}>
+        <Link
+          href={'/sign-in'}
+          className={'text-black hover:text-black dark:text-white'}
+        >
           Sign In
         </Link>
       </Button>
 
       <Button
         variant={'outline'}
-        className={'bg-hash border-hash hover:bg-silentWhite mr-2'}
+        className={
+          'mr-1 border-silentWhite bg-silentWhite dark:border-space dark:bg-space'
+        }
       >
         <Link href={'https://github.com/rootwebn/DinoLanguage'}>
-          <Github color={'#000000'} />
+          <Github color={'#000000'} className={'dark:stroke-white'} />
         </Link>
       </Button>
+
+      <ModeToggle />
     </NavigationMenu>
   );
 }

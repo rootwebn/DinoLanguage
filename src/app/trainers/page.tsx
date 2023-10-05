@@ -14,12 +14,12 @@ import {
   AccordionTrigger,
 } from '@/shared/ui/accordion';
 import Link from 'next/link';
-import { Brain, Clipboard, Dot } from 'lucide-react';
+import { Brain, Clipboard } from 'lucide-react';
 
 export default function TrainersPage() {
   return (
-    <div className={'mb-6 ml-6 mr-6 mt-6'}>
-      <Card className={'bg-tequila mb-6 mt-6'}>
+    <div className={'mb-6 ml-6 mr-6 mt-6 2xl:ml-16 2xl:mr-16'}>
+      <Card className={'mb-6 mt-6 bg-tequila'}>
         <CardHeader>
           <CardTitle className={'flex flex-row text-thunderbird'}>
             <Clipboard className={'mr-1.5'} />
@@ -160,7 +160,7 @@ export default function TrainersPage() {
             asChild
             className={'hover:border-black hover:bg-black hover:text-white'}
           >
-            <Link href={'/'}>Start Training!</Link>
+            <Link href={'/trainers/brainstorm'}>Start Training!</Link>
           </Button>
           <Button
             variant={'outline'}
@@ -172,7 +172,7 @@ export default function TrainersPage() {
         </CardFooter>
       </Card>
 
-      <Card className={'bg-terracotta border-terracotta mb-6 mt-6'}>
+      <Card className={'mb-6 mt-6 border-terracotta bg-terracotta'}>
         <CardHeader>
           <CardTitle className={'text-black'}>Verbal Memory</CardTitle>
           <CardDescription className={'text-voodoo'}>
@@ -221,7 +221,7 @@ export default function TrainersPage() {
           <Button
             variant={'outline'}
             className={
-              'border-hippieBlue bg-hippieBlue hover:bg-voodoo hover:border-voodoo hover:text-white'
+              'border-hippieBlue bg-hippieBlue hover:border-voodoo hover:bg-voodoo hover:text-white'
             }
           >
             <Link href={'/'} className={'hover:text-white'}>
@@ -231,7 +231,7 @@ export default function TrainersPage() {
           <Button
             variant={'outline'}
             className={
-              'border-hippieBlue bg-hippieBlue hover:bg-voodoo hover:border-voodoo hover:text-white'
+              'border-hippieBlue bg-hippieBlue hover:border-voodoo hover:bg-voodoo hover:text-white'
             }
           >
             <Link href={'/'}>My Results</Link>
@@ -239,7 +239,7 @@ export default function TrainersPage() {
         </CardFooter>
       </Card>
 
-      <Card className={'bg-fruidSalad border-fruidSalad mb-6 mt-6'}>
+      <Card className={'mb-6 mt-6 border-fruidSalad bg-fruidSalad'}>
         <CardHeader>
           <CardTitle>Grammar Test</CardTitle>
           <CardDescription className={'text-white'}>
@@ -298,7 +298,7 @@ export default function TrainersPage() {
           <Button
             variant={'outline'}
             className={
-              'hover:border-silentWhite hover:bg-silentWhite border-white bg-white'
+              'border-white bg-white hover:border-silentWhite hover:bg-silentWhite'
             }
           >
             <Link href={'/'}>Start Training!</Link>
@@ -306,7 +306,7 @@ export default function TrainersPage() {
           <Button
             variant={'outline'}
             className={
-              'hover:bg-silentWhite hover:border-silentWhite border-white bg-white'
+              'border-white bg-white hover:border-silentWhite hover:bg-silentWhite'
             }
           >
             <Link href={'/'}>My Results</Link>
