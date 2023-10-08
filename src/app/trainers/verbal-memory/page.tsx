@@ -1,14 +1,13 @@
 import TrainersLevelSelectUI from '@/widgets/ui/trainersPage/trainersLevelSelect';
-import TrainersLevelScoreUi from '@/widgets/ui/trainersPage/trainersLevelScore';
 import { TrainersLevelDescription } from '@/widgets/ui/trainersPage/trainersLevelDescritpion';
-import { BrainCircuit } from 'lucide-react';
+import TrainersLevelScoreUi from '@/widgets/ui/trainersPage/trainersLevelScore';
+import { Zap } from 'lucide-react';
 import ImgAlt2 from '../../../../public/LogoAlt2.png';
-
-export default function BrainstormPage() {
+export default function FlashcardTrainerPage() {
   return (
     <div
       className={
-        'uxs:ml-4 uxs:mr-4 grid gap-1 md:ml-6 md:mr-6 lg:ml-10 lg:mr-10 2xl:ml-32 2xl:mr-32'
+        'grid gap-1 uxs:ml-4 uxs:mr-4 md:ml-6 md:mr-6 lg:ml-10 lg:mr-10 2xl:ml-32 2xl:mr-32'
       }
     >
       <div
@@ -16,15 +15,15 @@ export default function BrainstormPage() {
       >
         <TrainersLevelScoreUi />
         <TrainersLevelDescription
-          iconSrc={<BrainCircuit />}
+          iconSrc={<Zap color={'#000000'} className={'mr-1.5'} />}
           title={'Pay Attention!'}
           description={
-            "DinoLanguage's Brainstorm challenges are not for the faint of heart. Designed for the boldest language learners, these challenges put your language skills to the test in high-pressure scenarios."
+            "DinoLanguage's Flashcards are more than just vocabulary drills; they're a high-speed journey to language mastery. "
           }
           heightImage={200}
           widthImage={200}
           imageDescSrc={ImgAlt2}
-          imageDescAlt={'DescImage'}
+          imageDescAlt={'ImageDesc'}
         />
         <TrainersLevelSelectUI />
       </div>

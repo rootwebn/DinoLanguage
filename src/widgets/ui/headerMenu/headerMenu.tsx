@@ -11,11 +11,6 @@ import * as React from 'react';
 
 export function HeaderMenu() {
   const [headerSnap, setHeaderSnap] = useState(false);
-  const [menuOpened, setMenuOpened] = useState(false);
-
-  const handleMenu = () => {
-    setMenuOpened(!menuOpened);
-  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,7 +31,7 @@ export function HeaderMenu() {
   return (
     <div
       className={
-        'sticky top-0 flex flex-row items-center justify-between bg-hash px-2 pt-2 dark:bg-darkSpace xl:px-16'
+        'sticky top-0 z-10 flex flex-row items-center justify-between border-b-2 border-miniSilentWhite bg-hash px-2 pb-1 pt-1 dark:border-space dark:bg-darkSpace xl:px-32 '
       }
     >
       <div className={'flex flex-row'}>

@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -11,9 +13,12 @@ module.exports = {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+    },
+    screens: {
+      "2xl": "1400px",
+      'xs': '475px',
+      'uxs' : '300px',
+      ...defaultTheme.screens,
     },
     extend: {
       keyframes: {
@@ -41,10 +46,14 @@ module.exports = {
         'indigo' : '#3e0f6b',
         'stiletto' : '#a12e37',
         'space' : '#272d2f',
+        'lightSpace' : '#3c4548',
+        'darkSpace' : '#191d1e',
         'royalBlue' : '#366bdf',
         'hash' : '#2F4175',
         'darkerHash' : '#2D354A',
         'silentWhite' : '#909BB4',
+        'mulledWine' : '#514769',
+        'miniSilentWhite' : '#788296',
         'orange' : '#FFAA00',
         'flamingo' : '#F1467F',
         'froly' : '#F57586',
@@ -66,6 +75,10 @@ module.exports = {
         'java' : '#13CFA6',
         'fruidSalad' : '#4C934D',
         'punch' : '#CC3A24',
+        'blueZodiac' : '#102357',
+        'flower' : '#8631b4',
+        'woodsmoke' : '#110f12',
+        'honeyFlower' : '#531e70',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} ${'dark:bg-darkSpace bg-hash'}`}>
+      <body className={`${inter.className} ${'bg-hash dark:bg-darkSpace'}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <HeaderMenu />
           {children}

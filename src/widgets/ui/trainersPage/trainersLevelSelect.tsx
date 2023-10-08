@@ -13,14 +13,14 @@ export default function TrainersLevelSelectUI() {
   return (
     <Card
       className={
-        'mb-6 ml-4 mr-4 mt-6 border-space bg-space lg:ml-0 lg:mr-0 lg:mt-4'
+        'mb-6 mt-6 border-silentWhite bg-silentWhite dark:border-space dark:bg-space lg:col-span-2 lg:ml-0 lg:mr-0 lg:mt-0'
       }
     >
       <CardHeader>
-        <CardTitle className={'text-silentWhite'}>
+        <CardTitle className={'text-flower dark:text-silentWhite'}>
           Are you ready? Then, choose level and go ahead.
         </CardTitle>
-        <CardDescription>
+        <CardDescription className={'text-woodsmoke'}>
           Overall, there is 3 levels of difficult.
         </CardDescription>
       </CardHeader>
@@ -31,7 +31,7 @@ export default function TrainersLevelSelectUI() {
       >
         <Card
           className={
-            'border-hippieBlue bg-hippieBlue hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out xl:min-w-[200px] xl:max-w-[250px]'
+            'bg-mulledWine border-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
           }
         >
           <Link href={'/'}>
@@ -39,7 +39,7 @@ export default function TrainersLevelSelectUI() {
               <CardTitle className={'text-turmeric'}>
                 Level 1: Micro-Dino
               </CardTitle>
-              <CardDescription className={'text-voodoo'}>
+              <CardDescription className={'text-mercury'}>
                 First level, just to understand how it works. Level A1+
               </CardDescription>
             </CardHeader>
@@ -53,13 +53,13 @@ export default function TrainersLevelSelectUI() {
         </Card>
         <Card
           className={
-            'border-hippieBlue bg-hippieBlue hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out xl:min-w-[200px] xl:max-w-[250px]'
+            'bg-mulledWine border-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
           }
         >
           <Link href={'/'}>
             <CardHeader>
               <CardTitle className={'text-turmeric'}>Level 2: Dino</CardTitle>
-              <CardDescription className={'text-voodoo'}>
+              <CardDescription className={'text-mercury'}>
                 First hard challenge! The game just got harder! level A2-B1
               </CardDescription>
             </CardHeader>
@@ -75,7 +75,7 @@ export default function TrainersLevelSelectUI() {
         </Card>
         <Card
           className={
-            'border-hippieBlue bg-hippieBlue hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out xl:min-w-[200px] xl:max-w-[250px]'
+            'bg-mulledWine border-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
           }
         >
           <Link href={'/'}>
@@ -83,7 +83,7 @@ export default function TrainersLevelSelectUI() {
               <CardTitle className={'text-turmeric'}>
                 Level 3: Giga-Dino
               </CardTitle>
-              <CardDescription className={'text-voodoo'}>
+              <CardDescription className={'text-mercury'}>
                 Truly hard challenge for level B2+
               </CardDescription>
             </CardHeader>
@@ -97,7 +97,7 @@ export default function TrainersLevelSelectUI() {
         </Card>
         <Card
           className={
-            'cursor-not-allowed border-hippieBlue bg-hippieBlue hover:border-thunderbird hover:bg-thunderbird hover:transition hover:duration-300 hover:ease-in-out xl:min-w-[200px] xl:max-w-[250px]'
+            'bg-mulledWine border-mulledWine cursor-not-allowed hover:border-thunderbird hover:bg-thunderbird hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:border-stiletto dark:hover:bg-stiletto xl:min-w-[200px] xl:max-w-[250px]'
           }
         >
           <Link href={''} className={'cursor-not-allowed'}>
@@ -105,7 +105,7 @@ export default function TrainersLevelSelectUI() {
               <CardTitle className={'text-turmeric'}>
                 Level 4: Prime-Dino
               </CardTitle>
-              <CardDescription className={'text-voodoo'}>
+              <CardDescription className={'text-mercury'}>
                 You cant beat this level. Actually, even play.
               </CardDescription>
             </CardHeader>
