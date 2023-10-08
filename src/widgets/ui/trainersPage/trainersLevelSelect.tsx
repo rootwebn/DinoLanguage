@@ -31,7 +31,7 @@ export default function TrainersLevelSelectUI() {
       >
         <Card
           className={
-            'bg-mulledWine border-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
+            'border-mulledWine bg-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
           }
         >
           <Link href={'/'}>
@@ -53,7 +53,7 @@ export default function TrainersLevelSelectUI() {
         </Card>
         <Card
           className={
-            'bg-mulledWine border-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
+            'border-mulledWine bg-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
           }
         >
           <Link href={'/'}>
@@ -75,7 +75,7 @@ export default function TrainersLevelSelectUI() {
         </Card>
         <Card
           className={
-            'bg-mulledWine border-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
+            'border-mulledWine bg-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
           }
         >
           <Link href={'/'}>
@@ -97,7 +97,7 @@ export default function TrainersLevelSelectUI() {
         </Card>
         <Card
           className={
-            'bg-mulledWine border-mulledWine cursor-not-allowed hover:border-thunderbird hover:bg-thunderbird hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:border-stiletto dark:hover:bg-stiletto xl:min-w-[200px] xl:max-w-[250px]'
+            'cursor-not-allowed border-mulledWine bg-mulledWine hover:border-thunderbird hover:bg-thunderbird hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:border-stiletto dark:hover:bg-stiletto xl:min-w-[200px] xl:max-w-[250px]'
           }
         >
           <Link href={''} className={'cursor-not-allowed'}>

@@ -21,6 +21,7 @@ export function AccountMenu() {
       <CardHeader>
         <CardTitle>Still not signed up?</CardTitle>
         <CardDescription className={'text-lightSpace dark:text-woodsmoke'}>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           Let's fix that here:
         </CardDescription>
       </CardHeader>
