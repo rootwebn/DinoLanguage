@@ -1,8 +1,11 @@
-import TrainersLevelSelectUI from '@/widgets/ui/trainersPage/trainersLevelSelect';
-import { TrainersLevelDescription } from '@/widgets/ui/trainersPage/trainersLevelDescritpion';
-import TrainersLevelScoreUi from '@/widgets/ui/trainersPage/trainersLevelScore';
+import {
+  TrainersLevelDescription,
+  TrainersLevelScoreUi,
+  TrainersLevelSelectUI,
+} from '@/entities/trainers/ui/';
 import { Zap } from 'lucide-react';
 import ImgAlt2 from '../../../../public/LogoAlt2.png';
+//TODO: Fix mobile menu, table colors
 export default function FlashcardTrainerPage() {
   return (
     <div

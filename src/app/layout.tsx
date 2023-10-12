@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/shared/providers/theme-provider';
-import { HeaderMenu } from '@/widgets/ui/headerMenu/headerMenu';
+import { Header } from '@/widgets/header/header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} ${'bg-hash dark:bg-darkSpace'}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <HeaderMenu />
+          <Header />
           {children}
         </ThemeProvider>
       </body>

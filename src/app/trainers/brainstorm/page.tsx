@@ -1,6 +1,8 @@
-import TrainersLevelSelectUI from '@/widgets/ui/trainersPage/trainersLevelSelect';
-import TrainersLevelScoreUi from '@/widgets/ui/trainersPage/trainersLevelScore';
-import { TrainersLevelDescription } from '@/widgets/ui/trainersPage/trainersLevelDescritpion';
+import {
+  TrainersLevelDescription,
+  TrainersLevelScoreUi,
+  TrainersLevelSelectUI,
+} from '@/entities/trainers/ui/';
 import { BrainCircuit } from 'lucide-react';
 import ImgAlt2 from '../../../../public/LogoAlt2.png';
 

@@ -1,7 +1,7 @@
 import {
   TrainersLevelDescription,
-  TrainersLevelScoreUi,
   TrainersLevelSelectUI,
+  TrainersLevelScoreUi,
 } from '@/entities/trainers/ui/';
 import { Zap } from 'lucide-react';
 import ImgAlt2 from '../../../../public/LogoAlt2.png';
