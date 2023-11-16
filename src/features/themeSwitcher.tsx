@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 
-export function ModeToggle() {
+export const ModeToggle = () => {
   const { theme, setTheme } = useTheme();
 
   return (
@@ -21,7 +21,7 @@ export function ModeToggle() {
           variant="outline"
           size="icon"
           className={
-            'border-hash bg-hash hover:border-silentWhite hover:bg-silentWhite dark:border-space dark:bg-space'
+            'border-silentWhite bg-silentWhite hover:border-white hover:bg-white dark:border-space dark:bg-space'
           }
         >
           <Sun
@@ -62,4 +62,4 @@ export function ModeToggle() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};

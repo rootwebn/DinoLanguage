@@ -1,37 +1,17 @@
 'use client';
 
 import { NavMenu } from '@/widgets/header/navMenu';
-import { NavMenuMobile } from '@/widgets/header/navMenuMobile';
 import Image from 'next/image';
 import Logo from '../../../public/Logo.png';
 import Link from 'next/link';
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { ModeToggle } from '@/features/themeSwitcher';
 import * as React from 'react';
+import NavMenuMobile from '@/widgets/header/navMenuMobile';
 
 export function Header() {
-  const [headerSnap, setHeaderSnap] = useState(false);
-
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 850) {
-        setHeaderSnap(true);
-      } else {
-        setHeaderSnap(false);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    handleResize();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   return (
     <div
       className={
-        'sticky top-0 z-10 flex flex-row items-center justify-between border-b-2 border-miniSilentWhite bg-hash px-2 pb-1 pt-1 dark:border-space dark:bg-darkSpace xl:px-32 '
+        'sticky top-0 z-10 flex flex-row items-center justify-between border-b-2 border-miniSilentWhite bg-hash px-2 pb-1 pt-1 dark:border-space dark:bg-darkSpace sm:px-6 lg:px-16 2xl:px-32'
       }
     >
       <div className={'flex flex-row'}>
@@ -52,14 +32,12 @@ export function Header() {
         </Link>
       </div>
       <div className={'flex flex-row'}>
-        {headerSnap ? (
-          <div className={'flex flex-row'}>
-            <ModeToggle />
-            <NavMenuMobile />
-          </div>
-        ) : (
+        <div className={'flex flex-row xlg:hidden'}>
+          <NavMenuMobile />
+        </div>
+        <div className={'hidden xlg:flex'}>
           <NavMenu />
-        )}
+        </div>
       </div>
     </div>
   );

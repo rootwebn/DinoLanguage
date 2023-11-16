@@ -100,22 +100,34 @@ export const TrainersLevelScoreUi = () => {
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent className={'pb-3 pl-3 pr-3 pt-0'}>
-        <Tabs defaultValue={'level-01'} className={''}>
+        <Tabs defaultValue={'trainerLevel-01'} className={''}>
           <TabsList className={'bg-miniSilentWhite dark:bg-darkSpace'}>
-            <TabsTrigger value={'level-01'} className={'text-lightSpace'}>
+            <TabsTrigger
+              value={'trainerLevel-01'}
+              className={'text-lightSpace'}
+            >
               Level 1
             </TabsTrigger>
-            <TabsTrigger value={'level-02'} className={'text-lightSpace'}>
+            <TabsTrigger
+              value={'trainerLevel-02'}
+              className={'text-lightSpace'}
+            >
               Level 2
             </TabsTrigger>
-            <TabsTrigger value={'level-03'} className={'text-lightSpace'}>
+            <TabsTrigger
+              value={'trainerLevel-03'}
+              className={'text-lightSpace'}
+            >
               Level 3
             </TabsTrigger>
-            <TabsTrigger value={'level-04'} className={'text-lightSpace'}>
+            <TabsTrigger
+              value={'trainerLevel-04'}
+              className={'text-lightSpace'}
+            >
               Level 4
             </TabsTrigger>
           </TabsList>
-          <TabsContent value={'level-01'} className={''}>
+          <TabsContent value={'trainerLevel-01'} className={''}>
             <Table className={'max-h-[152px]'}>
               <TableHeader>
                 <TableHeaderElement
@@ -168,7 +180,7 @@ export const TrainersLevelScoreUi = () => {
               .
             </div>
           </TabsContent>
-          <TabsContent value={'level-02'}>
+          <TabsContent value={'trainerLevel-02'}>
             <Table className={'max-h-[152px]'}>
               <TableHeader>
                 <TableHeaderElement
@@ -215,7 +227,7 @@ export const TrainersLevelScoreUi = () => {
               profile.
             </div>
           </TabsContent>
-          <TabsContent value={'level-03'}>
+          <TabsContent value={'trainerLevel-03'}>
             <Table className={'max-h-[152px]'}>
               <TableHeader>
                 <TableHeaderElement
@@ -276,7 +288,7 @@ export const TrainersLevelScoreUi = () => {
               profile.
             </div>
           </TabsContent>
-          <TabsContent value={'level-04'}>
+          <TabsContent value={'trainerLevel-04'}>
             <Table className={'max-h-[152px]'}>
               <TableHeader>
                 <TableHeaderElement

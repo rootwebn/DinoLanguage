@@ -34,7 +34,7 @@ export const TrainersLevelSelectUI = () => {
             'border-mulledWine bg-mulledWine hover:border-waikanaGrey hover:bg-waikanaGrey hover:transition hover:duration-300 hover:ease-in-out dark:border-darkerHash dark:bg-darkerHash dark:hover:bg-hash xl:min-w-[200px] xl:max-w-[250px]'
           }
         >
-          <Link href={'/'}>
+          <Link href={'/trainers/flashcards/level-1'}>
             <CardHeader>
               <CardTitle className={'text-turmeric'}>
                 Level 1: Micro-Dino

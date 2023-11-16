@@ -6,9 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/ui/card';
-import { Label } from '@/shared/ui/label';
-import { Input } from '@/shared/ui/input';
-import { Button } from '@/shared/ui/button';
+import { Label, Input, Button } from '@/shared/ui/';
 import * as React from 'react';
 
 export function AccountMenu() {

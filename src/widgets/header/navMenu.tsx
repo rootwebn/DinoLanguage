@@ -2,21 +2,48 @@
 
 import {
   NavigationMenu,
+  NavigationMenuItem,
   NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
 } from '@/shared/ui/navigation-menu';
 import { ModeToggle } from '@/features/themeSwitcher';
-import { AboutUsMenu } from '@/entities/navMenu/ui/aboutUsMenu';
-import { TrainersMenu } from '@/entities/navMenu/ui/trainersMenu';
 import { SignUpSheet } from '@/entities/auth/ui/signUp';
-import { LearnMoreBtn } from '@/entities/navMenu/ui/learnMoreBtn';
-import { GitHubButton } from '@/entities/navMenu/ui/gitHubButton';
+import {
+  GitHubButton,
+  LearnMoreBtn,
+  AboutUsMenu,
+  TrainersMenu,
+} from '@/entities/navMenu';
 
 export const NavMenu = () => {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <AboutUsMenu />
-        <TrainersMenu />
+        <NavigationMenuItem>
+          <NavigationMenuTrigger
+            className={
+              'bg-silentWhite text-black dark:bg-space dark:text-white'
+            }
+          >
+            About Us
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <AboutUsMenu />
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger
+            className={
+              'bg-silentWhite text-black dark:bg-space dark:text-white'
+            }
+          >
+            Trainers
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className={'bg-waikanaGrey dark:bg-woodsmoke'}>
+            <TrainersMenu />
+          </NavigationMenuContent>
+        </NavigationMenuItem>
         <LearnMoreBtn />
       </NavigationMenuList>
       <SignUpSheet />

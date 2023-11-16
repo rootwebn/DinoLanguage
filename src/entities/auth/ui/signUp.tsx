@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/shared/ui/dialog';
+} from '@/shared/ui/';
 import { AccountMenu } from '@/entities/auth';
 import { Dessert, Goal } from 'lucide-react';
 import Link from 'next/link';
@@ -49,14 +49,12 @@ export const SignUpSheet = () => {
       >
         Sign Up
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className={'bg-silentWhite dark:bg-darkSpace'}>
         <DialogHeader className={'mt-4'}>
           <DialogTitle className={'absolute top-0 mt-4'}>Sign Up</DialogTitle>
           <AccountMenu />
           <div
-            className={
-              'mb-2 mt-2 text-center text-chattel dark:text-lightSpace'
-            }
+            className={'mb-2 mt-2 text-center text-black dark:text-lightSpace'}
           >
             Or you can sign up below:
           </div>
@@ -64,7 +62,7 @@ export const SignUpSheet = () => {
             <SignUpOption
               iconSrc={<Goal className={'mr-1'} />}
               className={
-                'mr-2 border-hash bg-hash text-chattel dark:border-darkSpace dark:bg-darkSpace hover:dark:border-lightSpace hover:dark:bg-lightSpace'
+                'mr-2 border-hash bg-hash text-black dark:border-darkSpace dark:bg-space dark:text-chattel hover:dark:border-lightSpace hover:dark:bg-lightSpace'
               }
               linkHref={'/google'}
               buttonText={'Sign up with Google Account'}
@@ -72,7 +70,7 @@ export const SignUpSheet = () => {
             <SignUpOption
               iconSrc={<Dessert className={'mr-1'} />}
               className={
-                'ml-2 border-hash bg-hash text-chattel dark:border-darkSpace dark:bg-darkSpace hover:dark:border-lightSpace hover:dark:bg-lightSpace'
+                'ml-2 border-hash bg-hash text-black dark:border-darkSpace dark:bg-space dark:text-chattel hover:dark:border-lightSpace hover:dark:bg-lightSpace'
               }
               linkHref={'/github'}
               buttonText={'Sign up with GitHub Account'}

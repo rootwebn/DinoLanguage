@@ -10,7 +10,7 @@ export default function FlashcardTrainerPage() {
   return (
     <div
       className={
-        'grid gap-1 uxs:ml-4 uxs:mr-4 md:ml-6 md:mr-6 lg:ml-10 lg:mr-10 2xl:ml-32 2xl:mr-32'
+        'grid gap-1 uxs:ml-4 uxs:mr-4 md:ml-6 md:mr-6 lg:ml-16 lg:mr-16 2xl:ml-32 2xl:mr-32'
       }
     >
       <div

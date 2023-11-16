@@ -26,7 +26,7 @@ export function TrainersLevelDescription({
         'border-silentWhite bg-silentWhite dark:border-space dark:bg-space'
       }
     >
-      <CardHeader>
+      <CardHeader className={'p-4 pb-0'}>
         <CardTitle
           className={'flex flex-row text-flower dark:text-silentWhite'}
         >
@@ -36,7 +36,7 @@ export function TrainersLevelDescription({
       </CardHeader>
       <CardContent
         className={
-          'flex flex-col items-center justify-between sm:flex-row-reverse'
+          'flex flex-col items-center justify-between pb-4 sm:flex-row-reverse'
         }
       >
         <Image

@@ -38,7 +38,7 @@ export const PageCard: React.FC<PageCardInterface> = ({
           {descCard}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className={''}>
         <Accordion type={'multiple'}>
           <AccordionItemCard
             itemValue={'item-1'}

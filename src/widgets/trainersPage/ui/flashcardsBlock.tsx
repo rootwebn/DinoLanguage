@@ -1,4 +1,4 @@
-import { PageCard } from '@/entities/trainers/ui/pageCard';
+import { PageCard } from '@/entities/trainers/ui/';
 import { Clipboard } from 'lucide-react';
 
 export const FlashcardsBlock = () => {
