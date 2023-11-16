@@ -9,14 +9,14 @@ export function TrainersMenu() {
   return (
     <ul
       className={
-        'xlg:p-2 grid min-w-[400px] gap-3 p-0 xs:grid-cols-2 md:w-[526px] xl:w-[600px]'
+        'grid min-w-[400px] gap-3 p-0 xs:grid-cols-2 md:w-[526px] xlg:p-2 xl:w-[600px]'
       }
     >
       <ListItem
         href={'/trainers'}
         title={'All Trainers'}
         className={
-          'xlg:bg-inherit max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
         }
         imageSrc={ZapImage}
         widthImg={24}
@@ -29,7 +29,7 @@ export function TrainersMenu() {
         href={'/trainers/flashcards'}
         title={'Flashcards'}
         className={
-          'xlg:bg-inherit max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
         }
         imageSrc={ZapImage}
         widthImg={24}
@@ -42,7 +42,7 @@ export function TrainersMenu() {
         href={'/trainers/brainstorm'}
         title={'Brainstorm'}
         className={
-          'xlg:bg-inherit max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
         }
         imageSrc={BrainImage}
         widthImg={24}
@@ -55,7 +55,7 @@ export function TrainersMenu() {
         href={'/trainers/verbal-memory'}
         title={'Verbal Memory'}
         className={
-          'xlg:bg-inherit max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
         }
         imageSrc={SpeechImage}
         widthImg={24}
@@ -68,7 +68,7 @@ export function TrainersMenu() {
         href={'/trainers/grammar-test-test'}
         title={'Grammar Test'}
         className={
-          'xlg:bg-inherit max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
         }
         imageSrc={PenImage}
         widthImg={24}

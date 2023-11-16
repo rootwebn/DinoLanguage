@@ -27,7 +27,7 @@ const useStorage = <T>(
 
     const parseData: T | null = JSON.parse(lsData);
     if (parseData) customSet(parseData);
-  }, []);
+  }, [customSet, storageName]);
 
   return [data, customSet];
 };

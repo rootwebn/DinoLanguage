@@ -9,19 +9,19 @@ export function AboutUsMenu() {
   return (
     <ul
       className={
-        'xlg:grid-cols-[.75fr_1fr] grid gap-3 rounded-sm bg-waikanaGrey p-3 dark:bg-woodsmoke md:w-[526px] xl:w-[600px]'
+        'grid gap-3 rounded-sm bg-waikanaGrey p-3 dark:bg-woodsmoke md:w-[526px] xlg:grid-cols-[.75fr_1fr] xl:w-[600px]'
       }
     >
       <li className={'row-span-3'}>
         <Link
           className={
-            'xlg:bg-gradient-to-b xlg:from-silentWhite xlg:from-20% xlg:to-froly xlg:outline-none xlg:dark:from-woodsmoke xlg:dark:to-thunder xlg:min-h-full flex select-none flex-col justify-end rounded-md'
+            'flex select-none flex-col justify-end rounded-md xlg:min-h-full xlg:bg-gradient-to-b xlg:from-silentWhite xlg:from-20% xlg:to-froly xlg:outline-none xlg:dark:from-woodsmoke xlg:dark:to-thunder'
           }
           href={'/Introduction'}
         >
           <div
             className={
-              'xlg:min-h-full xlg:flex-col xlg:min-w-[220px] xlg:p-4 xlg:pt-2 flex min-h-full min-w-[250px] max-w-[300px] select-none flex-row justify-between rounded-md border-waikanaGrey'
+              'flex min-h-full min-w-[250px] max-w-[300px] select-none flex-row justify-between rounded-md border-waikanaGrey xlg:min-h-full xlg:min-w-[220px] xlg:flex-col xlg:p-4 xlg:pt-2'
             }
           >
             <Image
@@ -35,13 +35,13 @@ export function AboutUsMenu() {
               <div
                 className={`${
                   s.projectTitle
-                } ${'xlg:mt-0 mt-4 text-lightSpace'}`}
+                } ${'mt-4 text-lightSpace xlg:mt-0'}`}
               >
                 DinoLanguage
               </div>
               <div
                 className={
-                  'xlg:pt-0 min-w-[3rem] max-w-[12rem] pt-2 text-black dark:text-silentWhite'
+                  'min-w-[3rem] max-w-[12rem] pt-2 text-black dark:text-silentWhite xlg:pt-0'
                 }
               >
                 Unearth the Joy of Language Learning with Dinosaurs!

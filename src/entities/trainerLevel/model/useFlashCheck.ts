@@ -31,11 +31,13 @@ export const useFlashCheck = () => {
       prioritizeWordTranslated(wordsTranslate[wordIndex]);
     }
 
-    if (wordIndex < words.length - 1)
+    if (wordIndex < words.length - 1) {
       setWordIndex((prevIndex) => prevIndex + 1);
+    }
 
-    if (wordIndex === words.length - 1)
+    if (wordIndex === words.length - 1) {
       setWordIndex(wordIndex - words.length + 1);
+    }
 
     if (
       prioritizedWords.length < targetPrioritizedCount &&
@@ -43,12 +45,15 @@ export const useFlashCheck = () => {
     ) {
       memoizedLoadWords();
     }
+  };
 
-    if (
-      prioritizedWordsTranslated.length < targetPrioritizedCount &&
-      wordIndex === wordsTranslate.length - 1
-    ) {
-      memoizedLoadWordsTranslate();
+  const handlerUserMemoResponse = () => {
+    if (wordIndex < words.length - 1) {
+      setWordIndex((prevIndex) => prevIndex + 1);
+    }
+
+    if (wordIndex === words.length - 1) {
+      setWordIndex(wordIndex - words.length + 1);
     }
   };
 
@@ -64,6 +69,7 @@ export const useFlashCheck = () => {
     wordIndex,
     targetPrioritizedCount,
     call: handleUserResponse,
+    handlerUserMemoResponse,
     words,
     prioritizedWords,
     wordsTranslate,
