@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   useSetWordsStore,
   useWordsStore,
@@ -6,25 +6,36 @@ import {
 
 export const useFlashCheck = () => {
   const words = useWordsStore((state) => state.words);
+  const prioritizedWords = useWordsStore((state) => state.prioritizedWords);
+  const prioritizeWord = useSetWordsStore((state) => state.prioritizeWord);
   const loadWords = useSetWordsStore((state) => state.loadWords);
+  const cleanStore = useSetWordsStore((state) => state.cleanStore);
   const [wordIndex, setWordIndex] = useState(0);
-  // const [targetPrioritizedCount] = useState(5);
+  const [targetPrioritizedCount] = useState(5);
 
   const handleUserResponse = (knowsWord: boolean) => {
-    // if (!knowsWord) {
-    //   prioritizeWord(words[wordIndex]);
-    //   prioritizeWordTranslated(wordsTranslate[wordIndex]);
-    // }
+    if (!knowsWord) {
+      prioritizeWord(words[wordIndex]);
+    }
 
     if (wordIndex < words.length - 1) {
       setWordIndex((prevIndex) => prevIndex + 1);
     }
 
-    if (wordIndex === words.length - 1) {
+    if (
+      wordIndex === words.length - 1 &&
+      prioritizedWords.length < targetPrioritizedCount
+    ) {
       setWordIndex(wordIndex - words.length + 1);
+      cleanStore();
       loadWords();
     }
   };
+
+  useEffect(() => {
+    cleanStore();
+    loadWords();
+  }, [loadWords, cleanStore]);
 
   // const handlerUserMemoResponse = () => {
   //   if (wordIndex < words.length - 1) {
@@ -37,26 +48,12 @@ export const useFlashCheck = () => {
   // };
 
   // useEffect(() => {
-  //   loadWords();
-  // }, [loadWords]);
-
-  // useEffect(() => {
-  //   loadWordsTranslated();
-  // }, [loadWordsTranslated]);
-  //
-  // useEffect(() => {
-  //   const navigation = window.performance.getEntriesByType('navigation')[0];
-  //   if (navigation && 'type' in navigation && navigation.type === 'load') {
-  //     useWordsStore.persist.clearStorage();
-  //   }
-  // });
-
   return {
     wordIndex,
-    // targetPrioritizedCount,
+    targetPrioritizedCount,
     call: handleUserResponse,
     words,
-    // prioritizedWords,
+    prioritizedWords,
     // wordsTranslate,
     // prioritizedWordsTranslated,
   };

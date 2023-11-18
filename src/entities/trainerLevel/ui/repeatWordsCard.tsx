@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import useFlashCheck from '@/entities/trainerLevel/model/useFlashCheck';
 
-const RepeatWordsCard = () => {
+export const RepeatWordsCard = () => {
   const {
     wordIndex,
     // wordsTranslate,

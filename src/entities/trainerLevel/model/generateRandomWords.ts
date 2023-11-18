@@ -1,6 +1,7 @@
 import { wordList } from '@/entities/trainerLevel/model/wordsList';
 
 const count = (min: number, max: number) => Math.random() * (max - min) + min;
+
 export const generateRandomWords = () => {
   const newWords: string[] = [];
   const indexSet = generateRandomIndexes(count(5, 13));

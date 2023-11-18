@@ -6,12 +6,18 @@ import { useWordsStore } from '@/entities/trainerLevel/model/storageZustand';
 // rewrite useFlashCheck, make survey before training, use google API for translating words
 
 export const PickingWordCard = () => {
-  const words = useWordsStore((state) => state.words);
-  const { wordIndex, call: handleUserResponse } = useFlashCheck();
+  // const words = useWordsStore((state) => state.words);
+  // const prioritizedWords = useWordsStore((state) => state.prioritizedWords);
+  const {
+    wordIndex,
+    call: handleUserResponse,
+    words,
+    prioritizedWords,
+  } = useFlashCheck();
 
   console.log('Array of Words:', words);
   // console.log('Array of Translated Words:', wordsTranslate);
-  // console.log('Array of Prioritized Words:', prioritizedWords);
+  console.log('Array of Prioritized Words:', prioritizedWords);
   console.log('Current Word Index:', wordIndex);
   return (
     <Card

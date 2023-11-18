@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { wordList } from '@/entities/trainerLevel/model/wordsList';
 import { generateRandomWords } from '@/entities/trainerLevel/model/generateRandomWords';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
@@ -7,14 +6,18 @@ import { useEffect, useState } from 'react';
 
 interface States {
   words: string[];
+  prioritizedWords: string[];
 }
 interface Actions {
   loadWords: () => void;
+  prioritizeWord: (word: string) => void;
+  cleanStore: () => void;
 }
 interface useWordInterface extends States, Actions {}
 
 const initialStates: States = {
   words: [''],
+  prioritizedWords: [],
 };
 
 export const useSetWordsStore = create<useWordInterface>()(
@@ -27,10 +30,19 @@ export const useSetWordsStore = create<useWordInterface>()(
             const generateWords = generateRandomWords();
             set({ words: (get().words = generateWords) });
           },
+          prioritizeWord: (word: string) => {
+            set((state) => {
+              state.prioritizedWords.push(word);
+            });
+          },
+          cleanStore: () => {
+            set({ prioritizedWords: (get().prioritizedWords = []) });
+            set({ words: (get().words = ['']) });
+          },
         }),
         {
           name: 'auth-storage',
-          // skipHydration: true,
+          storage: createJSONStorage(() => localStorage),
         },
       ),
       { name: 'Zustand' },
