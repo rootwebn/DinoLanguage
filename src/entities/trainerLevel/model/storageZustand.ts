@@ -1,84 +1,54 @@
 import { create } from 'zustand';
 import { wordList } from '@/entities/trainerLevel/model/wordsList';
-import { wordListUa } from '@/entities/trainerLevel/model/wordListUa';
-import { generateRandomIndex } from '@/entities/trainerLevel/model/generateRandomIndex';
-import { devtools, persist } from 'zustand/middleware';
+import { generateRandomWords } from '@/entities/trainerLevel/model/generateRandomWords';
+import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { useEffect, useState } from 'react';
 
-interface useWordInterface {
+interface States {
   words: string[];
-  wordsTranslate: string[];
-  prioritizedWords: string[];
-  prioritizedWordsTranslated: string[];
-  prioritizeWord: (word: string) => void;
-  prioritizeWordTranslated: (word: string) => void;
-  loadWords: (forceGenerate?: boolean) => void;
-  loadWordsTranslated: (forceGenerate?: boolean) => void;
 }
+interface Actions {
+  loadWords: () => void;
+}
+interface useWordInterface extends States, Actions {}
 
-const count = (min: number, max: number) => Math.random() * (max - min) + min;
-const indexSet = generateRandomIndex(count(5, 13));
-console.log('Generated indexes:', indexSet);
-
-const generateRandomWords = () => {
-  const newWords: string[] = [];
-
-  for (let i = 0; i < indexSet.length; i++) {
-    const index = indexSet[i];
-    const element = wordList[index];
-    newWords.push(element);
-  }
-  return newWords;
+const initialStates: States = {
+  words: [''],
 };
 
-const generateRandomWordsTranslate = () => {
-  const newWordsTranslated: string[] = [];
-
-  for (let i = 0; i < indexSet.length; i++) {
-    const index = indexSet[i];
-    const element = wordListUa[index];
-    newWordsTranslated.push(element);
-  }
-  return newWordsTranslated;
-};
-
-export const useWordsStore = create<useWordInterface>()(
+export const useSetWordsStore = create<useWordInterface>()(
   immer(
     devtools(
       persist(
-        (set) => ({
-          words: [],
-          prioritizedWords: [],
-          prioritizedWordsTranslated: [],
-          wordsTranslate: [],
-          score: 0,
+        (set, get) => ({
+          ...initialStates,
           loadWords: () => {
-            const generatedWords = generateRandomWords();
-            localStorage.setItem('words', JSON.stringify(generatedWords));
-            set({ words: generatedWords });
-          },
-          loadWordsTranslated: () => {
-            const generatedWordsTranslate = generateRandomWordsTranslate();
-            localStorage.setItem(
-              'wordsTranslate',
-              JSON.stringify(generatedWordsTranslate),
-            );
-            set({ wordsTranslate: generatedWordsTranslate });
-          },
-          prioritizeWord: (word: string) => {
-            set((state) => ({
-              prioritizedWords: [...state.prioritizedWords, word],
-            }));
-          },
-          prioritizeWordTranslated: (word: string) => {
-            set((state) => ({}));
+            const generateWords = generateRandomWords();
+            set({ words: (get().words = generateWords) });
           },
         }),
         {
           name: 'auth-storage',
+          // skipHydration: true,
         },
       ),
       { name: 'Zustand' },
     ),
   ),
 );
+
+export const useWordsStore = <T extends keyof States>(
+  selector: (state: States) => States[T],
+): States[T] => {
+  const [state, setState] = useState(selector(initialStates));
+  const zustandState = useSetWordsStore((persistedState) =>
+    selector(persistedState),
+  );
+
+  useEffect(() => {
+    setState(zustandState);
+  }, [zustandState]);
+
+  return state;
+};

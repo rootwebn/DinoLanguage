@@ -1,20 +1,17 @@
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import React from 'react';
 import { useFlashCheck } from '@/entities/trainerLevel/model/';
+import { useWordsStore } from '@/entities/trainerLevel/model/storageZustand';
 //TODO: Rewrite storageZustand, rework UI flashcards and complete system of flashcards
 // rewrite useFlashCheck, make survey before training, use google API for translating words
 
 export const PickingWordCard = () => {
-  const {
-    wordIndex,
-    call: handleUserResponse,
-    words,
-    wordsTranslate,
-    prioritizedWords,
-  } = useFlashCheck();
+  const words = useWordsStore((state) => state.words);
+  const { wordIndex, call: handleUserResponse } = useFlashCheck();
+
   console.log('Array of Words:', words);
-  console.log('Array of Translated Words:', wordsTranslate);
-  console.log('Array of Prioritized Words:', prioritizedWords);
+  // console.log('Array of Translated Words:', wordsTranslate);
+  // console.log('Array of Prioritized Words:', prioritizedWords);
   console.log('Current Word Index:', wordIndex);
   return (
     <Card
@@ -32,20 +29,6 @@ export const PickingWordCard = () => {
             }
           >
             {words[wordIndex]}
-          </div>
-          <div
-            className={
-              'mb-6 flex justify-center text-4xl text-muted-foreground'
-            }
-          >
-            {words[wordIndex + 1]}
-          </div>
-          <div
-            className={
-              'mb-6 flex justify-center text-4xl text-muted-foreground'
-            }
-          >
-            {words[wordIndex + 2]}
           </div>
           <div className={'flex flex-row justify-between '}>
             <Button

@@ -1,35 +1,20 @@
-'use client';
-
-import { useCallback, useEffect, useState } from 'react';
-import { useWordsStore } from '@/entities/trainerLevel/model/storageZustand';
+import { useState } from 'react';
+import {
+  useSetWordsStore,
+  useWordsStore,
+} from '@/entities/trainerLevel/model/storageZustand';
 
 export const useFlashCheck = () => {
-  const {
-    words,
-    wordsTranslate,
-    loadWords,
-    loadWordsTranslated,
-    prioritizeWord,
-    prioritizeWordTranslated,
-    prioritizedWords,
-    prioritizedWordsTranslated,
-  } = useWordsStore();
+  const words = useWordsStore((state) => state.words);
+  const loadWords = useSetWordsStore((state) => state.loadWords);
   const [wordIndex, setWordIndex] = useState(0);
-  const [targetPrioritizedCount] = useState(5);
-
-  const memoizedLoadWords = useCallback(() => {
-    loadWords();
-  }, [loadWords]);
-
-  const memoizedLoadWordsTranslate = useCallback(() => {
-    loadWordsTranslated();
-  }, [loadWordsTranslated]);
+  // const [targetPrioritizedCount] = useState(5);
 
   const handleUserResponse = (knowsWord: boolean) => {
-    if (!knowsWord) {
-      prioritizeWord(words[wordIndex]);
-      prioritizeWordTranslated(wordsTranslate[wordIndex]);
-    }
+    // if (!knowsWord) {
+    //   prioritizeWord(words[wordIndex]);
+    //   prioritizeWordTranslated(wordsTranslate[wordIndex]);
+    // }
 
     if (wordIndex < words.length - 1) {
       setWordIndex((prevIndex) => prevIndex + 1);
@@ -37,43 +22,43 @@ export const useFlashCheck = () => {
 
     if (wordIndex === words.length - 1) {
       setWordIndex(wordIndex - words.length + 1);
-    }
-
-    if (
-      prioritizedWords.length < targetPrioritizedCount &&
-      wordIndex === words.length - 1
-    ) {
-      memoizedLoadWords();
+      loadWords();
     }
   };
 
-  const handlerUserMemoResponse = () => {
-    if (wordIndex < words.length - 1) {
-      setWordIndex((prevIndex) => prevIndex + 1);
-    }
+  // const handlerUserMemoResponse = () => {
+  //   if (wordIndex < words.length - 1) {
+  //     setWordIndex((prevIndex) => prevIndex + 1);
+  //   }
+  //
+  //   if (wordIndex === words.length - 1) {
+  //     setWordIndex(wordIndex - words.length + 1);
+  //   }
+  // };
 
-    if (wordIndex === words.length - 1) {
-      setWordIndex(wordIndex - words.length + 1);
-    }
-  };
+  // useEffect(() => {
+  //   loadWords();
+  // }, [loadWords]);
 
-  useEffect(() => {
-    memoizedLoadWords();
-  }, [memoizedLoadWords]);
-
-  useEffect(() => {
-    memoizedLoadWordsTranslate();
-  }, [memoizedLoadWordsTranslate]);
+  // useEffect(() => {
+  //   loadWordsTranslated();
+  // }, [loadWordsTranslated]);
+  //
+  // useEffect(() => {
+  //   const navigation = window.performance.getEntriesByType('navigation')[0];
+  //   if (navigation && 'type' in navigation && navigation.type === 'load') {
+  //     useWordsStore.persist.clearStorage();
+  //   }
+  // });
 
   return {
     wordIndex,
-    targetPrioritizedCount,
+    // targetPrioritizedCount,
     call: handleUserResponse,
-    handlerUserMemoResponse,
     words,
-    prioritizedWords,
-    wordsTranslate,
-    prioritizedWordsTranslated,
+    // prioritizedWords,
+    // wordsTranslate,
+    // prioritizedWordsTranslated,
   };
 };
 
