@@ -3,8 +3,8 @@ import { wordList } from '@/entities/trainerLevel/model/wordsList';
 const count = (min: number, max: number) => Math.random() * (max - min) + min;
 
 export const generateRandomWords = () => {
-  const newWords: string[] = [];
   const indexSet = generateRandomIndexes(count(5, 13));
+  const newWords: string[] = [];
   console.log('Generated indexes:', indexSet);
   for (let i = 0; i < indexSet.length; i++) {
     const index = indexSet[i];

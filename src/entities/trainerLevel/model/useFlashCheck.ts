@@ -3,6 +3,10 @@ import {
   useSetWordsStore,
   useWordsStore,
 } from '@/entities/trainerLevel/model/storageZustand';
+import {
+  useSetTranslationStorage,
+  useTranslationStore,
+} from '@/entities/trainerLevel/model/translationStorage';
 
 export const useFlashCheck = () => {
   const words = useWordsStore((state) => state.words);
@@ -10,8 +14,16 @@ export const useFlashCheck = () => {
   const prioritizeWord = useSetWordsStore((state) => state.prioritizeWord);
   const loadWords = useSetWordsStore((state) => state.loadWords);
   const cleanStore = useSetWordsStore((state) => state.cleanStore);
+  const translatedText = useTranslationStore((state) => state.translatedText);
+  const setTranslatedText = useSetTranslationStorage(
+    (state) => state.setDataTranslation,
+  );
+  const cleanStoreTranslation = useSetTranslationStorage(
+    (state) => state.cleanStoreTranslation,
+  );
   const [wordIndex, setWordIndex] = useState(0);
-  const [targetPrioritizedCount] = useState(5);
+  const [indexStage, setIndexStage] = useState(0);
+  const [targetPrioritizedCount] = useState(6);
 
   const handleUserResponse = (knowsWord: boolean) => {
     if (!knowsWord) {
@@ -27,35 +39,55 @@ export const useFlashCheck = () => {
       prioritizedWords.length < targetPrioritizedCount
     ) {
       setWordIndex(wordIndex - words.length + 1);
-      cleanStore();
       loadWords();
     }
   };
 
+  const handleUserMemo = (knowsWord: boolean) => {
+    if (knowsWord) {
+      setWordIndex((prevIndex) => prevIndex + 1);
+    }
+
+    if (wordIndex === words.length - 1) {
+      setWordIndex(wordIndex - words.length + 1);
+    }
+  };
+
+  const listPrioritizedWordsHandle = () => {
+    setIndexStage(2);
+  };
+
   useEffect(() => {
-    cleanStore();
     loadWords();
-  }, [loadWords, cleanStore]);
+  }, [loadWords]);
 
-  // const handlerUserMemoResponse = () => {
-  //   if (wordIndex < words.length - 1) {
-  //     setWordIndex((prevIndex) => prevIndex + 1);
-  //   }
-  //
-  //   if (wordIndex === words.length - 1) {
-  //     setWordIndex(wordIndex - words.length + 1);
-  //   }
-  // };
+  useEffect(() => {
+    if (prioritizedWords.length === targetPrioritizedCount - 1) {
+      setIndexStage(1);
+      cleanStoreTranslation();
+      console.log('Storage Translation Cleared!');
+    }
+  }, [
+    prioritizedWords,
+    targetPrioritizedCount,
+    setIndexStage,
+    cleanStoreTranslation,
+  ]);
 
-  // useEffect(() => {
   return {
     wordIndex,
     targetPrioritizedCount,
+    indexStage,
+    setIndexStage,
     call: handleUserResponse,
+    cleanStore,
+    handleUserMemo,
+    listPrioritizedWordsHandle,
+    translatedText,
+    setTranslatedText,
+    cleanStoreTranslation,
     words,
     prioritizedWords,
-    // wordsTranslate,
-    // prioritizedWordsTranslated,
   };
 };
 

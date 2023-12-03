@@ -8,6 +8,7 @@ interface States {
   words: string[];
   prioritizedWords: string[];
 }
+
 interface Actions {
   loadWords: () => void;
   prioritizeWord: (word: string) => void;
@@ -17,7 +18,7 @@ interface useWordInterface extends States, Actions {}
 
 const initialStates: States = {
   words: [''],
-  prioritizedWords: [],
+  prioritizedWords: [''],
 };
 
 export const useSetWordsStore = create<useWordInterface>()(

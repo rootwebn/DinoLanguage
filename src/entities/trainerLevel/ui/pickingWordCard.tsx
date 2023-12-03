@@ -1,29 +1,29 @@
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFlashCheck } from '@/entities/trainerLevel/model/';
-import { useWordsStore } from '@/entities/trainerLevel/model/storageZustand';
 //TODO: Rewrite storageZustand, rework UI flashcards and complete system of flashcards
 // rewrite useFlashCheck, make survey before training, use google API for translating words
 
 export const PickingWordCard = () => {
-  // const words = useWordsStore((state) => state.words);
-  // const prioritizedWords = useWordsStore((state) => state.prioritizedWords);
   const {
     wordIndex,
     call: handleUserResponse,
+    cleanStore,
+    cleanStoreTranslation,
     words,
     prioritizedWords,
   } = useFlashCheck();
 
+  useEffect(() => {
+    cleanStore();
+    cleanStoreTranslation();
+  }, []);
+
   console.log('Array of Words:', words);
-  // console.log('Array of Translated Words:', wordsTranslate);
   console.log('Array of Prioritized Words:', prioritizedWords);
   console.log('Current Word Index:', wordIndex);
   return (
-    <Card
-      key={wordIndex}
-      className={'flex min-h-[30rem] min-w-[40rem] flex-col justify-around'}
-    >
+    <Card key={wordIndex} className={'flex flex-col justify-around'}>
       <CardHeader className={'text-center text-2xl'}>
         Did you know this word?
       </CardHeader>
@@ -31,12 +31,12 @@ export const PickingWordCard = () => {
         <div className={'flex flex-col'}>
           <div
             className={
-              'mb-6 flex justify-center text-4xl text-muted-foreground'
+              'mb-6 mt-12 flex items-center justify-center gap-4 text-4xl text-muted-foreground'
             }
           >
-            {words[wordIndex]}
+            <div>{words[wordIndex]}</div>
           </div>
-          <div className={'flex flex-row justify-between '}>
+          <div className={'flex flex-row justify-between'}>
             <Button
               onClick={() => handleUserResponse(true)}
               className={'ml-8 mt-8 pb-6 pl-8 pr-8 pt-6 text-lg'}

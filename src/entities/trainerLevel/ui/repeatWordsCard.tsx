@@ -4,9 +4,8 @@ import useFlashCheck from '@/entities/trainerLevel/model/useFlashCheck';
 export const RepeatWordsCard = () => {
   const {
     wordIndex,
-    // wordsTranslate,
-    words,
-    call: handlerUserMemoResponse,
+    prioritizedWords,
+    call: handlerUserMemo,
   } = useFlashCheck();
   return (
     <Card key={wordIndex}>
@@ -17,16 +16,15 @@ export const RepeatWordsCard = () => {
           <div className={'flex flex-col'}>
             Try to memorize these words:
             <div>
-              <div>{/*{words[wordIndex]} is {wordsTranslate[wordIndex]}*/}</div>
+              <div>
+                {prioritizedWords[wordIndex]} is {[wordIndex]}
+              </div>
             </div>
           </div>
           <div className={'flex flex-row justify-center'}>
-            {/*<Button*/}
-            {/*  onClick={() => handlerUserMemoResponse(true)}*/}
-            {/*  className={'mt-6'}*/}
-            {/*>*/}
-            {/*  Next Word!*/}
-            {/*</Button>*/}
+            <Button onClick={() => handlerUserMemo(true)} className={'mt-6'}>
+              Next Word!
+            </Button>
           </div>
         </div>
       </CardContent>

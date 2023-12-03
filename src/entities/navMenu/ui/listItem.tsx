@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import s from '@/shared/styles/navMenu.module.scss';
 import Image from 'next/image';
 
 interface ListItemProps {
@@ -35,8 +34,7 @@ export const ListItem = React.forwardRef<React.ElementRef<'a'>, ListItemProps>(
           ref={ref}
           href={href}
           className={cn(
-            `${'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-thunder focus:bg-accent focus:text-thunder'} ${
-              s.navListMenu
+            `${'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-thunder focus:bg-accent focus:text-thunder'} 
             }`,
             className,
           )}

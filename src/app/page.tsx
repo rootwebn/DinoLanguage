@@ -1,7 +1,6 @@
-import s from '@/shared/styles/mainPage.module.scss';
 const Home = () => {
   return (
-    <div className={s.mainContainer}>
+    <div>
       <div className={'pl-16 pr-16'}>
         <div
           className={

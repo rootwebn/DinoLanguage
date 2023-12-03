@@ -3,7 +3,6 @@ import Image from 'next/image';
 import LogoImage from '../../../../public/Logo.png';
 import * as React from 'react';
 import { ListItem } from '@/entities/navMenu/ui/listItem';
-import s from '@/shared/styles/navMenu.module.scss';
 
 export function AboutUsMenu() {
   return (
@@ -32,11 +31,7 @@ export function AboutUsMenu() {
               className={'pb-[0.75rem]'}
             />
             <div className={'flex flex-col '}>
-              <div
-                className={`${
-                  s.projectTitle
-                } ${'mt-4 text-lightSpace xlg:mt-0'}`}
-              >
+              <div className={'mt-4 text-lightSpace xlg:mt-0'}>
                 DinoLanguage
               </div>
               <div
