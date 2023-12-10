@@ -3,10 +3,6 @@ import {
   useSetWordsStore,
   useWordsStore,
 } from '@/entities/trainerLevel/model/storageZustand';
-import {
-  useSetTranslationStorage,
-  useTranslationStore,
-} from '@/entities/trainerLevel/model/translationStorage';
 
 export const useFlashCheck = () => {
   const words = useWordsStore((state) => state.words);
@@ -14,11 +10,11 @@ export const useFlashCheck = () => {
   const prioritizeWord = useSetWordsStore((state) => state.prioritizeWord);
   const loadWords = useSetWordsStore((state) => state.loadWords);
   const cleanStore = useSetWordsStore((state) => state.cleanStore);
-  const translatedText = useTranslationStore((state) => state.translatedText);
-  const setTranslatedText = useSetTranslationStorage(
+  const translatedText = useWordsStore((state) => state.translatedText);
+  const setTranslatedText = useSetWordsStore(
     (state) => state.setDataTranslation,
   );
-  const cleanStoreTranslation = useSetTranslationStorage(
+  const cleanStoreTranslation = useSetWordsStore(
     (state) => state.cleanStoreTranslation,
   );
   const [wordIndex, setWordIndex] = useState(0);
@@ -80,9 +76,9 @@ export const useFlashCheck = () => {
     indexStage,
     setIndexStage,
     call: handleUserResponse,
+    listPrioritizedWordsHandle,
     cleanStore,
     handleUserMemo,
-    listPrioritizedWordsHandle,
     translatedText,
     setTranslatedText,
     cleanStoreTranslation,

@@ -14,8 +14,6 @@ export const ListPrioritizedWords = () => {
   const translatedListWords = translatedText.join(', ');
 
   useEffect(() => {
-    console.log('List pWords BEFORE fetching', prioritizedWords);
-    console.log('list translated words BEFORE fetching', translatedText);
     FetchResponse(prioritizedWords)
       .then((responseData) => {
         console.log('Translated Text:', responseData.translatedText);
@@ -27,10 +25,10 @@ export const ListPrioritizedWords = () => {
   }, [prioritizedWords]);
 
   return (
-    <Card>
+    <Card className={'flex flex-col'}>
       <CardHeader>Here is list of your problems word:</CardHeader>
       <CardContent className={'flex flex-col'}>
-        <div className={'grid grid-rows-2'}>
+        <div className={''}>
           <div>
             <div className={'text-2xl'}>{listWords}</div>
           </div>

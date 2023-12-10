@@ -1,4 +1,5 @@
 import { wordList } from '@/entities/trainerLevel/model/wordsList';
+import { factsList } from '@/entities/trainerLevel/model/factsList';
 
 const count = (min: number, max: number) => Math.random() * (max - min) + min;
 
@@ -12,6 +13,17 @@ export const generateRandomWords = () => {
     newWords.push(element);
   }
   return newWords;
+};
+
+export const generateRandomFacts = () => {
+  const indexSet = generateRandomIndexes(count(1, 1));
+  const newFacts: string[] = [];
+  for (let i = 0; i < indexSet.length; i++) {
+    const index = indexSet[i];
+    const element = factsList[index];
+    newFacts.push(element);
+  }
+  return newFacts;
 };
 
 const generateRandomIndexes = (count: number) => {

@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import {
-  useTimerStorage,
-  useSetTimerStorage,
-} from '@/entities/trainerLevel/model/timerStorage';
+  useSetStatsStorage,
+  useStatsStorage,
+} from '@/entities/trainerLevel/model/statsStorage';
 
 export const useStatsLevel = () => {
-  const time = useTimerStorage((state) => state.time);
-  const setTimer = useSetTimerStorage((state) => state.setTimer);
+  const time = useStatsStorage((state) => state.time);
+  const setTimer = useSetStatsStorage((state) => state.setTimer);
+  const score = useStatsStorage((state) => state.score);
+  const setScore = useSetStatsStorage((state) => state.setScore);
 
   const useTimer = () => {
     useEffect(() => {
-      setTimer(time);
       const timer = setInterval(() => {
         const [minutes, seconds] = time.split(':').map(Number);
         const newSeconds = seconds === 59 ? 0 : seconds + 1;
@@ -27,7 +28,9 @@ export const useStatsLevel = () => {
 
   return {
     time,
+    score,
+    setScore,
     setTimer,
-    // useTimer,
+    useTimer,
   };
 };
