@@ -1,12 +1,15 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useFlashCheck } from '@/entities/trainerLevel/model';
 
 const TestApi = () => {
-  // const { setTranslatedText, translatedText, prioritizedWords } =
-  //   useFlashCheck();
+  const { prioritizedWords, cleanStore } = useFlashCheck();
+  // useEffect(() => {
+  //   cleanStore();
+  // }, [cleanStore]);
   //
   // useEffect(() => {
   //   FetchResponse(prioritizedWords)
@@ -20,11 +23,10 @@ const TestApi = () => {
   // }, []);
 
   // const listTranslatedWords = translatedText.join(', ');
-  const data = ['hell', 'hello', 'run'];
-
-  const fetchTodoList = async (data: string[]) => {
+  const dataToTranslate = prioritizedWords;
+  const fetchTodoList = async (dataT: string[]) => {
     const response = await axios.post('http://localhost:5000/translate', {
-      q: data,
+      q: dataT,
       source: 'en',
       target: 'ru',
       format: 'text',
@@ -33,15 +35,27 @@ const TestApi = () => {
     return response.data;
   };
 
-  const info = useMutation({ mutationFn: fetchTodoList });
-  console.log(info.data);
+  const { data, isPending, isError, error } = useMutation({
+    mutationFn: () => fetchTodoList(dataToTranslate),
+  });
+
+  if (isPending) {
+    return <h3>Pending request...</h3>;
+  }
+
+  if (isError) {
+    return <h3>Error: {error.message}</h3>;
+  }
+
+  const dataRender = data.translatedText;
+
   return (
     <div>
       <Card>
         <CardHeader>Fetching Test</CardHeader>
         <CardContent>
-          {}
-          <Button onClick={() => info.mutate(data)}>Load Translate</Button>
+          {dataRender}
+          <Button>Load Translate</Button>
         </CardContent>
         <CardFooter></CardFooter>
       </Card>

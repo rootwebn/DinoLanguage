@@ -1,46 +1,71 @@
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { useFlashCheck } from '@/entities/trainerLevel/model';
 import { useEffect } from 'react';
-import { FetchResponse } from '@/entities/trainerLevel/model/request';
+import { fetchResponseTranslation } from '@/entities/trainerLevel/model/request';
+import { useMutation } from '@tanstack/react-query';
 
 export const ListPrioritizedWords = () => {
   const {
-    translatedText,
     prioritizedWords,
+    handleListWords,
     setTranslatedText,
-    listPrioritizedWordsHandle,
+    translatedTextStorage,
   } = useFlashCheck();
-  const listWords = prioritizedWords.join(', ');
-  const translatedListWords = translatedText.join(', ');
+  const translated = useMutation({
+    mutationFn: fetchResponseTranslation,
+  });
+
+  const translatedTextData = translated.data?.translatedText;
+  console.log('Response from server:', translated.data);
 
   useEffect(() => {
-    FetchResponse(prioritizedWords)
-      .then((responseData) => {
-        console.log('Translated Text:', responseData.translatedText);
-        setTranslatedText(responseData.translatedText);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }, [prioritizedWords]);
+    translated.mutate(prioritizedWords);
+  }, [prioritizedWords]); //ToDo: fix dependency array(must being empty array)
+  console.log('Zustand Storage of Translated Words:', translatedTextStorage);
+
+  useEffect(() => {
+    if (translated.data) {
+      setTranslatedText(translatedTextData);
+    }
+  }, [translatedTextData]);
 
   return (
     <Card className={'flex flex-col'}>
-      <CardHeader>Here is list of your problems word:</CardHeader>
+      <CardHeader>
+        {translated.isError
+          ? 'Error while request information!'
+          : 'Here is list of your problems word:'}
+      </CardHeader>
       <CardContent className={'flex flex-col'}>
         <div className={''}>
-          <div>
-            <div className={'text-2xl'}>{listWords}</div>
-          </div>
-          <div>
-            <div className={'text-2xl'}>{translatedListWords}</div>
-          </div>
-          <div>
-            <Button onClick={listPrioritizedWordsHandle}>Next Stage!</Button>
-          </div>
+          {translated.isPending ? (
+            <p>Pending request</p>
+          ) : translated.isError ? (
+            <div>
+              <p>Error: {translated.error.message}</p>
+              <p>Error: {translated.error.name}</p>
+            </div>
+          ) : (
+            <div>
+              <div>
+                <div className={'text-2xl'}>{prioritizedWords.join(', ')}</div>
+                <div>
+                  {translatedTextData && (
+                    <div className={'text-2xl'}>
+                      {translatedTextData.join(', ')}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <Button onClick={handleListWords}>Next Stage!</Button>
+            </div>
+          )}
         </div>
       </CardContent>
-      <CardFooter>DinoLanguage 2023</CardFooter>
+      <CardFooter>
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
+        DinoLanguage 2023 - Don't forget about time! It's really matter...
+      </CardFooter>
     </Card>
   );
 };

@@ -3,7 +3,7 @@ import { useFlashCheck } from '@/entities/trainerLevel/model';
 import { useStatsLevel } from '@/entities/trainerLevel/model/useStatsLevel';
 
 export const StatsInLevelCard = () => {
-  const { indexStage } = useFlashCheck();
+  const { stageFlash } = useFlashCheck();
   const { useTimer, time, score } = useStatsLevel();
   useTimer();
 
@@ -12,7 +12,7 @@ export const StatsInLevelCard = () => {
       <CardHeader className={'text-2xl'}>Your Stats!</CardHeader>
       <CardContent className={'flex flex-col gap-2'}>
         <div className={'text-xl text-muted-foreground'}>
-          Current stage: {indexStage}
+          Current stage: {stageFlash}
         </div>
         <div className={'text-xl text-muted-foreground'}>
           Current time: {time}

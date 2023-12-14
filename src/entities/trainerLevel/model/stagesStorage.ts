@@ -4,31 +4,25 @@ import { useEffect, useState } from 'react';
 import { create } from 'zustand';
 
 interface States {
-  time: string;
-  score: number;
+  stageFlash: number;
 }
 
 interface Actions {
-  setTimer: (time: string) => void;
-  setScore: (score: number) => void;
+  setStageFlash: (newStageFlash: number) => void;
 }
-interface useWordInterface extends States, Actions {}
+interface useStagesInterface extends States, Actions {}
 
 const initialStates: States = {
-  time: '00:00',
-  score: 1000,
+  stageFlash: 1,
 };
 
-export const useSetStatsStorage = create<useWordInterface>()(
+export const useSetStagesStorage = create<useStagesInterface>()(
   immer(
     devtools(
       (set, get) => ({
         ...initialStates,
-        setTimer: (newTime: string) => {
-          set({ time: newTime });
-        },
-        setScore: (newScore: number) => {
-          set({ score: get().score + newScore });
+        setStageFlash: (newStageFlash: number) => {
+          set({ stageFlash: newStageFlash });
         },
       }),
       {
@@ -39,9 +33,9 @@ export const useSetStatsStorage = create<useWordInterface>()(
   ),
 );
 
-export const useStatsStorage = <T>(selector: (state: States) => T): T => {
+export const useStagesStorage = <T>(selector: (state: States) => T): T => {
   const [state, setState] = useState(selector(initialStates));
-  const zustandState = useSetStatsStorage((persistedState) =>
+  const zustandState = useSetStagesStorage((persistedState) =>
     selector(persistedState),
   );
 

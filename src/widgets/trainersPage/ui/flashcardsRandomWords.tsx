@@ -6,10 +6,11 @@ import { ListPrioritizedWords } from '@/entities/trainerLevel/ui/listPrioritized
 import { RepeatWordsCard } from '@/entities/trainerLevel/ui/repeatWordsCard';
 import { StatsInLevelCard } from '@/entities/trainerLevel/ui/statsInLevelCard';
 import { useStatsLevel } from '@/entities/trainerLevel/model/useStatsLevel';
+import { CheckKnowWords } from '@/entities/trainerLevel/ui/checkKnowWords';
 
 export const FlashcardsRandomWords: React.FC = () => {
-  const { indexStage } = useFlashCheck();
-  console.log('Current index stage', indexStage);
+  const { stageFlash } = useFlashCheck();
+  console.log('Current index stage', stageFlash);
   return (
     <div
       className={
@@ -17,9 +18,10 @@ export const FlashcardsRandomWords: React.FC = () => {
       }
     >
       <div className={'col-span-2 row-span-2'}>
-        {indexStage === 0 && <PickingWordCard />}
-        {indexStage === 1 && <ListPrioritizedWords />}
-        {indexStage === 2 && <RepeatWordsCard />}
+        {stageFlash === 1 && <PickingWordCard />}
+        {stageFlash === 2 && <ListPrioritizedWords />}
+        {stageFlash === 3 && <RepeatWordsCard />}
+        {stageFlash === 4 && <CheckKnowWords />}
       </div>
       <StatsInLevelCard />
     </div>

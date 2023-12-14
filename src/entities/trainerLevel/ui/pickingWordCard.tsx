@@ -7,7 +7,7 @@ import { useFlashCheck } from '@/entities/trainerLevel/model/';
 export const PickingWordCard = () => {
   const {
     wordIndex,
-    call: handleUserResponse,
+    call: handleResponsePickFlash,
     cleanStore,
     cleanStoreTranslation,
     words,
@@ -38,14 +38,14 @@ export const PickingWordCard = () => {
           </div>
           <div className={'flex flex-row justify-between'}>
             <Button
-              onClick={() => handleUserResponse(true)}
+              onClick={() => handleResponsePickFlash(true)}
               className={'ml-8 mt-8 pb-6 pl-8 pr-8 pt-6 text-lg'}
               variant={'outline'}
             >
               Yes
             </Button>
             <Button
-              onClick={() => handleUserResponse(false)}
+              onClick={() => handleResponsePickFlash(false)}
               className={'mr-8 mt-8 pb-6 pl-8 pr-8 pt-6 text-lg'}
               variant={'outline'}
             >
