@@ -11,12 +11,14 @@ export const PickingWordCard = () => {
     cleanStore,
     cleanStoreTranslation,
     words,
+    loadWords,
     prioritizedWords,
   } = useFlashCheck();
 
   useEffect(() => {
     cleanStore();
     cleanStoreTranslation();
+    loadWords();
   }, []);
 
   console.log('Array of Words:', words);

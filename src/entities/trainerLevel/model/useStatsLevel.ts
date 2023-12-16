@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
 import {
-  useSetStatsStorage,
-  useStatsStorage,
-} from '@/entities/trainerLevel/model/statsStorage';
+  useSetTimerStorage,
+  useTimerStorage,
+} from '@/entities/trainerLevel/model/timerStorage';
+import { useSetStatsStorage } from '@/entities/trainerLevel/model/statsStorage';
 
 export const useStatsLevel = () => {
-  const time = useStatsStorage((state) => state.time);
-  const setTimer = useSetStatsStorage((state) => state.setTimer);
-  const score = useStatsStorage((state) => state.score);
-  const setScore = useSetStatsStorage((state) => state.setScore);
+  const time = useTimerStorage((state) => state.time);
+  const setTimer = useSetTimerStorage((state) => state.setTimer);
+  const setCleanStatsStorage = useSetStatsStorage(
+    (state) => state.setCleanStatsStorage,
+  );
+  const setCleanTimer = useSetTimerStorage((state) => state.setCleanTimer);
 
+  //ToDo Refactor timer and separate timer to another file and component
   const useTimer = () => {
     useEffect(() => {
       const timer = setInterval(() => {
@@ -26,11 +30,16 @@ export const useStatsLevel = () => {
     }, [time]);
   };
 
+  const stopTimer = () => {
+    setTimer('00:00');
+  };
+
   return {
     time,
-    score,
-    setScore,
     setTimer,
+    setCleanStatsStorage,
+    setCleanTimer,
+    stopTimer,
     useTimer,
   };
 };

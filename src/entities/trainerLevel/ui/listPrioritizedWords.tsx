@@ -8,26 +8,26 @@ export const ListPrioritizedWords = () => {
   const {
     prioritizedWords,
     handleListWords,
-    setTranslatedText,
-    translatedTextStorage,
+    setDataTranslation,
+    translatedWordsRes,
   } = useFlashCheck();
   const translated = useMutation({
     mutationFn: fetchResponseTranslation,
   });
 
-  const translatedTextData = translated.data?.translatedText;
+  const translatedWordsData = translated.data?.translatedText;
   console.log('Response from server:', translated.data);
 
   useEffect(() => {
     translated.mutate(prioritizedWords);
   }, [prioritizedWords]); //ToDo: fix dependency array(must being empty array)
-  console.log('Zustand Storage of Translated Words:', translatedTextStorage);
+  console.log('Zustand Storage of Translated Words:', translatedWordsRes);
 
   useEffect(() => {
     if (translated.data) {
-      setTranslatedText(translatedTextData);
+      setDataTranslation(translatedWordsData);
     }
-  }, [translatedTextData]);
+  }, [translatedWordsData]);
 
   return (
     <Card className={'flex flex-col'}>
@@ -50,9 +50,9 @@ export const ListPrioritizedWords = () => {
               <div>
                 <div className={'text-2xl'}>{prioritizedWords.join(', ')}</div>
                 <div>
-                  {translatedTextData && (
+                  {translatedWordsData && (
                     <div className={'text-2xl'}>
-                      {translatedTextData.join(', ')}
+                      {translatedWordsData.join(', ')}
                     </div>
                   )}
                 </div>

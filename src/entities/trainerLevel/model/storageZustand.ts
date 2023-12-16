@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 interface States {
   words: string[];
   prioritizedWords: string[];
-  translatedTextStorage: {
-    translatedText: string[];
+  translatedWordsRes: {
+    translatedWords: string[];
   };
 }
 
@@ -24,8 +24,8 @@ interface useWordInterface extends States, Actions {}
 const initialStates: States = {
   words: [''],
   prioritizedWords: [],
-  translatedTextStorage: {
-    translatedText: [''],
+  translatedWordsRes: {
+    translatedWords: [''],
   },
 };
 
@@ -46,7 +46,7 @@ export const useSetWordsStore = create<useWordInterface>()(
           },
           setDataTranslation: (translatedWords: string[]) => {
             set({
-              translatedTextStorage: { translatedText: translatedWords },
+              translatedWordsRes: { translatedWords: translatedWords },
             });
           },
           cleanStore: () => {
@@ -57,8 +57,8 @@ export const useSetWordsStore = create<useWordInterface>()(
           },
           cleanStoreTranslation: () => {
             set({
-              translatedTextStorage: (get().translatedTextStorage = {
-                translatedText: [''],
+              translatedWordsRes: (get().translatedWordsRes = {
+                translatedWords: [''],
               }),
             });
           },

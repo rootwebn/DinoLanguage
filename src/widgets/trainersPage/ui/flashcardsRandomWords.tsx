@@ -7,6 +7,7 @@ import { RepeatWordsCard } from '@/entities/trainerLevel/ui/repeatWordsCard';
 import { StatsInLevelCard } from '@/entities/trainerLevel/ui/statsInLevelCard';
 import { useStatsLevel } from '@/entities/trainerLevel/model/useStatsLevel';
 import { CheckKnowWords } from '@/entities/trainerLevel/ui/checkKnowWords';
+import { ResultLevelCard } from '@/entities/trainerLevel/ui/resultLevelCard';
 
 export const FlashcardsRandomWords: React.FC = () => {
   const { stageFlash } = useFlashCheck();
@@ -22,6 +23,7 @@ export const FlashcardsRandomWords: React.FC = () => {
         {stageFlash === 2 && <ListPrioritizedWords />}
         {stageFlash === 3 && <RepeatWordsCard />}
         {stageFlash === 4 && <CheckKnowWords />}
+        {stageFlash === 5 && <ResultLevelCard />}
       </div>
       <StatsInLevelCard />
     </div>

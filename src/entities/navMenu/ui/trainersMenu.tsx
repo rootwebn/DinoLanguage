@@ -16,7 +16,7 @@ export function TrainersMenu() {
         href={'/trainers'}
         title={'All Trainers'}
         className={
-          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower dark:bg-inherit hover:dark:bg-space'
         }
         imageSrc={ZapImage}
         widthImg={24}
@@ -29,7 +29,7 @@ export function TrainersMenu() {
         href={'/trainers/flashcards'}
         title={'Flashcards'}
         className={
-          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower dark:bg-inherit hover:dark:bg-space'
         }
         imageSrc={ZapImage}
         widthImg={24}
@@ -42,7 +42,7 @@ export function TrainersMenu() {
         href={'/trainers/brainstorm'}
         title={'Brainstorm'}
         className={
-          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower dark:bg-inherit hover:dark:bg-space'
         }
         imageSrc={BrainImage}
         widthImg={24}
@@ -55,7 +55,7 @@ export function TrainersMenu() {
         href={'/trainers/verbal-memory'}
         title={'Verbal Memory'}
         className={
-          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower dark:bg-inherit hover:dark:bg-space'
         }
         imageSrc={SpeechImage}
         widthImg={24}
@@ -68,7 +68,7 @@ export function TrainersMenu() {
         href={'/trainers/grammar-test-test'}
         title={'Grammar Test'}
         className={
-          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower xlg:bg-inherit'
+          'max-w-xs bg-miniSilentWhite text-lightSpace hover:text-flower dark:bg-inherit hover:dark:bg-space'
         }
         imageSrc={PenImage}
         widthImg={24}

@@ -2,7 +2,7 @@ import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import useFlashCheck from '@/entities/trainerLevel/model/useFlashCheck';
 
 export const RepeatWordsCard = () => {
-  const { wordIndex, prioritizedWords, translatedTextStorage, handleUserMemo } =
+  const { wordIndex, prioritizedWords, translatedWordsRes, handleUserMemo } =
     useFlashCheck();
 
   console.log('Current word index', wordIndex);
@@ -19,7 +19,7 @@ export const RepeatWordsCard = () => {
             <div>
               <div>
                 {prioritizedWords[wordIndex]} is{' '}
-                {translatedTextStorage.translatedText[wordIndex]}
+                {translatedWordsRes.translatedWords[wordIndex]}
               </div>
             </div>
           </div>

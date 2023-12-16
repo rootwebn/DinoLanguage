@@ -20,13 +20,15 @@ import {
 } from '@/shared/ui/card';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useStatsLevel } from '@/entities/trainerLevel/model/useStatsLevel';
+import { useStatsStorage } from '@/entities/trainerLevel/model/statsStorage';
 
 interface TableListInterface {
   className: string | undefined;
   titleCell: string;
   dataScore: number;
-  dataPercent: number;
-  dataTime: string;
+  dataStreak: number;
+  dataMultiplier: number;
 }
 
 interface TableHeaderInterface {
@@ -41,17 +43,19 @@ const TableCellElement: React.FC<TableListInterface> = ({
   className,
   titleCell,
   dataScore,
-  dataPercent,
-  dataTime,
+  dataStreak,
+  dataMultiplier,
 }) => {
   return (
     <TableRow className={className}>
       <TableCell className={'dark:text-miniSilentWhite'}>{titleCell}</TableCell>
       <TableCell className={'dark:text-miniSilentWhite'}>{dataScore}</TableCell>
       <TableCell className={'dark:text-miniSilentWhite'}>
-        {dataPercent}%
+        {dataStreak}
       </TableCell>
-      <TableCell className={'dark:text-miniSilentWhite'}>{dataTime}</TableCell>
+      <TableCell className={'dark:text-miniSilentWhite'}>
+        {dataMultiplier}
+      </TableCell>
     </TableRow>
   );
 };
@@ -84,6 +88,7 @@ const TableHeaderElement: React.FC<TableHeaderInterface> = ({
 };
 
 export const TrainersLevelScoreUi = () => {
+  const statsLevel1 = useStatsStorage((state) => state.statsLevel1);
   return (
     <Card
       className={
@@ -134,38 +139,17 @@ export const TrainersLevelScoreUi = () => {
                   className={''}
                   titleHeader={'Type of Score'}
                   titleHeader1={'Score'}
-                  titleHeader2={'Accuracy'}
-                  titleHeader3={'Time'}
+                  titleHeader2={'Score Multiplier'}
+                  titleHeader3={'Streak correct answers'}
                 />
               </TableHeader>
               <TableBody className={'relative w-full overflow-auto'}>
                 <TableCellElement
                   className={''}
                   titleCell={'Total Score'}
-                  dataScore={12000}
-                  dataPercent={78}
-                  dataTime={'12:37'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={12000}
-                  dataPercent={78}
-                  dataTime={'12:37'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={12000}
-                  dataPercent={78}
-                  dataTime={'12:37'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={12000}
-                  dataPercent={78}
-                  dataTime={'12:37'}
+                  dataScore={statsLevel1.score}
+                  dataStreak={statsLevel1.streak}
+                  dataMultiplier={statsLevel1.multiplier}
                 />
               </TableBody>
             </Table>
@@ -196,29 +180,8 @@ export const TrainersLevelScoreUi = () => {
                   className={''}
                   titleCell={'Total Score'}
                   dataScore={21000}
-                  dataPercent={88}
-                  dataTime={'15:55'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={21000}
-                  dataPercent={88}
-                  dataTime={'15:55'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={21000}
-                  dataPercent={88}
-                  dataTime={'15:55'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={21000}
-                  dataPercent={88}
-                  dataTime={'15:55'}
+                  dataStreak={88}
+                  dataMultiplier={statsLevel1.multiplier}
                 />
               </TableBody>
             </Table>
@@ -243,43 +206,8 @@ export const TrainersLevelScoreUi = () => {
                   className={''}
                   titleCell={'Total Score'}
                   dataScore={23000}
-                  dataPercent={90}
-                  dataTime={'11:46'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={23000}
-                  dataPercent={90}
-                  dataTime={'11:46'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={23000}
-                  dataPercent={90}
-                  dataTime={'11:46'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={23000}
-                  dataPercent={90}
-                  dataTime={'11:46'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={23000}
-                  dataPercent={90}
-                  dataTime={'11:46'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={23000}
-                  dataPercent={90}
-                  dataTime={'11:46'}
+                  dataStreak={90}
+                  dataMultiplier={statsLevel1.multiplier}
                 />
               </TableBody>
             </Table>
@@ -304,15 +232,8 @@ export const TrainersLevelScoreUi = () => {
                   className={''}
                   titleCell={'Total Score'}
                   dataScore={23000}
-                  dataPercent={90}
-                  dataTime={'11:46'}
-                />
-                <TableCellElement
-                  className={''}
-                  titleCell={'Total Score'}
-                  dataScore={23000}
-                  dataPercent={90}
-                  dataTime={'11:46'}
+                  dataStreak={90}
+                  dataMultiplier={statsLevel1.multiplier}
                 />
               </TableBody>
             </Table>

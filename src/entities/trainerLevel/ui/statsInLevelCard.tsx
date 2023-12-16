@@ -1,11 +1,30 @@
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { useFlashCheck } from '@/entities/trainerLevel/model';
 import { useStatsLevel } from '@/entities/trainerLevel/model/useStatsLevel';
+import { useEffect } from 'react';
 
 export const StatsInLevelCard = () => {
-  const { stageFlash } = useFlashCheck();
-  const { useTimer, time, score } = useStatsLevel();
+  const { stageFlash, score, scoreMultiplier } = useFlashCheck();
+  const { useTimer, time, stopTimer, setCleanStatsStorage, setCleanTimer } =
+    useStatsLevel();
+
   useTimer();
+
+  useEffect(() => {
+    setCleanStatsStorage();
+    setCleanTimer();
+  }, []);
+
+  useEffect(() => {
+    if (stageFlash === 5) {
+      setCleanStatsStorage();
+      setCleanTimer();
+    }
+  }, []);
+
+  if (stageFlash === 5) {
+    stopTimer();
+  }
 
   return (
     <Card className={'row-span-2 flex flex-col justify-around'}>
@@ -19,6 +38,9 @@ export const StatsInLevelCard = () => {
         </div>
         <div className={'text-xl text-muted-foreground'}>
           Current score: {score}
+        </div>
+        <div className={'text-xl text-muted-foreground'}>
+          Current score multiplier: {scoreMultiplier}
         </div>
       </CardContent>
       <CardFooter className={'flex flex-col items-start'}>
