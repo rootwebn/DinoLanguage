@@ -26,8 +26,7 @@ export const useSetStagesStorage = create<useStagesInterface>()(
         },
       }),
       {
-        name: 'auth-storage',
-        storage: createJSONStorage(() => localStorage),
+        name: 'stages-storage',
       },
     ),
   ),

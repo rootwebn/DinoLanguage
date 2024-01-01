@@ -20,8 +20,6 @@ import {
 } from '@/shared/ui/card';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { useStatsLevel } from '@/entities/trainerLevel/model/useStatsLevel';
-import { useStatsStorage } from '@/entities/trainerLevel/model/statsStorage';
 
 interface TableListInterface {
   className: string | undefined;
@@ -88,7 +86,6 @@ const TableHeaderElement: React.FC<TableHeaderInterface> = ({
 };
 
 export const TrainersLevelScoreUi = () => {
-  const statsLevel1 = useStatsStorage((state) => state.statsLevel1);
   return (
     <Card
       className={
@@ -147,9 +144,9 @@ export const TrainersLevelScoreUi = () => {
                 <TableCellElement
                   className={''}
                   titleCell={'Total Score'}
-                  dataScore={statsLevel1.score}
-                  dataStreak={statsLevel1.streak}
-                  dataMultiplier={statsLevel1.multiplier}
+                  dataScore={1}
+                  dataStreak={1}
+                  dataMultiplier={1}
                 />
               </TableBody>
             </Table>
@@ -181,7 +178,7 @@ export const TrainersLevelScoreUi = () => {
                   titleCell={'Total Score'}
                   dataScore={21000}
                   dataStreak={88}
-                  dataMultiplier={statsLevel1.multiplier}
+                  dataMultiplier={1}
                 />
               </TableBody>
             </Table>
@@ -207,7 +204,7 @@ export const TrainersLevelScoreUi = () => {
                   titleCell={'Total Score'}
                   dataScore={23000}
                   dataStreak={90}
-                  dataMultiplier={statsLevel1.multiplier}
+                  dataMultiplier={1}
                 />
               </TableBody>
             </Table>
@@ -233,7 +230,7 @@ export const TrainersLevelScoreUi = () => {
                   titleCell={'Total Score'}
                   dataScore={23000}
                   dataStreak={90}
-                  dataMultiplier={statsLevel1.multiplier}
+                  dataMultiplier={1}
                 />
               </TableBody>
             </Table>

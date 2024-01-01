@@ -2,17 +2,14 @@ import { useState } from 'react';
 import {
   useSetWordsStore,
   useWordsStore,
-} from '@/entities/trainerLevel/model/storageZustand';
+} from '@/entities/trainerLevel/model/wordsStorage';
 import {
   useSetStagesStorage,
   useStagesStorage,
 } from '@/entities/trainerLevel/model/stagesStorage';
 import * as z from 'zod';
-import { UseFormResetField } from 'react-hook-form';
-import {
-  useSetStatsStorage,
-  useStatsStorage,
-} from '@/entities/trainerLevel/model/statsStorage';
+import { UseFormResetField, UseFormSetError } from 'react-hook-form';
+import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
 
 export const useFlashCheck = () => {
   const words = useWordsStore((state) => state.words);
@@ -21,25 +18,21 @@ export const useFlashCheck = () => {
 
   const prioritizeWord = useSetWordsStore((state) => state.prioritizeWord);
   const loadWords = useSetWordsStore((state) => state.loadWords);
-  const cleanStore = useSetWordsStore((state) => state.cleanStore);
   const setDataTranslation = useSetWordsStore(
     (state) => state.setDataTranslation,
   );
-  const cleanStoreTranslation = useSetWordsStore(
-    (state) => state.cleanStoreTranslation,
-  );
 
-  const score = useStatsStorage((state) => state.score);
-  const numCorrectAnswers = useStatsStorage((state) => state.numCorrectAnswers);
-  const scoreMultiplier = useStatsStorage((state) => state.scoreMultiplier);
-  const statsLevel1 = useStatsStorage((state) => state.statsLevel1);
-
-  const setStatsLevel1 = useSetStatsStorage((state) => state.setStatsLevel1);
-  const setScore = useSetStatsStorage((state) => state.setScore);
-  const setScoreMultiplier = useSetStatsStorage((state) => state.setMultiplier);
-  const setNumCorrectAnswers = useSetStatsStorage(
-    (state) => state.setNumCorrectAnswers,
-  );
+  const {
+    score,
+    scoreMultiplier,
+    streakAnswers,
+    errorFormFlash,
+    prioritizedWordsFull,
+    setScore,
+    setMultiplier,
+    setNumCorrectAnswers,
+    setPrioritizedWordsFull,
+  } = useBoundStore();
 
   const stageFlash = useStagesStorage((state) => state.stageFlash);
   const setStageFlash = useSetStagesStorage((state) => state.setStageFlash);
@@ -51,7 +44,7 @@ export const useFlashCheck = () => {
     answer: z
       .string()
       .min(2, { message: 'Answer is always at least 2 characters' })
-      .max(15, { message: 'Answer is maximum 15 characters' }),
+      .max(20, { message: 'Answer is maximum 20 characters' }),
   });
   const handleResponsePickFlash = (knowsWord: boolean) => {
     if (!knowsWord) {
@@ -72,6 +65,7 @@ export const useFlashCheck = () => {
     }
 
     if (prioritizedWords.length === targetPrioritizedCount - 1) {
+      setPrioritizedWordsFull(true);
       setStageFlash(2);
     }
   };
@@ -93,51 +87,48 @@ export const useFlashCheck = () => {
   const onSubmitInput = (
     values: z.infer<typeof formSchema>,
     resetField: UseFormResetField<{ answer: string }>,
+    setError: UseFormSetError<{ answer: string }>,
   ) => {
     if (values.answer === translatedWordsRes.translatedWords[wordIndex]) {
       setWordIndex((prevIndex) => prevIndex + 1);
       setNumCorrectAnswers(1);
       setScore(200);
-      console.log('Answer is correct!');
       resetField('answer');
     } else {
+      setError('answer', { type: 'custom', message: 'Wrong Answer!' });
       setNumCorrectAnswers(-1);
       setScore(-200);
-      console.log('Answer is wrong!');
     }
 
-    if (numCorrectAnswers === 1) {
-      setScoreMultiplier(0.2);
-    } else if (numCorrectAnswers === 3) {
-      setScoreMultiplier(0.4);
-    } else if (numCorrectAnswers === 7) {
-      setScoreMultiplier(1.0);
+    if (streakAnswers === 1) {
+      setMultiplier(0.2);
+    } else if (streakAnswers === 3) {
+      setMultiplier(0.4);
+    } else if (streakAnswers === 7) {
+      setMultiplier(1.0);
     }
 
     if (prioritizedWords.length - 1 === wordIndex) {
-      setStatsLevel1(score, scoreMultiplier, numCorrectAnswers);
-      console.log('saved stats of level', statsLevel1);
       setStageFlash(5);
     }
     console.log(values);
   };
 
   return {
+    errorFormFlash,
     wordIndex,
     words,
     score,
     prioritizedWords,
     translatedWordsRes,
     targetPrioritizedCount,
-    numCorrectAnswers,
+    streakAnswers,
     stageFlash,
     scoreMultiplier,
     call: handleResponsePickFlash,
     handleUserMemo,
     handleListWords,
     onSubmitInput,
-    cleanStore,
-    cleanStoreTranslation,
     loadWords,
     setDataTranslation,
     formSchema,

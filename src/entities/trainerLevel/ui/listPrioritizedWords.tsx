@@ -3,6 +3,7 @@ import { useFlashCheck } from '@/entities/trainerLevel/model';
 import { useEffect } from 'react';
 import { fetchResponseTranslation } from '@/entities/trainerLevel/model/request';
 import { useMutation } from '@tanstack/react-query';
+import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
 
 export const ListPrioritizedWords = () => {
   const {
@@ -11,6 +12,7 @@ export const ListPrioritizedWords = () => {
     setDataTranslation,
     translatedWordsRes,
   } = useFlashCheck();
+  const { prioritizedWordsFull } = useBoundStore();
   const translated = useMutation({
     mutationFn: fetchResponseTranslation,
   });
@@ -20,14 +22,15 @@ export const ListPrioritizedWords = () => {
 
   useEffect(() => {
     translated.mutate(prioritizedWords);
-  }, [prioritizedWords]); //ToDo: fix dependency array(must being empty array)
+  }, [prioritizedWords, translated.mutate]);
   console.log('Zustand Storage of Translated Words:', translatedWordsRes);
 
   useEffect(() => {
     if (translated.data) {
       setDataTranslation(translatedWordsData);
     }
-  }, [translatedWordsData]);
+    console.log('does it works?');
+  }, [translated.data]);
 
   return (
     <Card className={'flex flex-col'}>

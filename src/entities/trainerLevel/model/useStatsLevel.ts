@@ -3,15 +3,13 @@ import {
   useSetTimerStorage,
   useTimerStorage,
 } from '@/entities/trainerLevel/model/timerStorage';
-import { useSetStatsStorage } from '@/entities/trainerLevel/model/statsStorage';
+import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
 
 export const useStatsLevel = () => {
-  const time = useTimerStorage((state) => state.time);
-  const setTimer = useSetTimerStorage((state) => state.setTimer);
-  const setCleanStatsStorage = useSetStatsStorage(
-    (state) => state.setCleanStatsStorage,
-  );
+  const { setCleanStatsStorage } = useBoundStore();
   const setCleanTimer = useSetTimerStorage((state) => state.setCleanTimer);
+  const setTimer = useSetTimerStorage((state) => state.setTimer);
+  const time = useTimerStorage((state) => state.time);
 
   //ToDo Refactor timer and separate timer to another file and component
   const useTimer = () => {

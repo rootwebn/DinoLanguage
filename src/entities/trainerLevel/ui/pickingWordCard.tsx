@@ -1,6 +1,8 @@
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import React, { useEffect } from 'react';
 import { useFlashCheck } from '@/entities/trainerLevel/model/';
+import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { useSaveContext } from '@/entities/trainerLevel/model/useSaveContext';
 //TODO: Rewrite storageZustand, rework UI flashcards and complete system of flashcards
 // rewrite useFlashCheck, make survey before training, use google API for translating words
 
@@ -8,22 +10,22 @@ export const PickingWordCard = () => {
   const {
     wordIndex,
     call: handleResponsePickFlash,
-    cleanStore,
-    cleanStoreTranslation,
     words,
     loadWords,
     prioritizedWords,
   } = useFlashCheck();
 
+  const statsLevel1Flash = useSaveContext((s) => s.statsLevel1Flash);
+  const setNewStats = useSaveContext((s) => s.setNewStats);
+  console.log('Stats of level 1', statsLevel1Flash);
+
   useEffect(() => {
-    cleanStore();
-    cleanStoreTranslation();
     loadWords();
   }, []);
 
-  console.log('Array of Words:', words);
+  // console.log('Array of Words:', words);
   console.log('Array of Prioritized Words:', prioritizedWords);
-  console.log('Current Word Index:', wordIndex);
+  // console.log('Current Word Index:', wordIndex);
   return (
     <Card key={wordIndex} className={'flex flex-col justify-around'}>
       <CardHeader className={'text-center text-2xl'}>

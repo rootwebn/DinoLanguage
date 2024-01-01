@@ -5,9 +5,6 @@ export const RepeatWordsCard = () => {
   const { wordIndex, prioritizedWords, translatedWordsRes, handleUserMemo } =
     useFlashCheck();
 
-  console.log('Current word index', wordIndex);
-  console.log('length array pWords', prioritizedWords.length);
-
   return (
     <Card>
       {/* eslint-disable-next-line react/no-unescaped-entities */}

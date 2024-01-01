@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useFlashCheck } from '@/entities/trainerLevel/model';
 
 const TestApi = () => {
-  const { prioritizedWords, cleanStore } = useFlashCheck();
+  const { prioritizedWords } = useFlashCheck();
   // useEffect(() => {
   //   cleanStore();
   // }, [cleanStore]);

@@ -24,10 +24,8 @@ export function CheckKnowWords() {
     wordIndex,
     formSchema,
     onSubmitInput,
-    numCorrectAnswers,
+    errorFormFlash,
   } = useFlashCheck();
-  console.log('current word index on checking:', wordIndex);
-  console.log('current number of correct answers', numCorrectAnswers);
 
   const formFlash = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,9 +45,10 @@ export function CheckKnowWords() {
         <Form {...formFlash}>
           <form
             onSubmit={formFlash.handleSubmit((values) =>
-              onSubmitInput(values, formFlash.resetField),
+              onSubmitInput(values, formFlash.resetField, formFlash.setError),
             )}
             className="space-y-8"
+            autoComplete="off"
           >
             <FormField
               control={formFlash.control}
@@ -64,6 +63,7 @@ export function CheckKnowWords() {
                   </FormControl>
                   <FormDescription>
                     This is easy question, right? Right...?
+                    {errorFormFlash && <p className={''}>Wrong Answer!</p>}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

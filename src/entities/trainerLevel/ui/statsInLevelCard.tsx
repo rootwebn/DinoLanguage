@@ -15,17 +15,6 @@ export const StatsInLevelCard = () => {
     setCleanTimer();
   }, []);
 
-  useEffect(() => {
-    if (stageFlash === 5) {
-      setCleanStatsStorage();
-      setCleanTimer();
-    }
-  }, []);
-
-  if (stageFlash === 5) {
-    stopTimer();
-  }
-
   return (
     <Card className={'row-span-2 flex flex-col justify-around'}>
       <CardHeader className={'text-2xl'}>Your Stats!</CardHeader>
