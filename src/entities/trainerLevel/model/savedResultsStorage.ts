@@ -1,5 +1,5 @@
 import { createStore } from 'zustand/vanilla';
-import React, { createContext, useRef } from 'react';
+import { createContext } from 'react';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
@@ -7,24 +7,28 @@ export interface SaveProps {
   statsLevel1Flash: {
     attemptId: number;
     score: number;
-    streak: number;
+    time: string;
     scoreMultiplier: number;
+    accuracyAnswers: number;
+    rightAnswers: number;
+    totalNumAnswers: number;
   }[];
 }
-
+//! make save system even bigger (prepare system to different modes, add time, accuracy, etc. )
+//! and make brand new select modes menu (random, custom, themed, add configuration before start game
+//! (targeted language, how hard, how long, how much mistakes you can make, etc.))
+//! also fix fucking ui in flashcard game and make it clear and beautiful;
 export interface SaveState extends SaveProps {
   setNewStats: (data: {
     attemptId: number;
     score: number;
-    streak: number;
+    time: string;
     scoreMultiplier: number;
+    accuracyAnswers: number;
+    rightAnswers: number;
+    totalNumAnswers: number;
   }) => void;
-  setEmptyStorage: (data: {
-    attemptId: number;
-    score: number;
-    streak: number;
-    scoreMultiplier: number;
-  }) => void;
+  setCleanStats: () => void;
 }
 export type SaveStorage = ReturnType<typeof createSaveStorage>;
 
@@ -39,16 +43,14 @@ export const createSaveStorage = (initProps?: Partial<SaveProps>) => {
           ...DEFAULT_PROPS,
           ...initProps,
           setNewStats: (data) => {
-            set((state) => ({
-              ...state,
-              statsLevel1Flash: [...state.statsLevel1Flash, data],
-            }));
+            set((state) => {
+              state.statsLevel1Flash.push(data);
+            });
           },
-          setEmptyStorage: (data) => {
-            set((state) => ({
-              ...state,
-              statsLevel1Flash: [...state.statsLevel1Flash, data],
-            }));
+          setCleanStats: () => {
+            set((state) => {
+              state.statsLevel1Flash = [];
+            });
           },
         }),
         { name: 'SaveStorage', storage: createJSONStorage(() => localStorage) },
@@ -58,22 +60,3 @@ export const createSaveStorage = (initProps?: Partial<SaveProps>) => {
 };
 
 export const SaveContext = createContext<SaveStorage | null>(null);
-
-// export const useStatsStorage = create<useSaveInterface>()(
-//   immer(
-//     persist(
-//       (set) => ({
-//         ...initialStates,
-//         setNewStats: (data) => {
-//           set((state) => {
-//             state.statsLevel1Flash.push(data);
-//           });
-//         },
-//       }),
-//       {
-//         name: 'statsSaveStorage',
-//         storage: createJSONStorage(() => localStorage),
-//       },
-//     ),
-//   ),
-// );

@@ -1,4 +1,4 @@
-import { devtools } from 'zustand/middleware';
+import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { useEffect, useState } from 'react';
 import { create } from 'zustand';
@@ -8,28 +8,28 @@ interface States {
 }
 
 interface Actions {
-  setTimer: (time: string) => void;
-  setCleanTimer: () => void;
+  setTimeStorage: (timeProp: string) => void;
 }
+
 interface useTimerInterface extends States, Actions {}
 
 const initialStates: States = {
-  time: '00:00',
+  time: '',
 };
 
 export const useSetTimerStorage = create<useTimerInterface>()(
   immer(
-    devtools(
+    persist(
       (set) => ({
         ...initialStates,
-        setTimer: (newTime: string) => {
-          set({ time: newTime });
-        },
-        setCleanTimer: () => {
-          set({ time: '00:00' });
+        setTimeStorage: (timeProp) => {
+          set({ time: timeProp });
         },
       }),
-      { name: 'ZustandStatsLocal' },
+      {
+        name: 'ZustandTimeLocal',
+        storage: createJSONStorage(() => localStorage),
+      },
     ),
   ),
 );

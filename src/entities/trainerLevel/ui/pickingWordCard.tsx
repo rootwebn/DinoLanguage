@@ -1,8 +1,8 @@
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useFlashCheck } from '@/entities/trainerLevel/model/';
-import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
-import { useSaveContext } from '@/entities/trainerLevel/model/useSaveContext';
+import Image from 'next/image';
+import LoadingGif from '../../../../public/Loading_backD.gif';
 //TODO: Rewrite storageZustand, rework UI flashcards and complete system of flashcards
 // rewrite useFlashCheck, make survey before training, use google API for translating words
 
@@ -12,27 +12,19 @@ export const PickingWordCard = () => {
     call: handleResponsePickFlash,
     words,
     loadWords,
-    prioritizedWords,
   } = useFlashCheck();
-
-  const statsLevel1Flash = useSaveContext((s) => s.statsLevel1Flash);
-  const setNewStats = useSaveContext((s) => s.setNewStats);
-  console.log('Stats of level 1', statsLevel1Flash);
 
   useEffect(() => {
     loadWords();
   }, []);
 
-  // console.log('Array of Words:', words);
-  console.log('Array of Prioritized Words:', prioritizedWords);
-  // console.log('Current Word Index:', wordIndex);
   return (
     <Card key={wordIndex} className={'flex flex-col justify-around'}>
       <CardHeader className={'text-center text-2xl'}>
         Did you know this word?
       </CardHeader>
-      <CardContent>
-        <div className={'flex flex-col'}>
+      <CardContent className={'flex flex-row gap-6'}>
+        <div className={'flex min-w-[600px] flex-col'}>
           <div
             className={
               'mb-6 mt-12 flex items-center justify-center gap-4 text-4xl text-muted-foreground'
@@ -57,6 +49,7 @@ export const PickingWordCard = () => {
             </Button>
           </div>
         </div>
+        <Image width={150} height={150} alt={'LoadingGif'} src={LoadingGif} />
       </CardContent>
       <CardFooter className={'text-lg text-muted-foreground'}>
         DinoLanguage 2023

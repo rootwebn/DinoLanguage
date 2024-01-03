@@ -1,9 +1,11 @@
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { useFlashCheck } from '@/entities/trainerLevel/model';
 import { useEffect } from 'react';
-import { fetchResponseTranslation } from '@/entities/trainerLevel/model/request';
+import { fetchResponseTranslation } from '@/shared/api/translate';
 import { useMutation } from '@tanstack/react-query';
 import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import Image from 'next/image';
+import LoadingGif from '../../../../public/Loading_backD.gif';
 
 export const ListPrioritizedWords = () => {
   const {
@@ -23,13 +25,11 @@ export const ListPrioritizedWords = () => {
   useEffect(() => {
     translated.mutate(prioritizedWords);
   }, [prioritizedWords, translated.mutate]);
-  console.log('Zustand Storage of Translated Words:', translatedWordsRes);
 
   useEffect(() => {
     if (translated.data) {
       setDataTranslation(translatedWordsData);
     }
-    console.log('does it works?');
   }, [translated.data]);
 
   return (
@@ -42,7 +42,15 @@ export const ListPrioritizedWords = () => {
       <CardContent className={'flex flex-col'}>
         <div className={''}>
           {translated.isPending ? (
-            <p>Pending request</p>
+            <div>
+              <p>Pending request</p>
+              <Image
+                width={150}
+                height={150}
+                alt={'LoadingGif'}
+                src={LoadingGif}
+              />
+            </div>
           ) : translated.isError ? (
             <div>
               <p>Error: {translated.error.message}</p>

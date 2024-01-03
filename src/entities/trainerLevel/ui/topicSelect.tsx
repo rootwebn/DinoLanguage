@@ -26,7 +26,7 @@ export const TopicSelect = () => {
             <CardContent className={'flex flex-col items-center'}>
               <Image
                 src={
-                  'https://media.tenor.com/rAHG9xNcLKoAAAAC/dice-spinning.gif'
+                  'https://media.tenor.com/rAHG9xNcLKoAAAAC/dice-spinning.gife'
                 }
                 alt={''}
                 height={150}

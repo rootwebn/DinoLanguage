@@ -26,11 +26,15 @@ export const useFlashCheck = () => {
     score,
     scoreMultiplier,
     streakAnswers,
+    accuracyAnswers,
+    rightAnswers,
     errorFormFlash,
     prioritizedWordsFull,
     setScore,
+    setRightAnswers,
+    setTotalNumAnswers,
+    setAccuracyAnswers,
     setMultiplier,
-    setNumCorrectAnswers,
     setPrioritizedWordsFull,
   } = useBoundStore();
 
@@ -43,7 +47,7 @@ export const useFlashCheck = () => {
   const formSchema = z.object({
     answer: z
       .string()
-      .min(2, { message: 'Answer is always at least 2 characters' })
+      .min(1, { message: "Answer field can't being empty" })
       .max(20, { message: 'Answer is maximum 20 characters' }),
   });
   const handleResponsePickFlash = (knowsWord: boolean) => {
@@ -90,21 +94,26 @@ export const useFlashCheck = () => {
     setError: UseFormSetError<{ answer: string }>,
   ) => {
     if (values.answer === translatedWordsRes.translatedWords[wordIndex]) {
+      setAccuracyAnswers();
       setWordIndex((prevIndex) => prevIndex + 1);
-      setNumCorrectAnswers(1);
       setScore(200);
+      setRightAnswers();
+      setTotalNumAnswers();
       resetField('answer');
+      console.log('accuracy right', accuracyAnswers);
     } else {
+      setAccuracyAnswers();
+      console.log('accuracy wrong', accuracyAnswers);
       setError('answer', { type: 'custom', message: 'Wrong Answer!' });
-      setNumCorrectAnswers(-1);
       setScore(-200);
+      setTotalNumAnswers();
     }
 
-    if (streakAnswers === 1) {
+    if (rightAnswers === 1) {
       setMultiplier(0.2);
-    } else if (streakAnswers === 3) {
+    } else if (rightAnswers === 3) {
       setMultiplier(0.4);
-    } else if (streakAnswers === 7) {
+    } else if (rightAnswers === 7) {
       setMultiplier(1.0);
     }
 

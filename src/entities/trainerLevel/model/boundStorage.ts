@@ -1,4 +1,3 @@
-import { createJSONStorage, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { create, StateCreator } from 'zustand';
 
@@ -13,7 +12,9 @@ interface States {
   score: number;
   scoreMultiplier: number;
   streakAnswers: number;
-  attemptId: number;
+  accuracyAnswers: number;
+  rightAnswers: number;
+  totalNumAnswers: number;
 }
 interface StatesGlobalFlash {
   errorFormFlash: boolean;
@@ -23,8 +24,9 @@ interface StatesGlobalFlash {
 interface Actions {
   setScore: (newScore: number) => void;
   setMultiplier: (newMultiplier: number) => void;
-  setNumCorrectAnswers: (newNumCorrectAnswers: number) => void;
-  setCleanStatsStorage: () => void;
+  setAccuracyAnswers: () => void;
+  setRightAnswers: () => void;
+  setTotalNumAnswers: () => void;
 }
 interface ActionsGlobalFlash {
   setErrorFlashForm: (propForm: boolean) => void;
@@ -42,7 +44,9 @@ const initialStates: States = {
   score: 0,
   scoreMultiplier: 1.0,
   streakAnswers: 0,
-  attemptId: 1,
+  accuracyAnswers: 0,
+  rightAnswers: 0,
+  totalNumAnswers: 0,
 };
 
 const useStatsSlice: MiddlewareStateCreator<useStatsInterface> = (
@@ -55,33 +59,34 @@ const useStatsSlice: MiddlewareStateCreator<useStatsInterface> = (
     const scoreC = get().score;
     const updatedScore = scoreC + newScore * scoreMultiplier;
     if (scoreC === 0 && updatedScore < 0) {
-      set({ score: scoreC });
+      set({ score: parseFloat(scoreC.toFixed()) });
     } else {
-      set({ score: updatedScore });
+      set({ score: parseFloat(updatedScore.toFixed()) });
     }
   },
   setMultiplier: (newMultiplier: number) => {
-    set({ scoreMultiplier: get().scoreMultiplier + newMultiplier });
+    set({
+      scoreMultiplier: parseFloat(
+        (get().scoreMultiplier + newMultiplier).toFixed(),
+      ),
+    });
   },
-  setNumCorrectAnswers: (newNumCorrectAnswers: number) => {
-    const streakAnswersC = get().streakAnswers;
-    const updatedStreakAnswers = streakAnswersC + newNumCorrectAnswers;
-
-    if (streakAnswersC === 0 && newNumCorrectAnswers < 0) {
-      set({ streakAnswers: streakAnswersC });
-    } else {
-      set({
-        streakAnswers: updatedStreakAnswers,
-      });
-    }
+  setAccuracyAnswers: () => {
+    set((state) => ({
+      accuracyAnswers: parseFloat(
+        ((state.rightAnswers / state.totalNumAnswers) * 100).toFixed(2),
+      ),
+    }));
   },
-  setAttemptId: (attemptId: number) => {
-    set({ attemptId: (get().attemptId = attemptId + 1) });
+  setTotalNumAnswers: () => {
+    set((state) => ({
+      totalNumAnswers: state.totalNumAnswers + 1,
+    }));
   },
-  setCleanStatsStorage: () => {
-    set({ score: 0 });
-    set({ scoreMultiplier: 1.0 });
-    set({ streakAnswers: 0 });
+  setRightAnswers: () => {
+    set((state) => ({
+      rightAnswers: state.rightAnswers + 1,
+    }));
   },
 });
 
