@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { useFlashCheck } from '@/entities/trainerLevel/model';
 import { useEffect } from 'react';

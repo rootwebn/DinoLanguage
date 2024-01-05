@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import {
   useSetWordsStore,
@@ -42,6 +44,7 @@ export const useFlashCheck = () => {
   const setStageFlash = useSetStagesStorage((state) => state.setStageFlash);
 
   const [wordIndex, setWordIndex] = useState(0);
+  const [timeSaved, setTimeSaved] = useState(false);
   const [targetPrioritizedCount] = useState(6);
 
   const formSchema = z.object({
@@ -127,17 +130,16 @@ export const useFlashCheck = () => {
     errorFormFlash,
     wordIndex,
     words,
-    score,
     prioritizedWords,
     translatedWordsRes,
     targetPrioritizedCount,
-    streakAnswers,
+    timeSaved,
     stageFlash,
-    scoreMultiplier,
     call: handleResponsePickFlash,
     handleUserMemo,
     handleListWords,
     onSubmitInput,
+    setTimeSaved,
     loadWords,
     setDataTranslation,
     formSchema,

@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Button,
   Card,
@@ -14,11 +16,11 @@ import {
   Input,
 } from '@/shared/ui';
 import { useFlashCheck } from '@/entities/trainerLevel/model';
-import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
+import { useForm } from 'react-hook-form';
 
 export function CheckKnowWords() {
   const {

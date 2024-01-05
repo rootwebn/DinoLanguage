@@ -1966,5 +1966,4 @@ export const wordList = [
   'zebra',
   'zipper',
   'zoo',
-  'zulu',
 ];

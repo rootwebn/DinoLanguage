@@ -1,6 +1,7 @@
+'use client';
+
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { useFlashCheck } from '@/entities/trainerLevel/model';
-// import { useTimerLevel } from '@/entities/trainerLevel/model/useTimerLevel';
 import { useEffect } from 'react';
 import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
 import { useSaveContext } from '@/entities/trainerLevel/model/useSaveContext';
@@ -9,33 +10,80 @@ import {
   useAttemptStore,
   useSetAttemptStore,
 } from '@/entities/trainerLevel/model/attemptsStorage';
+import { useSetTimerStorage } from '@/entities/trainerLevel/model/timerStorage';
 
 export const StatsInLevelCard = () => {
-  const { stageFlash, score, scoreMultiplier } = useFlashCheck();
-  const { time, startTimer, stopTimer, setExactTime, saveTime } = useTimer(
-    '00:00',
-    true,
-  );
-  const { accuracyAnswers, totalNumAnswers, rightAnswers } = useBoundStore();
+  const { stageFlash } = useFlashCheck();
+  const { time, startTimer, stopTimer, setExactTime } = useTimer('00:00', true);
+  const {
+    accuracyAnswers,
+    totalNumAnswers,
+    rightAnswers,
+    score,
+    scoreMultiplier,
+  } = useBoundStore();
   const setCleanStats = useSaveContext((s) => s.setCleanStats);
   const setAttemptId = useSetAttemptStore((state) => state.setAttemptIdFlash);
   const attemptId = useAttemptStore((state) => state.attemptIdFlash);
   const setAttemptClean = useSetAttemptStore(
     (state) => state.setAttemptIdCleanFlash,
   );
+  const setCleanTimeStorage = useSetTimerStorage(
+    (state) => state.setCleanTimeStorage,
+  );
+  const setNewStats = useSaveContext((s) => s.setNewStats);
 
   const eraseSavesHandler = () => {
     setCleanStats();
   };
 
+  // useEffect(() => {
+  //   if (stageFlash === 1) {
+  //     setCleanTimeStorage();
+  //   } else if (stageFlash === 2) {
+  //     setAttemptId();
+  //   } else if (stageFlash === 5) {
+  //     stopTimer();
+  //     const data = {
+  //       score,
+  //       scoreMultiplier,
+  //       attemptId,
+  //       time,
+  //       accuracyAnswers,
+  //       rightAnswers,
+  //       totalNumAnswers,
+  //     };
+  //     setNewStats(data);
+  //     console.log('save system worked');
+  //   }
+  //
+  //   console.log('useEffect worked');
+  // }, [stageFlash]);
+
   useEffect(() => {
-    if (stageFlash === 5) {
-      saveTime();
-      stopTimer();
+    switch (stageFlash) {
+      case 1:
+        setCleanTimeStorage();
+        break;
+      case 2:
+        setAttemptId();
+        break;
+      case 5:
+        stopTimer();
+        const data = {
+          score,
+          scoreMultiplier,
+          attemptId,
+          time,
+          accuracyAnswers,
+          rightAnswers,
+          totalNumAnswers,
+        };
+        setNewStats(data);
+        console.log('save system worked');
+        break;
     }
-    if (stageFlash === 2) {
-      setAttemptId();
-    }
+
     console.log('useEffect worked');
   }, [stageFlash]);
 
@@ -84,12 +132,14 @@ export const StatsInLevelCard = () => {
             Set to 0 timer
           </Button>
           <Button onClick={setAttemptClean}>Set Attempts to 0</Button>
+          <Button onClick={setCleanTimeStorage}>Set Time Storage to 0</Button>
         </div>
       </CardContent>
       <CardFooter className={'flex flex-col items-start'}>
         Did you know?
         <div className={'text-muted-foreground'}>
           Venus is the only planet in our solar system that rotates clockwise.
+          Version: 1.0.0
         </div>
       </CardFooter>
     </Card>

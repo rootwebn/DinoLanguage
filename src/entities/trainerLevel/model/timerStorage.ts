@@ -9,6 +9,7 @@ interface States {
 
 interface Actions {
   setTimeStorage: (timeProp: string) => void;
+  setCleanTimeStorage: () => void;
 }
 
 interface useTimerInterface extends States, Actions {}
@@ -19,16 +20,18 @@ const initialStates: States = {
 
 export const useSetTimerStorage = create<useTimerInterface>()(
   immer(
-    persist(
+    devtools(
       (set) => ({
         ...initialStates,
         setTimeStorage: (timeProp) => {
           set({ time: timeProp });
         },
+        setCleanTimeStorage: () => {
+          set({ time: '' });
+        },
       }),
       {
         name: 'ZustandTimeLocal',
-        storage: createJSONStorage(() => localStorage),
       },
     ),
   ),
