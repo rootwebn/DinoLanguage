@@ -23,6 +23,7 @@ export const StatsInLevelCard = () => {
     scoreMultiplier,
   } = useBoundStore();
   const setCleanStats = useSaveContext((s) => s.setCleanStats);
+  const setNewStats = useSaveContext((s) => s.setNewStats);
   const setAttemptId = useSetAttemptStore((state) => state.setAttemptIdFlash);
   const attemptId = useAttemptStore((state) => state.attemptIdFlash);
   const setAttemptClean = useSetAttemptStore(
@@ -31,34 +32,10 @@ export const StatsInLevelCard = () => {
   const setCleanTimeStorage = useSetTimerStorage(
     (state) => state.setCleanTimeStorage,
   );
-  const setNewStats = useSaveContext((s) => s.setNewStats);
 
   const eraseSavesHandler = () => {
     setCleanStats();
   };
-
-  // useEffect(() => {
-  //   if (stageFlash === 1) {
-  //     setCleanTimeStorage();
-  //   } else if (stageFlash === 2) {
-  //     setAttemptId();
-  //   } else if (stageFlash === 5) {
-  //     stopTimer();
-  //     const data = {
-  //       score,
-  //       scoreMultiplier,
-  //       attemptId,
-  //       time,
-  //       accuracyAnswers,
-  //       rightAnswers,
-  //       totalNumAnswers,
-  //     };
-  //     setNewStats(data);
-  //     console.log('save system worked');
-  //   }
-  //
-  //   console.log('useEffect worked');
-  // }, [stageFlash]);
 
   useEffect(() => {
     switch (stageFlash) {
