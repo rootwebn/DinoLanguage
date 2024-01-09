@@ -16,10 +16,7 @@ interface States {
   rightAnswers: number;
   totalNumAnswers: number;
 }
-interface StatesGlobalFlash {
-  errorFormFlash: boolean;
-  prioritizedWordsFull: boolean;
-}
+interface StatesFlashConfig {}
 
 interface Actions {
   setScore: (newScore: number) => void;
@@ -27,19 +24,14 @@ interface Actions {
   setAccuracyAnswers: () => void;
   setRightAnswers: () => void;
   setTotalNumAnswers: () => void;
+  setCleanStatsStorage: () => void;
 }
-interface ActionsGlobalFlash {
-  setErrorFlashForm: (propForm: boolean) => void;
-  setPrioritizedWordsFull: (propPWords: boolean) => void;
-}
+interface ActionsFlashConfig {}
 
 interface useStatsInterface extends States, Actions {}
-interface useTimerInterface extends StatesGlobalFlash, ActionsGlobalFlash {}
+interface useTimerInterface extends StatesFlashConfig, ActionsFlashConfig {}
 
-const initialStatesGlobalFlash: StatesGlobalFlash = {
-  errorFormFlash: false,
-  prioritizedWordsFull: false,
-};
+const initialStatesFlashConfig: StatesFlashConfig = {};
 const initialStates: States = {
   score: 0,
   scoreMultiplier: 1.0,
@@ -67,7 +59,7 @@ const useStatsSlice: MiddlewareStateCreator<useStatsInterface> = (
   setMultiplier: (newMultiplier: number) => {
     set({
       scoreMultiplier: parseFloat(
-        (get().scoreMultiplier + newMultiplier).toFixed(),
+        (get().scoreMultiplier + newMultiplier).toFixed(1),
       ),
     });
   },
@@ -88,23 +80,20 @@ const useStatsSlice: MiddlewareStateCreator<useStatsInterface> = (
       rightAnswers: state.rightAnswers + 1,
     }));
   },
+  setCleanStatsStorage: () => {
+    set({ ...initialStates });
+  },
 });
 
-export const useGlobalFlashSlice: MiddlewareStateCreator<useTimerInterface> = (
+export const FlashConfigSlice: MiddlewareStateCreator<useTimerInterface> = (
   set,
 ) => ({
-  ...initialStatesGlobalFlash,
-  setErrorFlashForm: (propForm: boolean) => {
-    set({ errorFormFlash: propForm });
-  },
-  setPrioritizedWordsFull: (propPWords: boolean) => {
-    set({ prioritizedWordsFull: propPWords });
-  },
+  ...initialStatesFlashConfig,
 });
 
-export const useBoundStore = create<useTimerInterface & useStatsInterface>()(
+export const BoundStore = create<useTimerInterface & useStatsInterface>()(
   immer((...args) => ({
     ...useStatsSlice(...args),
-    ...useGlobalFlashSlice(...args),
+    ...FlashConfigSlice(...args),
   })),
 );

@@ -10,28 +10,25 @@ export const ResultLevelCard = () => {
 
   return (
     <>
-      <Card>
+      <Card className={'bg-space'}>
         <CardHeader>YOUR RESULT OF LEVEL, YOU DID IT!</CardHeader>
-        <CardContent className={'grid grid-cols-3 grid-rows-3 gap-4 bg-space'}>
-          <div className={'flex flex-col'}>
-            {statsLevel1Flash.map((item) => {
-              return (
-                <div
-                  key={item.attemptId}
-                  className={'mt-2 border-4 bg-lightSpace'}
-                >
-                  <div>Your time: {item.time}</div>
-                </div>
-              );
-            })}
-            <Button>
-              <Link href={'/trainers/flashcards/level-1/'}>
-                Want to try again?
-              </Link>
-            </Button>
-          </div>
+        <CardContent className={'grid grid-cols-3 grid-rows-1 gap-4'}>
+          {statsLevel1Flash.map((item) => {
+            return (
+              <div key={item.attemptId} className={'bg-lightSpace'}>
+                <div>Your time: {item.time}</div>
+                <div>Your attempt: {item.attemptId}</div>
+              </div>
+            );
+          })}
         </CardContent>
-        <CardFooter></CardFooter>
+        <CardFooter>
+          <Button asChild>
+            <Link href={'/trainers/flashcards/level-1/'}>
+              Want to try again?
+            </Link>
+          </Button>
+        </CardFooter>
       </Card>
     </>
   );

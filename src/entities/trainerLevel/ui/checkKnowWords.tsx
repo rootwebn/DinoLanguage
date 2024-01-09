@@ -23,13 +23,8 @@ import LoadingGif from '../../../../public/Loading_backD.gif';
 import { useForm } from 'react-hook-form';
 
 export function CheckKnowWords() {
-  const {
-    prioritizedWords,
-    wordIndex,
-    formSchema,
-    onSubmitInput,
-    errorFormFlash,
-  } = useFlashCheck();
+  const { prioritizedWords, wordIndex, formSchema, onSubmitInput } =
+    useFlashCheck();
 
   const formFlash = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,7 +34,7 @@ export function CheckKnowWords() {
   });
 
   return (
-    <Card>
+    <Card className={'bg-eclipseGray'}>
       <CardHeader className={'flex flex-row'}>
         {/* eslint-disable-next-line react/no-unescaped-entities */}
         Okay! Let's check how&nbsp;<div className={'font-bold'}>{'good'}</div>
@@ -52,7 +47,7 @@ export function CheckKnowWords() {
               onSubmit={formFlash.handleSubmit((values) =>
                 onSubmitInput(values, formFlash.resetField, formFlash.setError),
               )}
-              className="space-y-8"
+              className="space-y-6"
               autoComplete="off"
             >
               <FormField
@@ -65,25 +60,26 @@ export function CheckKnowWords() {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        className={'bg-darkSpace'}
                         placeholder="Write your answer here..."
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
                       This is easy question, right? Right...?
-                      {errorFormFlash && <p className={''}>Wrong Answer!</p>}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
             </form>
           </Form>
         </div>
         <Image width={150} height={150} alt={'LoadingGif'} src={LoadingGif} />
       </CardContent>
-      <CardFooter></CardFooter>
+      <CardFooter>
+        <Button type="submit">Submit</Button>
+      </CardFooter>
     </Card>
   );
 }

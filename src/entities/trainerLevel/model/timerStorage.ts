@@ -5,9 +5,11 @@ import { create } from 'zustand';
 
 interface States {
   time: string;
+  timeOver: boolean;
 }
 
 interface Actions {
+  setTimerOver: (timeOverProp: boolean) => void;
   setTimeStorage: (timeProp: string) => void;
   setCleanTimeStorage: () => void;
 }
@@ -16,6 +18,7 @@ interface useTimerInterface extends States, Actions {}
 
 const initialStates: States = {
   time: '',
+  timeOver: false,
 };
 
 export const useSetTimerStorage = create<useTimerInterface>()(
@@ -25,6 +28,9 @@ export const useSetTimerStorage = create<useTimerInterface>()(
         ...initialStates,
         setTimeStorage: (timeProp) => {
           set({ time: timeProp });
+        },
+        setTimerOver: (timeOverProp) => {
+          set({ timeOver: timeOverProp });
         },
         setCleanTimeStorage: () => {
           set({ time: '' });

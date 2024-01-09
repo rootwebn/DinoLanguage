@@ -16,3 +16,4 @@ export * from './table';
 export * from './tabs';
 export * from './progress';
 export * from './form';
+export * from './slider';

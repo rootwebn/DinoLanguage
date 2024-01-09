@@ -13,9 +13,10 @@ interface States {
 }
 
 interface Actions {
-  loadWords: () => void;
+  loadWords: (countMin: number, countMax: number) => void;
   prioritizeWord: (word: string) => void;
   setDataTranslation: (translatedWords: string[]) => void;
+  setCleanStorage: () => void;
 }
 interface useWordInterface extends States, Actions {}
 
@@ -32,8 +33,8 @@ export const useSetWordsStore = create<useWordInterface>()(
     devtools(
       (set, get) => ({
         ...initialStates,
-        loadWords: () => {
-          const generateWords = generateRandomWords();
+        loadWords: (countMin, countMax) => {
+          const generateWords = generateRandomWords(countMin, countMax);
           set({ words: (get().words = generateWords) });
         },
         prioritizeWord: (word: string) => {
@@ -45,6 +46,9 @@ export const useSetWordsStore = create<useWordInterface>()(
           set({
             translatedWordsRes: { translatedWords: translatedWords },
           });
+        },
+        setCleanStorage: () => {
+          set({ ...initialStates });
         },
       }),
       { name: 'Zustand' },

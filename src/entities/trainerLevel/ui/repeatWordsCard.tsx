@@ -8,7 +8,7 @@ export const RepeatWordsCard = () => {
     useFlashCheck();
 
   return (
-    <Card>
+    <Card className={'bg-eclipseGray'}>
       {/* eslint-disable-next-line react/no-unescaped-entities */}
       <CardHeader>Okay! Let's memorize some words.</CardHeader>
       <CardContent className={'flex flex-row justify-around gap-4'}>

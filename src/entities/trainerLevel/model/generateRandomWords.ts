@@ -1,10 +1,11 @@
 import { wordList } from '@/entities/trainerLevel/model/wordsList';
 import { factsList } from '@/entities/trainerLevel/model/factsList';
+import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
 
 const count = (min: number, max: number) => Math.random() * (max - min) + min;
 
-export const generateRandomWords = () => {
-  const indexSet = generateRandomIndexes(count(5, 13));
+export const generateRandomWords = (countMin: number, countMax: number) => {
+  const indexSet = generateRandomIndexes(count(countMin, countMax));
   const newWords: string[] = [];
   console.log('Generated indexes:', indexSet);
   for (let i = 0; i < indexSet.length; i++) {

@@ -11,41 +11,34 @@ import {
 } from '@/entities/trainerLevel/model/stagesStorage';
 import * as z from 'zod';
 import { UseFormResetField, UseFormSetError } from 'react-hook-form';
-import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { useConfigContext } from '@/entities/trainerLevel/model/useConfigContext';
 
 export const useFlashCheck = () => {
-  const words = useWordsStore((state) => state.words);
-  const prioritizedWords = useWordsStore((state) => state.prioritizedWords);
-  const translatedWordsRes = useWordsStore((state) => state.translatedWordsRes);
+  const words = useWordsStore((s) => s.words);
+  const prioritizedWords = useWordsStore((s) => s.prioritizedWords);
+  const translatedWordsRes = useWordsStore((s) => s.translatedWordsRes);
 
-  const prioritizeWord = useSetWordsStore((state) => state.prioritizeWord);
-  const loadWords = useSetWordsStore((state) => state.loadWords);
+  const prioritizeWord = useSetWordsStore((s) => s.prioritizeWord);
+  const loadWords = useSetWordsStore((s) => s.loadWords);
   const setDataTranslation = useSetWordsStore(
     (state) => state.setDataTranslation,
   );
 
   const {
-    score,
-    scoreMultiplier,
-    streakAnswers,
     accuracyAnswers,
     rightAnswers,
-    errorFormFlash,
-    prioritizedWordsFull,
     setScore,
     setRightAnswers,
     setTotalNumAnswers,
     setAccuracyAnswers,
     setMultiplier,
-    setPrioritizedWordsFull,
-  } = useBoundStore();
+  } = BoundStore();
 
-  const stageFlash = useStagesStorage((state) => state.stageFlash);
-  const setStageFlash = useSetStagesStorage((state) => state.setStageFlash);
-
+  const stageFlash = useStagesStorage((s) => s.stageFlash);
+  const setStageFlash = useSetStagesStorage((s) => s.setStageFlash);
+  const wordsGenMin = useConfigContext((s) => s.wordsGenMin);
   const [wordIndex, setWordIndex] = useState(0);
-  const [timeSaved, setTimeSaved] = useState(false);
-  const [targetPrioritizedCount] = useState(6);
 
   const formSchema = z.object({
     answer: z
@@ -64,21 +57,16 @@ export const useFlashCheck = () => {
 
     if (
       wordIndex === words.length - 1 &&
-      prioritizedWords.length < targetPrioritizedCount &&
+      prioritizedWords.length < wordsGenMin &&
       stageFlash === 1
     ) {
       setWordIndex(wordIndex - words.length + 1);
-      loadWords();
+      loadWords(5, 5);
     }
 
-    if (prioritizedWords.length === targetPrioritizedCount - 1) {
-      setPrioritizedWordsFull(true);
+    if (prioritizedWords.length === wordsGenMin - 1) {
       setStageFlash(2);
     }
-  };
-
-  const handleListWords = () => {
-    setStageFlash(3);
   };
 
   const handleUserMemo = () => {
@@ -113,6 +101,7 @@ export const useFlashCheck = () => {
     }
 
     if (rightAnswers === 1) {
+      console.log('setMultiplier');
       setMultiplier(0.2);
     } else if (rightAnswers === 3) {
       setMultiplier(0.4);
@@ -127,22 +116,17 @@ export const useFlashCheck = () => {
   };
 
   return {
-    errorFormFlash,
     wordIndex,
     words,
     prioritizedWords,
     translatedWordsRes,
-    targetPrioritizedCount,
-    timeSaved,
     stageFlash,
+    formSchema,
     call: handleResponsePickFlash,
     handleUserMemo,
-    handleListWords,
     onSubmitInput,
-    setTimeSaved,
     loadWords,
     setDataTranslation,
-    formSchema,
   };
 };
 

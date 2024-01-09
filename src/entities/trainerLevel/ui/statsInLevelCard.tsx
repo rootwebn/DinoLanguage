@@ -3,7 +3,7 @@
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { useFlashCheck } from '@/entities/trainerLevel/model';
 import { useEffect } from 'react';
-import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
 import { useSaveContext } from '@/entities/trainerLevel/model/useSaveContext';
 import useTimer from '@/entities/trainerLevel/model/timer';
 import {
@@ -14,14 +14,17 @@ import { useSetTimerStorage } from '@/entities/trainerLevel/model/timerStorage';
 
 export const StatsInLevelCard = () => {
   const { stageFlash } = useFlashCheck();
-  const { time, startTimer, stopTimer, setExactTime } = useTimer('00:00', true);
+  const { time, startTimer, stopTimer, setExactTime } = useTimer(
+    '00:00',
+    false,
+  );
   const {
     accuracyAnswers,
     totalNumAnswers,
     rightAnswers,
     score,
     scoreMultiplier,
-  } = useBoundStore();
+  } = BoundStore();
   const setCleanStats = useSaveContext((s) => s.setCleanStats);
   const setNewStats = useSaveContext((s) => s.setNewStats);
   const setAttemptId = useSetAttemptStore((state) => state.setAttemptIdFlash);
@@ -32,10 +35,6 @@ export const StatsInLevelCard = () => {
   const setCleanTimeStorage = useSetTimerStorage(
     (state) => state.setCleanTimeStorage,
   );
-
-  const eraseSavesHandler = () => {
-    setCleanStats();
-  };
 
   useEffect(() => {
     switch (stageFlash) {
@@ -65,7 +64,7 @@ export const StatsInLevelCard = () => {
   }, [stageFlash]);
 
   return (
-    <Card className={'row-span-2 flex flex-col justify-around'}>
+    <Card className={'row-span-2 flex flex-col justify-around bg-eclipseGray'}>
       <CardHeader className={'text-2xl'}>Your Stats!</CardHeader>
       <CardContent className={'flex flex-col gap-2'}>
         <div className={'text-xl text-muted-foreground'}>
@@ -93,7 +92,10 @@ export const StatsInLevelCard = () => {
           Current num right answers: {rightAnswers}
         </div>
         <div className={'grid grid-cols-2 gap-2'}>
-          <Button onClick={eraseSavesHandler} className={'after:bg-lightSpace'}>
+          <Button
+            onClick={() => setCleanStats()}
+            className={'after:bg-lightSpace'}
+          >
             Erase saves
           </Button>
           <Button onClick={stopTimer} className={'after:bg-lightSpace'}>

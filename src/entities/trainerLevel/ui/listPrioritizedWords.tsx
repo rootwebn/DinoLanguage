@@ -5,18 +5,13 @@ import { useFlashCheck } from '@/entities/trainerLevel/model';
 import { useEffect } from 'react';
 import { fetchResponseTranslation } from '@/shared/api/translate';
 import { useMutation } from '@tanstack/react-query';
-import { useBoundStore } from '@/entities/trainerLevel/model/boundStorage';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
+import { useSetStagesStorage } from '@/entities/trainerLevel/model/stagesStorage';
 
 export const ListPrioritizedWords = () => {
-  const {
-    prioritizedWords,
-    handleListWords,
-    setDataTranslation,
-    translatedWordsRes,
-  } = useFlashCheck();
-  const { prioritizedWordsFull } = useBoundStore();
+  const { prioritizedWords, setDataTranslation } = useFlashCheck();
+  const setStageFlash = useSetStagesStorage((state) => state.setStageFlash);
   const translated = useMutation({
     mutationFn: fetchResponseTranslation,
   });
@@ -35,7 +30,7 @@ export const ListPrioritizedWords = () => {
   }, [translated.data]);
 
   return (
-    <Card className={'flex flex-col'}>
+    <Card className={'bg-eclipseGray flex flex-col'}>
       <CardHeader>
         {translated.isError
           ? 'Error while request information!'
@@ -70,7 +65,7 @@ export const ListPrioritizedWords = () => {
                   )}
                 </div>
               </div>
-              <Button onClick={handleListWords}>Next Stage!</Button>
+              <Button onClick={() => setStageFlash(3)}>Next Stage!</Button>
             </div>
           )}
         </div>

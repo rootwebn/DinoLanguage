@@ -4,5 +4,4 @@ export * from './checkKnowWords';
 export * from './listPrioritizedWords';
 export * from './repeatWordsCard';
 export * from './statsInLevelCard';
-export * from './flashcardsCustomTopic';
-export * from './flashcardRandomTopic';
+export * from './flashcardsTopicCard';

@@ -5,6 +5,9 @@ import { useEffect } from 'react';
 import { useFlashCheck } from '@/entities/trainerLevel/model/';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
+import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { useConfigContext } from '@/entities/trainerLevel/model/useConfigContext';
+import { useWordsStore } from '@/entities/trainerLevel/model/wordsStorage';
 //TODO: Rewrite storageZustand, rework UI flashcards and complete system of flashcards
 // rewrite useFlashCheck, make survey before training, use google API for translating words
 
@@ -16,12 +19,22 @@ export const PickingWordCard = () => {
     loadWords,
   } = useFlashCheck();
 
+  const wordsGenMin = useConfigContext((s) => s.wordsGenMin);
+  const setWordsGenMin = useConfigContext((s) => s.setWordsGenLimit);
+  const setCleanConfig = useConfigContext((s) => s.setCleanStorage);
+  const loadConfigStorage = useConfigContext((s) => s.loadConfigStorage);
+  const prioritizedWords = useWordsStore((s) => s.prioritizedWords);
+  console.log('wordsGenMin', wordsGenMin);
+
   useEffect(() => {
-    loadWords();
+    loadWords(5, 5);
   }, []);
 
   return (
-    <Card key={wordIndex} className={'flex flex-col justify-around'}>
+    <Card
+      key={wordIndex}
+      className={'flex flex-col justify-around bg-eclipseGray'}
+    >
       <CardHeader className={'text-center text-2xl'}>
         Did you know this word?
       </CardHeader>
