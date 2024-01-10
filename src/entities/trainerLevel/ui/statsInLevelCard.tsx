@@ -42,6 +42,7 @@ export const StatsInLevelCard = () => {
         setCleanTimeStorage();
         break;
       case 2:
+        setExactTime('00:05');
         setAttemptId();
         break;
       case 5:

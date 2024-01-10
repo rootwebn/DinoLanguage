@@ -55,7 +55,7 @@ const useTimer = (initialTime: string, reverseTimer: boolean): TimerHook => {
   }, [timerActive, time]);
 
   const setExactTime = (exactTime: string): void => {
-    setTime(exactTime);
+    setTime(time + exactTime);
   };
 
   const startTimer = (): void => {

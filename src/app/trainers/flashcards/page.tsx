@@ -1,3 +1,4 @@
+'use client';
 import {
   TrainersLevelDescription,
   TrainersLevelScoreUi,
@@ -5,7 +6,7 @@ import {
 } from '@/entities/trainers/ui/';
 import { Zap } from 'lucide-react';
 import ImgAlt2 from '../../../../public/LogoAlt2.png';
-//TODO: Fix mobile menu, table colors
+import { useRef } from 'react';
 export default function FlashcardTrainerPage() {
   return (
     <div

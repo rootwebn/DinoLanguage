@@ -2,6 +2,7 @@ import { createStore } from 'zustand/vanilla';
 import { createContext } from 'react';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { state } from 'sucrase/dist/types/parser/traverser/base';
 
 export interface ConfigProps {
   difficultGame: number;
@@ -14,7 +15,6 @@ export interface ConfigState extends ConfigProps {
   setWordsGenLimit: (wordsGenMinProp: number) => void;
   setTimeOnStage: (timeOnStageProp: number) => void;
   setPeacefulMode: (peacefulModeProp: boolean) => void;
-  loadConfigStorage: () => void;
   setCleanStorage: () => void;
 }
 export type ConfigStorage = ReturnType<typeof createConfigStorage>;
@@ -47,18 +47,16 @@ export const createConfigStorage = (initProps?: Partial<ConfigProps>) => {
           setCleanStorage: () => {
             set({ ...DEFAULT_PROPS });
           },
-          loadConfigStorage: () => {
-            set((state) => ({
-              wordsGenMin: state.wordsGenMin,
-              timeOnStage: state.timeOnStage,
-              peacefulMode: state.peacefulMode,
-              difficultGame: state.difficultGame,
-            }));
-          },
         }),
         {
           name: 'ConfigStorage',
           storage: createJSONStorage(() => localStorage),
+          partialize: (state) => ({
+            difficultGame: state.difficultGame,
+            peacefulMode: state.peacefulMode,
+            timeOnStage: state.timeOnStage,
+            wordsGenMin: state.wordsGenMin,
+          }),
         },
       ),
     ),

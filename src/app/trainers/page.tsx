@@ -6,6 +6,7 @@ import {
   VerbalMemoryBlock,
   BrainstormBlock,
 } from '@/widgets/trainersPage/ui/';
+import { useRef } from 'react';
 
 export default function TrainersPage() {
   return (

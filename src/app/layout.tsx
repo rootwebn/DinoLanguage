@@ -5,6 +5,8 @@ import { ThemeProvider } from '@/shared/providers/theme-provider';
 import { Header } from '@/widgets/header/header';
 import ReactQueryProvider from '@/shared/providers/reactQueryProvider';
 import React from 'react';
+import { ConfigProvider } from '@/shared/providers/configStorageProvider';
+import { Toaster } from '@/shared/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,10 +24,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} bg-hash dark:bg-darkSpace`}>
         <ReactQueryProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Header />
-            {children}
-          </ThemeProvider>
+          <ConfigProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <Header />
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </ConfigProvider>
         </ReactQueryProvider>
       </body>
     </html>

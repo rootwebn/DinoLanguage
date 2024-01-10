@@ -1,9 +1,11 @@
 import { Card } from '@/shared/ui';
 import useTimer from '@/entities/trainerLevel/model/timer';
 import { useEffect } from 'react';
+import { useConfigContext } from '@/entities/trainerLevel/model/useConfigContext';
 
 export const TimerStage = () => {
-  const { time, startTimer, stopTimer } = useTimer('00:30', true);
+  const timeOnStage = useConfigContext((s) => s.timeOnStage);
+  const { time, startTimer } = useTimer(`00:${timeOnStage.toString()}`, true);
 
   useEffect(() => {
     startTimer();
