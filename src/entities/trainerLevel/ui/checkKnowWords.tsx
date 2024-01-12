@@ -16,22 +16,14 @@ import {
   Input,
 } from '@/shared/ui';
 import { useFlashCheck } from '@/entities/trainerLevel/model';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
-import { useForm } from 'react-hook-form';
+import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { FormsSets } from '@/entities/trainerLevel/model/formsSets';
 
 export function CheckKnowWords() {
-  const { prioritizedWords, wordIndex, formSchema, onSubmitInput } =
-    useFlashCheck();
-
-  const formFlash = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      answer: '',
-    },
-  });
+  const { prioritizedWords, wordIndex } = BoundStore();
+  const { formFlash, onSubmitInput } = FormsSets();
 
   return (
     <Card className={'bg-eclipseGray'}>

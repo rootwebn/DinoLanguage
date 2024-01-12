@@ -5,25 +5,15 @@ import { useEffect } from 'react';
 import { useFlashCheck } from '@/entities/trainerLevel/model/';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
+import { PersistBoundStore } from '@/entities/trainerLevel/model/persistBoundStorage';
 import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
-import { useConfigContext } from '@/entities/trainerLevel/model/useConfigContext';
-import { useWordsStore } from '@/entities/trainerLevel/model/wordsStorage';
 //TODO: Rewrite storageZustand, rework UI flashcards and complete system of flashcards
 // rewrite useFlashCheck, make survey before training, use google API for translating words
 
 export const PickingWordCard = () => {
-  const {
-    wordIndex,
-    call: handleResponsePickFlash,
-    words,
-    loadWords,
-  } = useFlashCheck();
-
-  const wordsGenMin = useConfigContext((s) => s.wordsGenMin);
-  const setWordsGenMin = useConfigContext((s) => s.setWordsGenLimit);
-  const setCleanConfig = useConfigContext((s) => s.setCleanStorage);
-  const loadConfigStorage = useConfigContext((s) => s.loadConfigStorage);
-  const prioritizedWords = useWordsStore((s) => s.prioritizedWords);
+  const { call: handleResponsePickFlash, loadWords } = useFlashCheck();
+  const { words, wordIndex } = BoundStore();
+  const { wordsGenMin } = PersistBoundStore();
   console.log('wordsGenMin', wordsGenMin);
 
   useEffect(() => {

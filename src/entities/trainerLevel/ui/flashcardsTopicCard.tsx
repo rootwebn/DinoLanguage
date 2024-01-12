@@ -6,22 +6,32 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from '@/shared/ui';
 import React from 'react';
 import { Settings2 } from 'lucide-react';
 import { FlashcardsDialogSettings } from '@/entities/trainerLevel/ui/flashcardsDialogSettings';
 import Link from 'next/link';
+import { CustomListForm } from '@/entities/trainerLevel/ui/customListForm';
+import { SettingsForm } from '@/entities/trainerLevel/ui/settingsForm';
 
 interface FlashcardsTopicCardInterface {
   titleCardTopic: string;
   descCardTopic: string;
   iconCardTopic: JSX.Element;
+  customListWords: boolean;
 }
 
 export const FlashcardsTopicCard: React.FC<FlashcardsTopicCardInterface> = ({
   titleCardTopic,
   descCardTopic,
   iconCardTopic,
+  customListWords,
 }) => {
   return (
     <Card className={''}>
@@ -33,9 +43,10 @@ export const FlashcardsTopicCard: React.FC<FlashcardsTopicCardInterface> = ({
         <CardDescription>{descCardTopic}</CardDescription>
       </CardHeader>
       <CardContent className={'flex flex-col'}>
-        <div></div>
         <div className={'flex flex-row justify-between'}>
-          <FlashcardsDialogSettings />
+          <div>
+            <FlashcardsDialogSettings customListWords={customListWords} />
+          </div>
           <Button className={'bg-lightSpace'} asChild>
             <Link href={'/trainers/flashcards/level-1/random-topic'}>
               Start Game!

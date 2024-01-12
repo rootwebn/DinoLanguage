@@ -1,17 +1,15 @@
 'use client';
 
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
-import { useFlashCheck } from '@/entities/trainerLevel/model';
 import { useEffect } from 'react';
 import { fetchResponseTranslation } from '@/shared/api/translate';
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
-import { useSetStagesStorage } from '@/entities/trainerLevel/model/stagesStorage';
+import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
 
 export const ListPrioritizedWords = () => {
-  const { prioritizedWords, setDataTranslation } = useFlashCheck();
-  const setStageFlash = useSetStagesStorage((state) => state.setStageFlash);
+  const { setStageFlash, setDataTranslation, prioritizedWords } = BoundStore();
   const translated = useMutation({
     mutationFn: fetchResponseTranslation,
   });
@@ -30,7 +28,7 @@ export const ListPrioritizedWords = () => {
   }, [translated.data]);
 
   return (
-    <Card className={'bg-eclipseGray flex flex-col'}>
+    <Card className={'flex flex-col bg-eclipseGray'}>
       <CardHeader>
         {translated.isError
           ? 'Error while request information!'
@@ -55,15 +53,13 @@ export const ListPrioritizedWords = () => {
             </div>
           ) : (
             <div>
+              <div className={'text-2xl'}>{prioritizedWords.join(', ')}</div>
               <div>
-                <div className={'text-2xl'}>{prioritizedWords.join(', ')}</div>
-                <div>
-                  {translatedWordsData && (
-                    <div className={'text-2xl'}>
-                      {translatedWordsData.join(', ')}
-                    </div>
-                  )}
-                </div>
+                {translatedWordsData && (
+                  <div className={'text-2xl'}>
+                    {translatedWordsData.join(', ')}
+                  </div>
+                )}
               </div>
               <Button onClick={() => setStageFlash(3)}>Next Stage!</Button>
             </div>

@@ -9,18 +9,15 @@ import {
   FormMessage,
   Input,
 } from '@/shared/ui';
-import { ConfigFormSet } from '@/entities/trainerLevel/model/configFormSet';
+import { FormsSets } from '@/entities/trainerLevel/model/formsSets';
 import React from 'react';
 import { toast } from 'sonner';
-import { useConfigContext } from '@/entities/trainerLevel/model/useConfigContext';
 import { Checkbox } from '@/shared/ui/checkbox';
+import { PersistBoundStore } from '@/entities/trainerLevel/model/persistBoundStorage';
 
 export const SettingsForm = () => {
-  const { onSubmit, configForm } = ConfigFormSet();
-  const wordsGenMin = useConfigContext((s) => s.wordsGenMin);
-  const difficultGame = useConfigContext((s) => s.difficultGame);
-  const timeStage = useConfigContext((s) => s.timeOnStage);
-  const setClearStorage = useConfigContext((s) => s.setCleanStorage);
+  const { onSubmit, configForm } = FormsSets();
+  const { setCleanConfig } = PersistBoundStore();
 
   return (
     <Form {...configForm}>
@@ -141,7 +138,7 @@ export const SettingsForm = () => {
                 )}, Peaceful Mode: ${configForm.getValues('peacefulMode')}`,
                 action: {
                   label: 'Set to Default',
-                  onClick: () => setClearStorage(),
+                  onClick: () => setCleanConfig(),
                 },
               })
             }

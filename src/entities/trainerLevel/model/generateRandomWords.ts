@@ -1,6 +1,5 @@
 import { wordList } from '@/entities/trainerLevel/model/wordsList';
-import { factsList } from '@/entities/trainerLevel/model/factsList';
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { factsList } from '@/deprecated/factsList';
 
 const count = (min: number, max: number) => Math.random() * (max - min) + min;
 

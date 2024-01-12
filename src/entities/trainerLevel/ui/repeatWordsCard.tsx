@@ -2,10 +2,11 @@ import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import useFlashCheck from '@/entities/trainerLevel/model/useFlashCheck';
 import LoadingGif from '../../../../public/Loading_backD.gif';
 import Image from 'next/image';
+import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
 
 export const RepeatWordsCard = () => {
-  const { wordIndex, prioritizedWords, translatedWordsRes, handleUserMemo } =
-    useFlashCheck();
+  const { handleUserMemo } = useFlashCheck();
+  const { prioritizedWords, translatedWordsRes, wordIndex } = BoundStore();
 
   return (
     <Card className={'bg-eclipseGray'}>

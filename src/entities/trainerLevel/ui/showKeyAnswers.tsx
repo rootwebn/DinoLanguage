@@ -1,13 +1,15 @@
 import { Card, CardContent } from '@/shared/ui';
-import { useWordsStore } from '@/entities/trainerLevel/model/wordsStorage';
+import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
 
 export const ShowKeyAnswers = () => {
-  const keyAnswers = useWordsStore((state) => state.translatedWordsRes);
+  const { translatedWordsRes } = BoundStore();
 
   return (
-    <Card className={'bg-eclipseGray mt-4'}>
+    <Card className={'mt-4 bg-eclipseGray'}>
       <CardContent className={'pt-4'}>
-        <div>Key to this test: {keyAnswers.translatedWords.join(', ')}</div>
+        <div>
+          Key to this test: {translatedWordsRes.translatedWords.join(', ')}
+        </div>
       </CardContent>
     </Card>
   );

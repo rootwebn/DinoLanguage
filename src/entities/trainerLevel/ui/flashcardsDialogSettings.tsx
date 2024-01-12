@@ -10,8 +10,15 @@ import {
 } from '@/shared/ui';
 import React from 'react';
 import { SettingsForm } from '@/entities/trainerLevel/ui/settingsForm';
+import { CustomListForm } from '@/entities/trainerLevel/ui/customListForm';
 
-export const FlashcardsDialogSettings = () => {
+type FlashcardsSettingsType = {
+  customListWords: boolean;
+};
+
+export const FlashcardsDialogSettings: React.FC<FlashcardsSettingsType> = ({
+  customListWords,
+}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -25,7 +32,8 @@ export const FlashcardsDialogSettings = () => {
             and adjust timing. Personalize your learning journey with ease.
           </DialogDescription>
         </DialogHeader>
-        <div className={'flex flex-row justify-center'}>
+        <div className={'flex flex-col justify-center'}>
+          {customListWords && <CustomListForm />}
           <SettingsForm />
         </div>
       </DialogContent>

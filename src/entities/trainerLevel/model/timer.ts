@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSetTimerStorage } from '@/entities/trainerLevel/model/timerStorage';
+import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
 
 type TimerHook = {
   time: string;
@@ -13,8 +13,7 @@ type TimerHook = {
 const useTimer = (initialTime: string, reverseTimer: boolean): TimerHook => {
   const [time, setTime] = useState<string>(initialTime);
   const [timerActive, setTimerActive] = useState<boolean>(true);
-  const setTimeOver = useSetTimerStorage((s) => s.setTimerOver);
-
+  const { setTimerOver } = BoundStore();
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -34,15 +33,14 @@ const useTimer = (initialTime: string, reverseTimer: boolean): TimerHook => {
         totalSeconds++;
         setTime(formatTime(totalSeconds));
       }, 1000);
-    } else {
+    } else if (timerActive && reverseTimer) {
       const [minutes, seconds] = time.split(':').map(Number);
       let totalSeconds = minutes * 60 + seconds;
-      console.log('reverse timer started');
 
       interval = setInterval(() => {
         if (totalSeconds <= 0) {
           clearInterval(interval);
-          setTimeOver(true);
+          setTimerOver(true);
           console.log('reverse timer finished');
         } else {
           totalSeconds--;
@@ -55,7 +53,7 @@ const useTimer = (initialTime: string, reverseTimer: boolean): TimerHook => {
   }, [timerActive, time]);
 
   const setExactTime = (exactTime: string): void => {
-    setTime(time + exactTime);
+    setTime(exactTime);
   };
 
   const startTimer = (): void => {
