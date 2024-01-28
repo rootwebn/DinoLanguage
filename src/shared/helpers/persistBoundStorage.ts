@@ -15,6 +15,13 @@ interface StatesConfigFlashcards {
   timeOnStage: number;
   peacefulMode: boolean;
   targetLanguage: string;
+  customListEnable: boolean;
+  customList: {
+    listTitle: string;
+    listDesc: string;
+    listWords: string[];
+    listDefinition: string[];
+  }[];
 }
 interface FlashcardsSaveStates {
   attemptIdFlash: number;
@@ -35,6 +42,13 @@ interface FlashcardsActionsConfig {
   setTimeOnStage: (timeOnStageProp: number) => void;
   setPeacefulMode: (peacefulModeProp: boolean) => void;
   setTargetLanguage: (targetLanguageProp: string) => void;
+  setCustomListEnable: (customListProp: boolean) => void;
+  setCustomList: (dataList: {
+    listTitle: string;
+    listDesc: string;
+    listWords: string[];
+    listDefinition: string[];
+  }) => void;
   setCleanConfig: () => void;
 }
 interface FlashcardsActionsSave {
@@ -69,6 +83,8 @@ const initialStates: StatesConfigFlashcards = {
   timeOnStage: 30,
   targetLanguage: '',
   peacefulMode: false,
+  customListEnable: false,
+  customList: [],
 };
 
 const useConfigSlice: MiddlewareStateCreator<ConfigInterface> = (set) => ({
@@ -87,6 +103,14 @@ const useConfigSlice: MiddlewareStateCreator<ConfigInterface> = (set) => ({
   },
   setTargetLanguage: (targetLanguageProp) => {
     set({ targetLanguage: targetLanguageProp });
+  },
+  setCustomListEnable: (customListProp) => {
+    set({ customListEnable: customListProp });
+  },
+  setCustomList: (dataList) => {
+    set((state) => {
+      state.customList.push(dataList);
+    });
   },
   setCleanConfig: () => {
     set({ ...initialStates });
@@ -127,6 +151,12 @@ export const PersistBoundStore = create<useTimerInterface & ConfigInterface>()(
       {
         name: 'ConfigSaveStorage',
         storage: createJSONStorage(() => localStorage),
+        // partialize: (state) => ({
+        //   wordsGenMin: state.wordsGenMin,
+        //   timeOnStage: state.timeOnStage,
+        //   peacefulMode: state.peacefulMode,
+        //   targetLanguage: state.targetLanguage,
+        // }),
       },
     ),
   ),

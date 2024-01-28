@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   CheckKnowWords,
   ListPrioritizedWords,
@@ -9,36 +9,33 @@ import {
   StatsInLevelCard,
 } from '@/entities/trainerLevel/ui/';
 import useFlashCheck from '@/entities/trainerLevel/model/useFlashCheck';
-import {
-  createSaveStorage,
-  SaveContext,
-} from '@/entities/trainerLevel/model/savedResultsStorage';
 import { ShowKeyAnswers } from '@/entities/trainerLevel/ui/showKeyAnswers';
-import {
-  ConfigContext,
-  createConfigStorage,
-} from '@/entities/trainerLevel/model/configFlashcardsStorage';
 import { TimerStage } from '@/entities/trainerLevel/ui/timerStage';
-import useTimer from '@/entities/trainerLevel/model/timer';
-import { useTimerStorage } from '@/entities/trainerLevel/model/timerStorage';
-import { Button } from '@/shared/ui';
+import { Button, Skeleton } from '@/shared/ui';
 import Link from 'next/link';
-import { useConfigContext } from '@/entities/trainerLevel/model/useConfigContext';
+import { BoundStore } from '@/shared/helpers/boundStorage';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 export const FlashcardsRandomWords: React.FC = () => {
-  const { stageFlash } = useFlashCheck();
-  console.log('Current index stage', stageFlash);
-  const store = useRef(createSaveStorage()).current;
-  const storeConfig = useRef(createConfigStorage()).current;
-  const timeOver = useTimerStorage((s) => s.timeOver);
-  const peacefulMode = useConfigContext((s) => s.peacefulMode);
-  console.log('peacefulMode state', peacefulMode);
+  const { setStageFlash, timeOver, stageFlash } = BoundStore();
+  const { peacefulMode } = PersistBoundStore();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
-    <SaveContext.Provider value={store}>
+    <div>
       {!timeOver ? (
-        <>
+        <div>
           <div className={'flex justify-center'}>
-            {peacefulMode ? null : <TimerStage />}
+            {isMounted ? (
+              peacefulMode ? null : (
+                <TimerStage />
+              )
+            ) : (
+              <Skeleton className={'mt-2 h-8 w-12'} />
+            )}
           </div>
           <div
             className={
@@ -55,7 +52,7 @@ export const FlashcardsRandomWords: React.FC = () => {
             </div>
             <StatsInLevelCard />
           </div>
-        </>
+        </div>
       ) : (
         <div className={'flex flex-col items-center justify-center text-2xl'}>
           Time is over. YOU DIED.
@@ -69,6 +66,6 @@ export const FlashcardsRandomWords: React.FC = () => {
           </div>
         </div>
       )}
-    </SaveContext.Provider>
+    </div>
   );
 };

@@ -18,8 +18,8 @@ import {
 import { useFlashCheck } from '@/entities/trainerLevel/model';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
-import { FormsSets } from '@/entities/trainerLevel/model/formsSets';
+import { BoundStore } from '@/shared/helpers/boundStorage';
+import { FormsSets } from '@/shared/helpers/formsSets';
 
 export function CheckKnowWords() {
   const { prioritizedWords, wordIndex } = BoundStore();

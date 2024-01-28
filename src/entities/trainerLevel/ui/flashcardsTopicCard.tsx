@@ -3,22 +3,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from '@/shared/ui';
 import React from 'react';
-import { Settings2 } from 'lucide-react';
 import { FlashcardsDialogSettings } from '@/entities/trainerLevel/ui/flashcardsDialogSettings';
 import Link from 'next/link';
-import { CustomListForm } from '@/entities/trainerLevel/ui/customListForm';
-import { SettingsForm } from '@/entities/trainerLevel/ui/settingsForm';
 
 interface FlashcardsTopicCardInterface {
   titleCardTopic: string;

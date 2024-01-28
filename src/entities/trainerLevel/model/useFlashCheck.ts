@@ -1,7 +1,7 @@
 'use client';
 
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
-import { PersistBoundStore } from '@/entities/trainerLevel/model/persistBoundStorage';
+import { BoundStore } from '@/shared/helpers/boundStorage';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 
 export const useFlashCheck = () => {
   const {

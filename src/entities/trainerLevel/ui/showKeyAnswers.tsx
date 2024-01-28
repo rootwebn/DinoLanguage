@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/shared/ui';
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { BoundStore } from '@/shared/helpers/boundStorage';
 
 export const ShowKeyAnswers = () => {
   const { translatedWordsRes } = BoundStore();

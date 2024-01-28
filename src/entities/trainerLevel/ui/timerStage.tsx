@@ -1,8 +1,8 @@
 import { Card } from '@/shared/ui';
 import useTimer from '@/entities/trainerLevel/model/timer';
 import { useEffect } from 'react';
-import { PersistBoundStore } from '@/entities/trainerLevel/model/persistBoundStorage';
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
+import { BoundStore } from '@/shared/helpers/boundStorage';
 
 export const TimerStage = () => {
   const { timeOnStage } = PersistBoundStore();

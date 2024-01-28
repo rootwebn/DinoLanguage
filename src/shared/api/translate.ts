@@ -1,10 +1,13 @@
 import axios from 'axios';
-import { useMutation } from '@tanstack/react-query';
 export const fetchResponseTranslation = async (data: string[]) => {
+  const configStorage = JSON.parse(
+    localStorage.getItem('ConfigSaveStorage') || '{}',
+  );
+  const targetLanguage = configStorage?.state?.targetLanguage;
   const response = await axios.post('http://localhost:5000/translate', {
     q: data,
     source: 'en',
-    target: 'ru',
+    target: targetLanguage,
     format: 'text',
     api_key: '',
   });

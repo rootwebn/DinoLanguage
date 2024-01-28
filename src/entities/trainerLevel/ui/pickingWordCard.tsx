@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 import { useFlashCheck } from '@/entities/trainerLevel/model/';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
-import { PersistBoundStore } from '@/entities/trainerLevel/model/persistBoundStorage';
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
+import { BoundStore } from '@/shared/helpers/boundStorage';
 //TODO: Rewrite storageZustand, rework UI flashcards and complete system of flashcards
 // rewrite useFlashCheck, make survey before training, use google API for translating words
 

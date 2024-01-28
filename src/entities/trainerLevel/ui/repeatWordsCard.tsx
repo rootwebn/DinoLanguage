@@ -2,7 +2,7 @@ import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import useFlashCheck from '@/entities/trainerLevel/model/useFlashCheck';
 import LoadingGif from '../../../../public/Loading_backD.gif';
 import Image from 'next/image';
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { BoundStore } from '@/shared/helpers/boundStorage';
 
 export const RepeatWordsCard = () => {
   const { handleUserMemo } = useFlashCheck();

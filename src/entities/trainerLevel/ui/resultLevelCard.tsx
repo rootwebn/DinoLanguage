@@ -2,7 +2,7 @@
 
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import Link from 'next/link';
-import { PersistBoundStore } from '@/entities/trainerLevel/model/persistBoundStorage';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 import useTimer from '@/entities/trainerLevel/model/timer';
 
 export const ResultLevelCard = () => {

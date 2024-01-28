@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  Button,
   Card,
   CardContent,
   CardFooter,
@@ -9,15 +8,12 @@ import {
   Skeleton,
 } from '@/shared/ui';
 import { useEffect, useState } from 'react';
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { BoundStore } from '@/shared/helpers/boundStorage';
 import useTimer from '@/entities/trainerLevel/model/timer';
-import { PersistBoundStore } from '@/entities/trainerLevel/model/persistBoundStorage';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 
 export const StatsInLevelCard = () => {
-  const { time, startTimer, stopTimer, setExactTime } = useTimer(
-    '00:00',
-    false,
-  );
+  const { time, stopTimer } = useTimer('00:00', false);
   const [isMountedStats, setIsMountedStats] = useState<boolean>(false);
   const {
     setCleanTimeStorage,
@@ -29,13 +25,8 @@ export const StatsInLevelCard = () => {
     stageFlash,
     setExactWordIndex,
   } = BoundStore();
-  const {
-    setAttemptIdFlash,
-    attemptIdFlash,
-    setNewStats,
-    setAttemptIdCleanFlash,
-    setInitialSaves,
-  } = PersistBoundStore();
+  const { setAttemptIdFlash, attemptIdFlash, setNewStats } =
+    PersistBoundStore();
 
   useEffect(() => {
     switch (stageFlash) {
@@ -67,7 +58,6 @@ export const StatsInLevelCard = () => {
         console.log('save system worked');
         break;
     }
-
     console.log('useEffect worked');
   }, [stageFlash]);
 

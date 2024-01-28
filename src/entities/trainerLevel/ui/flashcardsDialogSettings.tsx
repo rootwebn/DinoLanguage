@@ -10,7 +10,6 @@ import {
 } from '@/shared/ui';
 import React from 'react';
 import { SettingsForm } from '@/entities/trainerLevel/ui/settingsForm';
-import { CustomListForm } from '@/entities/trainerLevel/ui/customListForm';
 
 type FlashcardsSettingsType = {
   customListWords: boolean;
@@ -33,8 +32,7 @@ export const FlashcardsDialogSettings: React.FC<FlashcardsSettingsType> = ({
           </DialogDescription>
         </DialogHeader>
         <div className={'flex flex-col justify-center'}>
-          {customListWords && <CustomListForm />}
-          <SettingsForm />
+          <SettingsForm customListWords={customListWords} />
         </div>
       </DialogContent>
     </Dialog>

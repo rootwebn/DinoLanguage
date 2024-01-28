@@ -6,7 +6,7 @@ import { fetchResponseTranslation } from '@/shared/api/translate';
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { BoundStore } from '@/shared/helpers/boundStorage';
 
 export const ListPrioritizedWords = () => {
   const { setStageFlash, setDataTranslation, prioritizedWords } = BoundStore();

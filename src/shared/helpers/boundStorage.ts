@@ -29,6 +29,9 @@ interface FlashcardsStatesTimer {
   time: string;
   timeOver: boolean;
 }
+interface labStates {
+  wordsRequest: string;
+}
 
 interface FlashcardsActionsGame {
   setStageFlash: (newStageFlash: number) => void;
@@ -52,6 +55,9 @@ interface FlashcardsActionsTimer {
   setTimeStorage: (timeProp: string) => void;
   setCleanTimeStorage: () => void;
 }
+interface labActions {
+  setWordRequest: (wordProp: string) => void;
+}
 
 interface useStatsInterface
   extends FlashcardsStatsGame,
@@ -59,6 +65,7 @@ interface useStatsInterface
 interface useTimerInterface
   extends FlashcardsStatesTimer,
     FlashcardsActionsTimer {}
+interface useLabInterface extends labActions, labStates {}
 
 const initialFlashcardsTimer: FlashcardsStatesTimer = {
   time: '',
@@ -79,6 +86,9 @@ const initialStates: FlashcardsStatsGame = {
   translatedWordsRes: {
     translatedWords: [''],
   },
+};
+const initialLabStates: labStates = {
+  wordsRequest: '',
 };
 
 const useStatsSlice: MiddlewareStateCreator<useStatsInterface> = (
@@ -175,9 +185,7 @@ const useStatsSlice: MiddlewareStateCreator<useStatsInterface> = (
   },
 });
 
-export const FlashTimerSlice: MiddlewareStateCreator<useTimerInterface> = (
-  set,
-) => ({
+const FlashTimerSlice: MiddlewareStateCreator<useTimerInterface> = (set) => ({
   ...initialFlashcardsTimer,
   setTimeStorage: (timeProp) => {
     set({ time: timeProp });
@@ -190,9 +198,21 @@ export const FlashTimerSlice: MiddlewareStateCreator<useTimerInterface> = (
   },
 });
 
-export const BoundStore = create<useTimerInterface & useStatsInterface>()(
+const labSlice: MiddlewareStateCreator<useLabInterface> = (set) => ({
+  ...initialLabStates,
+  setWordRequest: (wordProp) => {
+    set(() => ({
+      wordsRequest: wordProp,
+    }));
+  },
+});
+
+export const BoundStore = create<
+  useTimerInterface & useStatsInterface & useLabInterface
+>()(
   immer((...args) => ({
     ...useStatsSlice(...args),
     ...FlashTimerSlice(...args),
+    ...labSlice(...args),
   })),
 );

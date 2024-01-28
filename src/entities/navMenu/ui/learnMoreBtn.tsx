@@ -9,11 +9,11 @@ import Link from 'next/link';
 export const LearnMoreBtn = () => {
   return (
     <NavigationMenuItem>
-      <Link href={'/learn-more'} legacyBehavior passHref>
+      <Link href={'/lab'} legacyBehavior passHref>
         <NavigationMenuLink
           className={`${navigationMenuTriggerStyle()} ${'mr-1 bg-silentWhite text-black hover:text-black dark:bg-space dark:text-white'}`}
         >
-          Learn More!
+          Laboratory
         </NavigationMenuLink>
       </Link>
     </NavigationMenuItem>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { BoundStore } from '@/entities/trainerLevel/model/boundStorage';
+import { BoundStore } from '@/shared/helpers/boundStorage';
 
 type TimerHook = {
   time: string;

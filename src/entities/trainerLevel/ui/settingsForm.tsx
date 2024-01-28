@@ -6,16 +6,27 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
   Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/shared/ui';
-import { FormsSets } from '@/entities/trainerLevel/model/formsSets';
+import { FormsSets } from '@/shared/helpers/formsSets';
 import React from 'react';
 import { toast } from 'sonner';
 import { Checkbox } from '@/shared/ui/checkbox';
-import { PersistBoundStore } from '@/entities/trainerLevel/model/persistBoundStorage';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
+import Link from 'next/link';
 
-export const SettingsForm = () => {
+type SettingsFormType = {
+  customListWords: boolean;
+};
+
+export const SettingsForm: React.FC<SettingsFormType> = ({
+  customListWords,
+}) => {
   const { onSubmit, configForm } = FormsSets();
   const { setCleanConfig } = PersistBoundStore();
 
@@ -28,6 +39,19 @@ export const SettingsForm = () => {
           )}
           className="flex flex-col space-y-2"
         >
+          {customListWords && (
+            <>
+              <div className={'flex flex-row'}>
+                You want reject chaos and create your list words with your
+                rules?
+                <Button asChild>
+                  <Link href={'/trainers/laboratory'}>
+                    We have something special for you...
+                  </Link>
+                </Button>
+              </div>
+            </>
+          )}
           <FormField
             control={configForm.control}
             name="wordsMemo"
@@ -124,6 +148,35 @@ export const SettingsForm = () => {
               </FormItem>
             )}
           />
+          <FormField
+            control={configForm.control}
+            name="targetLanguage"
+            render={({ field }) => (
+              <FormItem
+                className={'flex flex-row items-center justify-between gap-6'}
+              >
+                <FormLabel className={''}>Target Language</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl className={'max-w-[30%]'}>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder={'Select target language to learn'}
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={'en'}>English</SelectItem>
+                    <SelectItem value={'de'}>German</SelectItem>
+                    <SelectItem value={'pl'}>Polish</SelectItem>
+                    <SelectItem value={'uk'}>Ukraine</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
           <Button
             className={'bg-lightSpace'}
             type={'submit'}
@@ -135,7 +188,9 @@ export const SettingsForm = () => {
                   'time',
                 )}, Difficult of game: ${configForm.getValues(
                   'difficult',
-                )}, Peaceful Mode: ${configForm.getValues('peacefulMode')}`,
+                )}, Peaceful Mode: ${configForm.getValues(
+                  'peacefulMode',
+                )}, Target Language: ${configForm.getValues('targetLanguage')}`,
                 action: {
                   label: 'Set to Default',
                   onClick: () => setCleanConfig(),
