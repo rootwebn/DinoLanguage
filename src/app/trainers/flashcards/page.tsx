@@ -6,8 +6,17 @@ import {
 } from '@/entities/trainers/ui/';
 import { Zap } from 'lucide-react';
 import ImgAlt2 from '../../../../public/LogoAlt2.png';
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
+import { Button, Skeleton } from '@/shared/ui';
 export default function FlashcardTrainerPage() {
+  const { userRole, setUserRole } = PersistBoundStore();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <div
       className={
@@ -29,7 +38,21 @@ export default function FlashcardTrainerPage() {
           imageDescSrc={ImgAlt2}
           imageDescAlt={'ImageDesc'}
         />
-        <TrainersLevelSelectUI />
+        {userRole.length === 0 && (
+          <Button onClick={() => setUserRole('tutorial')}>
+            Lol you broke this
+          </Button>
+        )}
+
+        {isMounted ? (
+          <>
+            {userRole.includes('story') && <TrainersLevelSelectUI />}
+            {/*{userRole.includes('custom') && <TrainersLevelSelectUI />}*/}
+            {userRole.includes('tutorial') && <></>}
+          </>
+        ) : (
+          <Skeleton />
+        )}
       </div>
     </div>
   );

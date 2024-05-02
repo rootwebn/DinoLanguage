@@ -7,15 +7,25 @@ import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
 import { BoundStore } from '@/shared/helpers/boundStorage';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
+import { toast } from 'sonner';
+import { generateRandomWords } from '@/entities/trainerLevel/model/generateRandomWords';
 
 export const ListPrioritizedWords = () => {
-  const { setStageFlash, setDataTranslation, prioritizedWords } = BoundStore();
+  const {
+    setStageFlash,
+    setDataTranslation,
+    prioritizedWords,
+    setStageBrain,
+    setExactWordIndex,
+  } = BoundStore();
+  const { userGameMode } = PersistBoundStore();
   const translated = useMutation({
     mutationFn: fetchResponseTranslation,
   });
 
   const translatedWordsData = translated.data?.translatedText;
-  console.log('Response from server:', translated.data);
+  toast.message(`Response from server: ${translated.data?.translatedText}`);
 
   useEffect(() => {
     translated.mutate(prioritizedWords);
@@ -24,8 +34,19 @@ export const ListPrioritizedWords = () => {
   useEffect(() => {
     if (translated.data) {
       setDataTranslation(translatedWordsData);
+      toast.message('worked');
     }
   }, [translated.data]);
+
+  const listPriorHandler = () => {
+    if (userGameMode === 'brainstorm') {
+      setStageBrain(3);
+    }
+    if (userGameMode === 'flashcards') {
+      setStageFlash(3);
+    }
+    setExactWordIndex(0);
+  };
 
   return (
     <Card className={'flex flex-col bg-eclipseGray'}>
@@ -61,7 +82,7 @@ export const ListPrioritizedWords = () => {
                   </div>
                 )}
               </div>
-              <Button onClick={() => setStageFlash(3)}>Next Stage!</Button>
+              <Button onClick={listPriorHandler}>Next Stage!</Button>
             </div>
           )}
         </div>

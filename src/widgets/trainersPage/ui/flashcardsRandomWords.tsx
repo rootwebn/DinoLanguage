@@ -9,25 +9,32 @@ import {
   StatsInLevelCard,
 } from '@/entities/trainerLevel/ui/';
 import useFlashCheck from '@/entities/trainerLevel/model/useFlashCheck';
-import { ShowKeyAnswers } from '@/entities/trainerLevel/ui/showKeyAnswers';
+import { ShowKeyAnswers } from '@/entities/testingPanels/showKeyAnswers';
 import { TimerStage } from '@/entities/trainerLevel/ui/timerStage';
 import { Button, Skeleton } from '@/shared/ui';
 import Link from 'next/link';
 import { BoundStore } from '@/shared/helpers/boundStorage';
 import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 export const FlashcardsRandomWords: React.FC = () => {
-  const { setStageFlash, timeOver, stageFlash } = BoundStore();
+  const {
+    setStageFlash,
+    timeOver,
+    stageFlash,
+    setCleanTimeStorage,
+    setCleanStatsStorage,
+  } = BoundStore();
   const { peacefulMode } = PersistBoundStore();
   const [isMounted, setIsMounted] = useState(false);
+  const { loadWords } = useFlashCheck();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   return (
-    <div>
+    <>
       {!timeOver ? (
-        <div>
+        <>
           <div className={'flex justify-center'}>
             {isMounted ? (
               peacefulMode ? null : (
@@ -39,7 +46,7 @@ export const FlashcardsRandomWords: React.FC = () => {
           </div>
           <div
             className={
-              'lg:ml-10 lg:mr-10 lg:mt-12 lg:grid lg:grid-cols-3 lg:gap-4 2xl:mb-14 2xl:ml-32 2xl:mr-32 2xl:mt-2'
+              'lg:ml-10 lg:mr-10 lg:mt-12 lg:grid lg:grid-cols-3 lg:grid-rows-2 lg:gap-4 2xl:mb-0 2xl:ml-0 2xl:mr-0 2xl:mt-2'
             }
           >
             <div className={'col-span-2 row-span-2'}>
@@ -52,7 +59,7 @@ export const FlashcardsRandomWords: React.FC = () => {
             </div>
             <StatsInLevelCard />
           </div>
-        </div>
+        </>
       ) : (
         <div className={'flex flex-col items-center justify-center text-2xl'}>
           Time is over. YOU DIED.
@@ -66,6 +73,6 @@ export const FlashcardsRandomWords: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };

@@ -11,22 +11,48 @@ import { Button } from '@/shared/ui/button';
 import Link from 'next/link';
 import { AccordionItemCard } from '@/entities/trainers/ui/components';
 import React from 'react';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
+import { possibleGameModes } from '@/shared/helpers/consts';
+import { BoundStore } from '@/shared/helpers/boundStorage';
 
 interface PageCardInterface {
   titleCard: string;
   descCard: string;
-  footerCardBtnStart: string;
-  footerCardBtnResult: string;
+  footerBtnGame: string;
+  btnGameMode: (typeof possibleGameModes)[number];
+  footerBtnGameHref: string;
+  footerBtnStatsHref: string;
+  footerBtnStats: string;
   iconSrc: JSX.Element;
 }
 
 export const PageCard: React.FC<PageCardInterface> = ({
   titleCard,
   descCard,
-  footerCardBtnResult,
-  footerCardBtnStart,
+  footerBtnStats,
+  footerBtnGameHref,
+  footerBtnStatsHref,
+  footerBtnGame,
+  btnGameMode,
   iconSrc,
 }) => {
+  const { setUserGameMode } = PersistBoundStore();
+  const {
+    setStageFlash,
+    setStageBrain,
+    setCleanTimeStorage,
+    setCleanStatsStorage,
+    loadWords,
+  } = BoundStore();
+  const handler = (btnGameMode: (typeof possibleGameModes)[number]) => {
+    setStageFlash(0);
+    setStageBrain(0);
+    setCleanTimeStorage();
+    setCleanStatsStorage();
+    loadWords(5, 5);
+    setUserGameMode(btnGameMode);
+  };
+
   return (
     <Card className={'mb-6 mt-6 border-space bg-space'}>
       <CardHeader>
@@ -72,21 +98,23 @@ export const PageCard: React.FC<PageCardInterface> = ({
       </CardContent>
       <CardFooter className={'flex flex-row justify-between'}>
         <Button
+          onClick={() => handler(btnGameMode)}
           variant={'outline'}
           className={
             'border-darkerHash bg-darkerHash text-white hover:border-hash hover:bg-hash'
           }
           asChild
         >
-          <Link href={'/trainers/flashcards'}>{footerCardBtnStart}</Link>
+          <Link href={`${footerBtnGameHref}`}>{footerBtnGame}</Link>
         </Button>
         <Button
           variant={'outline'}
           className={
             'border-darkerHash bg-darkerHash text-white hover:border-hash hover:bg-hash'
           }
+          asChild
         >
-          {footerCardBtnResult}
+          <Link href={`${footerBtnStatsHref}`}>{footerBtnStats}</Link>
         </Button>
       </CardFooter>
     </Card>

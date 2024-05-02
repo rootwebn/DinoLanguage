@@ -15,17 +15,6 @@ export const generateRandomWords = (countMin: number, countMax: number) => {
   return newWords;
 };
 
-export const generateRandomFacts = () => {
-  const indexSet = generateRandomIndexes(count(1, 1));
-  const newFacts: string[] = [];
-  for (let i = 0; i < indexSet.length; i++) {
-    const index = indexSet[i];
-    const element = factsList[index];
-    newFacts.push(element);
-  }
-  return newFacts;
-};
-
 const generateRandomIndexes = (count: number) => {
   const indexSet: number[] = [];
   while (indexSet.length < count) {

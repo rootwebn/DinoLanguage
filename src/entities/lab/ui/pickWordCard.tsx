@@ -19,13 +19,14 @@ import {
 } from '@/shared/ui';
 import { FormsSets } from '@/shared/helpers/formsSets';
 import * as z from 'zod';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchWordInfo } from '@/shared/api/wordInfo';
 import { BoundStore } from '@/shared/helpers/boundStorage';
 import { WordInfoCard } from '@/entities/lab/ui/wordInfoCard';
 import ImgGif from '../../../../public/Loading_backD.gif';
 import React from 'react';
 import Image from 'next/image';
+import { fetchResponseTranslation } from '@/shared/api/translate';
 
 export const PickWordCard = () => {
   const { formLab, formLabSchema } = FormsSets();
@@ -37,13 +38,18 @@ export const PickWordCard = () => {
     enabled: Boolean(wordsRequest),
   });
 
+  const translated = useMutation({
+    mutationFn: fetchResponseTranslation,
+  });
+
   const onSubmitLab = (value: z.infer<typeof formLabSchema>) => {
     setWordRequest(value.wordRequest);
     wordInfo.refetch().then();
+    translated.mutate(value.wordRequest);
   };
 
   return (
-    <Card className={'col-span-3 row-span-2 bg-eclipseGray'}>
+    <Card className={'col-span-3 row-span-1 bg-eclipseGray'}>
       <CardHeader>
         <CardTitle>The Lab!</CardTitle>
         <CardDescription>
@@ -87,6 +93,7 @@ export const PickWordCard = () => {
         </Form>
         {wordInfo.isSuccess && wordInfo?.data[0] ? (
           <WordInfoCard
+            wordTranslate={translated.data?.translatedText}
             word={wordInfo.data[0].word}
             phonetics={wordInfo.data[0].phonetics}
             meanings={wordInfo.data[0].meanings}

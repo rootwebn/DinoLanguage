@@ -15,8 +15,8 @@ export default function TrainersPage() {
     >
       <FlashcardsBlock />
       <BrainstormBlock />
-      <VerbalMemoryBlock />
-      <GrammarTestBlock />
+      {/*<VerbalMemoryBlock />*/}
+      {/*<GrammarTestBlock />*/}
     </div>
   );
 }

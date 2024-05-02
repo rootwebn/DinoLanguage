@@ -8,8 +8,11 @@ export const VerbalMemoryBlock = () => {
         titleCard={'Verbal Memory'}
         descCard={'Sharpen your verbal memory skills with engaging exercises!'}
         iconSrc={<Speech className={'mr-1.5'} />}
-        footerCardBtnStart={'Start Training!'}
-        footerCardBtnResult={'My Results'}
+        footerBtnGame={'Start Training!'}
+        footerBtnStats={'My Results'}
+        footerBtnGameHref={'/trainers/game'}
+        footerBtnStatsHref={'/profile'}
+        btnGameMode={'grammar'}
       />
     </div>
   );

@@ -4,11 +4,28 @@ import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import Link from 'next/link';
 import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 import useTimer from '@/entities/trainerLevel/model/timer';
+import { BoundStore } from '@/shared/helpers/boundStorage';
+import { useFlashCheck } from '@/entities/trainerLevel/model';
 
 export const ResultLevelCard = () => {
   const { statsLevel1Flash, setInitialSaves, setAttemptIdCleanFlash } =
     PersistBoundStore();
+  const {
+    setStageFlash,
+    setCleanStatsStorage,
+    setCleanTimeStorage,
+    setStageBrain,
+  } = BoundStore();
+  const { loadWords } = useFlashCheck();
   const { stopTimer, startTimer, setExactTime } = useTimer('', false);
+
+  const handlerButtonRepeat = () => {
+    setStageFlash(0);
+    setStageBrain(0);
+    setCleanTimeStorage();
+    setCleanStatsStorage();
+    loadWords(5, 5);
+  };
 
   return (
     <Card className={'bg-space'}>
@@ -31,8 +48,8 @@ export const ResultLevelCard = () => {
         </CardContent>
       </div>
       <CardFooter className={'grid grid-cols-4 grid-rows-1 gap-4'}>
-        <Button asChild>
-          <Link href={'/trainers/flashcards/level-1/'}>Want to try again?</Link>
+        <Button onClick={() => handlerButtonRepeat()}>
+          Want to try again?
         </Button>
         <Button
           onClick={() => setInitialSaves()}

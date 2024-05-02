@@ -7,8 +7,6 @@ import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
 import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 import { BoundStore } from '@/shared/helpers/boundStorage';
-//TODO: Rewrite storageZustand, rework UI flashcards and complete system of flashcards
-// rewrite useFlashCheck, make survey before training, use google API for translating words
 
 export const PickingWordCard = () => {
   const { call: handleResponsePickFlash, loadWords } = useFlashCheck();
@@ -23,13 +21,13 @@ export const PickingWordCard = () => {
   return (
     <Card
       key={wordIndex}
-      className={'flex flex-col justify-around bg-eclipseGray'}
+      className={'grid grid-cols-4 grid-rows-1 bg-eclipseGray'}
     >
-      <CardHeader className={'text-center text-2xl'}>
+      <CardHeader className={'col-span-4 text-center text-2xl'}>
         Did you know this word?
       </CardHeader>
-      <CardContent className={'flex flex-row gap-6'}>
-        <div className={'flex min-w-[600px] flex-col'}>
+      <CardContent className={'col-start-1 col-end-4 flex flex-row gap-6'}>
+        <div className={'min-w-full'}>
           <div
             className={
               'mb-6 mt-12 flex items-center justify-center gap-4 text-4xl text-muted-foreground'
@@ -54,9 +52,17 @@ export const PickingWordCard = () => {
             </Button>
           </div>
         </div>
-        <Image width={150} height={150} alt={'LoadingGif'} src={LoadingGif} />
       </CardContent>
-      <CardFooter className={'text-lg text-muted-foreground'}>
+      <Image
+        width={150}
+        height={150}
+        alt={'LoadingGif'}
+        src={LoadingGif}
+        className={'col-start-4'}
+      />
+      <CardFooter
+        className={'col-span-2 row-start-3 text-lg text-muted-foreground'}
+      >
         DinoLanguage 2023
       </CardFooter>
     </Card>

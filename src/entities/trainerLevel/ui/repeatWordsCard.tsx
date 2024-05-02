@@ -3,9 +3,11 @@ import useFlashCheck from '@/entities/trainerLevel/model/useFlashCheck';
 import LoadingGif from '../../../../public/Loading_backD.gif';
 import Image from 'next/image';
 import { BoundStore } from '@/shared/helpers/boundStorage';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 
 export const RepeatWordsCard = () => {
   const { handleUserMemo } = useFlashCheck();
+  const { userSelectLevel, currentCustomList } = PersistBoundStore();
   const { prioritizedWords, translatedWordsRes, wordIndex } = BoundStore();
 
   return (
@@ -18,8 +20,19 @@ export const RepeatWordsCard = () => {
             Try to memorize these words:
             <div>
               <div className={'flex flex-row justify-center'}>
-                {prioritizedWords[wordIndex]} is{' '}
-                {translatedWordsRes.translatedWords[wordIndex]}
+                {userSelectLevel === 'customL' ? (
+                  <div>
+                    <div>
+                      {currentCustomList.listWords[wordIndex].customWord} is{' '}
+                      {currentCustomList.listWords[wordIndex].customDef}
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {prioritizedWords[wordIndex]} is{' '}
+                    {translatedWordsRes.translatedWords[wordIndex]}
+                  </>
+                )}
               </div>
             </div>
           </div>

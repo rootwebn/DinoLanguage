@@ -26,6 +26,7 @@ const SignUpOption: React.FC<SignUpInterface> = ({
 }) => {
   return (
     <Button
+      asChild={true}
       className={cn('flex flex-row items-center justify-center', className)}
     >
       <Link
@@ -47,7 +48,7 @@ export const SignUpSheet = () => {
           'group group mr-1 inline-flex h-10 w-max items-center justify-center rounded-md bg-silentWhite px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 dark:border-space dark:bg-space dark:text-white'
         }
       >
-        Sign Up
+        Your Profile
       </DialogTrigger>
       <DialogContent className={'bg-silentWhite dark:bg-darkSpace'}>
         <DialogHeader className={'mt-4'}>
@@ -64,7 +65,7 @@ export const SignUpSheet = () => {
               className={
                 'mr-2 border-hash bg-hash text-black dark:border-darkSpace dark:bg-space dark:text-chattel hover:dark:border-lightSpace hover:dark:bg-lightSpace'
               }
-              linkHref={'/google'}
+              linkHref={'/profile'}
               buttonText={'Sign up with Google Account'}
             />
             <SignUpOption

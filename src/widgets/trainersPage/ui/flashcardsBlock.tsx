@@ -10,8 +10,11 @@ export const FlashcardsBlock = () => {
           'Maximize vocabulary and grammar-test mastery with our interactive flashcards!'
         }
         iconSrc={<Clipboard className={'mr-1.5'} />}
-        footerCardBtnStart={'Start Training!'}
-        footerCardBtnResult={'My Results'}
+        footerBtnGame={'Start Training!'}
+        footerBtnStats={'My Results'}
+        footerBtnGameHref={'/trainers/game'}
+        footerBtnStatsHref={'/profile'}
+        btnGameMode={'flashcards'}
       />
     </div>
   );

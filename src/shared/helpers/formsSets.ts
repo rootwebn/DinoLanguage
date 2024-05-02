@@ -9,25 +9,34 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 import { BoundStore } from '@/shared/helpers/boundStorage';
 import useFlashCheck from '@/entities/trainerLevel/model/useFlashCheck';
+import { toast } from 'sonner';
 
 export const FormsSets = () => {
   const {
-    setDifficultGame,
     setPeacefulMode,
     setWordsGenLimit,
     setTimeOnStage,
     setTargetLanguage,
     setCustomList,
+    setUserName,
     wordsGenMin,
     peacefulMode,
     timeOnStage,
     targetLanguage,
+    userName,
+    customList,
+    currentCustomList,
+    userSelectLevel,
   } = PersistBoundStore();
   const {
     prioritizedWords,
     wordIndex,
     translatedWordsRes,
     rightAnswersRow,
+    gameChallenge,
+    setWordPriority,
+    setExactWordIndex,
+    setGameChallenge,
     setRightAnswersRow,
     setMultiplier,
     setStageFlash,
@@ -38,23 +47,46 @@ export const FormsSets = () => {
   } = BoundStore();
   const { setWordIndex } = useFlashCheck();
 
+  const setCorrectAnswer = () => {
+    setWordIndex();
+    setScore(200);
+    setRightAnswers();
+    setRightAnswersRow(false);
+    setTotalAnswers();
+    setAccuracyAnswers();
+  };
+
+  const setFalseAnswer = () => {
+    setAccuracyAnswers();
+    setRightAnswersRow(true);
+    setScore(-200);
+    setTotalAnswers();
+  };
+
   const configFormSchema = z.object({
+    userName: z
+      .string()
+      .min(4, 'too small name, no zxc')
+      .max(12, 'too big name'),
     wordsMemo: z
       .number()
       .min(1, 'Write smt')
-      .max(23, "Can't be more than 23 words to memo"),
+      .max(50, "Can't be more than 50 words to memo"),
     time: z
       .number()
       .min(10, 'minimal time is 10 seconds')
       .max(60, 'max time is 60 seconds')
       .positive()
       .int(),
-    difficult: z
-      .number()
-      .min(1, 'minimal difficult is A1')
-      .max(6, 'max difficult is C2'),
     peacefulMode: z.boolean().default(false),
     targetLanguage: z.string({ required_error: 'Select a target language.' }),
+  });
+
+  const brainstormGameScheme = z.object({
+    userAnswer: z.string().min(2, 'too small name, no zxc').max(15, 'too big'),
+    userAnswerFalseTranslation: z.enum(['true', 'false-1', 'false-2'], {
+      required_error: 'You need to select a notification type.',
+    }),
   });
 
   const formFlashSchema = z.object({
@@ -70,17 +102,97 @@ export const FormsSets = () => {
 
   const formCustomListSchema = z.object({
     listName: z.string().min(4).max(35),
-    descList: z.string().min(4).max(120),
-    wordCustom: z.string().min(1).max(20),
-    definitionCustom: z.string().min(1).max(20),
+    listDesc: z.string().min(4).max(120),
+    listWords: z.array(
+      z.object({
+        customWord: z.string(),
+        customDef: z.string(),
+      }),
+    ),
+  });
+
+  const brainstormOnSubmit = (
+    value: z.infer<typeof brainstormGameScheme>,
+    resetField: UseFormResetField<{
+      userAnswer: string;
+      userAnswerFalseTranslation: string;
+    }>,
+    setError: UseFormSetError<{
+      userAnswer: string;
+      userAnswerFalseTranslation: string;
+    }>,
+  ) => {
+    console.log('submit handler worked');
+
+    switch (gameChallenge) {
+      case 'reverseTranslate':
+        if (prioritizedWords[wordIndex] === value.userAnswer) {
+          setCorrectAnswer();
+          setGameChallenge('missingLetters');
+          setWordPriority(2);
+          setWordIndex();
+          resetField('userAnswer');
+        } else {
+          setFalseAnswer();
+          setError('userAnswer', { type: 'custom', message: 'Wrong Error!' });
+          setWordPriority(3);
+          setWordIndex();
+        }
+        break;
+      case 'translate':
+        console.log('worked');
+        if (
+          value.userAnswer === translatedWordsRes?.translatedWords[wordIndex]
+        ) {
+          setGameChallenge('falseTranslate');
+          setWordPriority(2);
+          setWordIndex();
+          setCorrectAnswer();
+          resetField('userAnswer');
+        } else {
+          setFalseAnswer();
+          setError('userAnswer', { type: 'custom', message: 'Wrong Error!' });
+          setWordPriority(3);
+          setWordIndex();
+        }
+        break;
+      case 'falseTranslate':
+        toast.message('worked');
+        if (
+          value.userAnswerFalseTranslation === 'false-1' ||
+          value.userAnswerFalseTranslation === 'false-2'
+        ) {
+          setFalseAnswer();
+          setError('userAnswer', { type: 'custom', message: 'Wrong Error!' });
+          setWordPriority(3);
+          setWordIndex();
+        } else {
+          setGameChallenge('translate');
+          setWordPriority(2);
+          setWordIndex();
+          setCorrectAnswer();
+          resetField('userAnswer');
+          break;
+        }
+
+        if (wordIndex === prioritizedWords.length + 1) {
+          setExactWordIndex(0);
+        }
+    }
+  };
+  const brainstormForm = useForm<z.infer<typeof brainstormGameScheme>>({
+    resolver: zodResolver(brainstormGameScheme),
+    defaultValues: {
+      userAnswer: '',
+    },
   });
 
   const onSubmit = (value: z.infer<typeof configFormSchema>) => {
     setPeacefulMode(value.peacefulMode);
-    setDifficultGame(value.difficult);
     setWordsGenLimit(value.wordsMemo);
     setTimeOnStage(value.time);
     setTargetLanguage(value.targetLanguage);
+    setUserName(value.userName);
   };
 
   const onSubmitInput = (
@@ -88,19 +200,25 @@ export const FormsSets = () => {
     resetField: UseFormResetField<{ answer: string }>,
     setError: UseFormSetError<{ answer: string }>,
   ) => {
-    if (values.answer === translatedWordsRes.translatedWords[wordIndex]) {
-      setWordIndex();
-      setScore(200);
-      setRightAnswers();
-      setRightAnswersRow(false);
-      setTotalAnswers();
-      setAccuracyAnswers();
+    // if (
+    //   userSelectLevel === 'customL' &&
+    //   values.answer === currentCustomList.listWords[wordIndex].customDef
+    // ) {
+    //   setCorrectAnswer();
+    //   resetField('answer');
+    // } else {
+    //   setFalseAnswer();
+    //   setError('answer', { type: 'custom', message: 'Wrong Answer!' });
+    // }
+
+    if (
+      userSelectLevel !== 'customL' &&
+      values.answer === translatedWordsRes.translatedWords[wordIndex]
+    ) {
+      setCorrectAnswer();
       resetField('answer');
     } else {
-      setAccuracyAnswers();
-      setRightAnswersRow(true);
-      setScore(-200);
-      setTotalAnswers();
+      setFalseAnswer();
       setError('answer', { type: 'custom', message: 'Wrong Answer!' });
     }
 
@@ -117,27 +235,55 @@ export const FormsSets = () => {
       setMultiplier(0);
     }
 
-    if (prioritizedWords.length - 1 === wordIndex) {
+    if (
+      userSelectLevel === 'customL' &&
+      currentCustomList.listWords.length - 1 === wordIndex
+    ) {
+      setStageFlash(5);
+    } else if (prioritizedWords.length - 1 === wordIndex) {
       setStageFlash(5);
     }
+
     console.log(values);
   };
 
-  const onSubmitCustomList = (values: z.infer<typeof formCustomListSchema>) => {
-    console.log('worked.');
-    const listWords = [''];
-    const listDefinition = [''];
-    listWords.push(values.wordCustom);
-    listDefinition.push(values.definitionCustom);
-    console.log('pushing things done', listWords, listDefinition);
+  const checkSameNameList = (values: z.infer<typeof formCustomListSchema>) => {
+    let sameTitleList = 0;
+    let idCustomList = 0;
+
+    for (let i = 0; i < customList.length; i++) {
+      if (values.listName === customList[i].listTitle) {
+        sameTitleList += 1;
+      }
+      if (customList[i].listId) {
+        idCustomList = customList[i].listId;
+      }
+    }
+    return { sameTitleList, idCustomList };
+  };
+
+  const onSubmitCustomList = (
+    values: z.infer<typeof formCustomListSchema>,
+    setError: UseFormSetError<{ listName: string }>,
+  ) => {
+    const sameTitleList = checkSameNameList(values).sameTitleList;
+    const idCustomList = checkSameNameList(values).idCustomList;
     const dataList = {
       listTitle: values.listName,
-      listDesc: values.descList,
-      listWords: listWords,
-      listDefinition: listDefinition,
+      listDesc: values.listDesc,
+      listWords: values.listWords,
+      listId: idCustomList + 1,
     };
-    console.log('custom save sys worked', dataList);
-    setCustomList(dataList);
+
+    // toast('is it worked?');
+    if (sameTitleList > 0) {
+      setError('listName', {
+        type: 'custom',
+        message: 'This list name is already used!',
+      });
+    } else {
+      setCustomList(dataList);
+    }
   };
 
   const configForm = useForm<z.infer<typeof configFormSchema>>({
@@ -145,11 +291,10 @@ export const FormsSets = () => {
     defaultValues: {
       wordsMemo: wordsGenMin,
       time: timeOnStage,
-      difficult: 2,
       peacefulMode: peacefulMode,
       targetLanguage: targetLanguage,
+      userName: userName,
     },
-    э,
   });
 
   const formFlash = useForm<z.infer<typeof formFlashSchema>>({
@@ -166,15 +311,38 @@ export const FormsSets = () => {
     },
   });
 
+  const formCustomList = useForm<z.infer<typeof formCustomListSchema>>({
+    resolver: zodResolver(formCustomListSchema),
+    defaultValues: {
+      listName: '',
+      listDesc: '',
+      listWords: [
+        {
+          customWord: '',
+          customDef: '',
+        },
+      ],
+    },
+  });
+
+  const formCustomArray = useFieldArray({
+    control: formCustomList.control,
+    name: 'listWords',
+  });
+
   return {
     onSubmit,
     onSubmitInput,
     onSubmitCustomList,
+    brainstormOnSubmit,
     configForm,
+    brainstormForm,
     formFlash,
     formLab,
     formFlashSchema,
     formLabSchema,
+    formCustomList,
+    formCustomArray,
     formCustomListSchema,
   };
 };

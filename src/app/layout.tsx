@@ -1,13 +1,20 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Outfit, Archivo } from 'next/font/google';
 import { ThemeProvider } from '@/shared/providers/theme-provider';
 import { Header } from '@/widgets/header/header';
 import ReactQueryProvider from '@/shared/providers/reactQueryProvider';
 import React from 'react';
 import { Toaster } from '@/shared/ui/sonner';
+import localFont from 'next/font/local';
+import { DebugPanel } from '@/widgets/testingPanel/debugPanel';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Archivo({ subsets: ['latin'], weight: '400' });
+const kodeMono = localFont({
+  src: '../../public/fonts/Salmapro.otf',
+  display: 'swap',
+  weight: '400',
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -26,7 +33,8 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Header />
             {children}
-            <Toaster />
+            {/*<DebugPanel />*/}
+            <Toaster richColors={true} />
           </ThemeProvider>
         </ReactQueryProvider>
       </body>

@@ -10,19 +10,24 @@ import {
 } from '@/shared/ui';
 import { FlashcardsTopicCard } from '@/entities/trainerLevel/ui/';
 import { ClipboardList, Dices, Settings2 } from 'lucide-react';
-import React, { useEffect } from 'react';
-import { BoundStore } from '@/shared/helpers/boundStorage';
+import React from 'react';
 
-export const FlashcardsTopicSelect = () => {
-  const { setTimerOver, setInitialWords, setStageFlash, setCleanStatsStorage } =
-    BoundStore();
+type flashcardsSelectType = {
+  isCustom: boolean;
+};
 
-  useEffect(() => {
-    setTimerOver(false);
-    setInitialWords();
-    setStageFlash(1);
-    setCleanStatsStorage();
-  }, [setStageFlash]);
+export const FlashcardsTopicSelect: React.FC<flashcardsSelectType> = ({
+  isCustom,
+}) => {
+  // const { setTimerOver, setInitialWords, setStageFlash, setCleanStatsStorage } =
+  //   BoundStore();
+  //
+  // useEffect(() => {
+  //   setTimerOver(false);
+  //   setInitialWords();
+  //   setStageFlash(1);
+  //   setCleanStatsStorage();
+  // }, []);
 
   return (
     <Card className={'max-h-[620px] max-w-[1200px] bg-lightSpace'}>
@@ -47,26 +52,29 @@ export const FlashcardsTopicSelect = () => {
           <CardContent
             className={'grid grid-cols-2 grid-rows-1 gap-4 bg-space'}
           >
-            <FlashcardsTopicCard
-              titleCardTopic={'Custom Topic'}
-              descCardTopic={
-                'You can create your very own set words and setup almost everything.'
-              }
-              iconCardTopic={<Settings2 className={'mr-0.5 min-w-[24px]'} />}
-              customListWords={true}
-            />
-            <FlashcardsTopicCard
-              titleCardTopic={'Random Topic'}
-              descCardTopic={
-                'Explore the Unpredictable: Random Topic Flashcards'
-              }
-              iconCardTopic={<Dices className={'mr-0.5 min-w-[24px]'} />}
-              customListWords={false}
-            />
+            {isCustom ? (
+              <FlashcardsTopicCard
+                titleCardTopic={'Custom Topic'}
+                descCardTopic={
+                  'You can create your very own set words and setup almost everything.'
+                }
+                iconCardTopic={<Settings2 className={'mr-0.5 min-w-[24px]'} />}
+                customListWords={true}
+              />
+            ) : (
+              <FlashcardsTopicCard
+                titleCardTopic={'Random Topic'}
+                descCardTopic={
+                  'Explore the Unpredictable: Random Topic Flashcards'
+                }
+                iconCardTopic={<Dices className={'mr-0.5 min-w-[24px]'} />}
+                customListWords={false}
+              />
+            )}
           </CardContent>
           <CardFooter className={'justify-between rounded-b-lg bg-space'}>
             <div>DinoLanguage 2024</div>
-            Version: 1.0.0
+            Version: 0.2.1
           </CardFooter>
         </Card>
       </CardContent>

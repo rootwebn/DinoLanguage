@@ -15,13 +15,14 @@ import {
   FormMessage,
   Input,
 } from '@/shared/ui';
-import { useFlashCheck } from '@/entities/trainerLevel/model';
 import Image from 'next/image';
 import LoadingGif from '../../../../public/Loading_backD.gif';
 import { BoundStore } from '@/shared/helpers/boundStorage';
 import { FormsSets } from '@/shared/helpers/formsSets';
+import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
 
 export function CheckKnowWords() {
+  const { userSelectLevel, currentCustomList } = PersistBoundStore();
   const { prioritizedWords, wordIndex } = BoundStore();
   const { formFlash, onSubmitInput } = FormsSets();
 
@@ -32,8 +33,8 @@ export function CheckKnowWords() {
         Okay! Let's check how&nbsp;<div className={'font-bold'}>{'good'}</div>
         &nbsp;you know these words.
       </CardHeader>
-      <CardContent className={'flex flex-row gap-6'}>
-        <div className={'min-w-[600px]'}>
+      <CardContent className={'grid grid-cols-3 gap-6'}>
+        <div className={'col-span-2'}>
           <Form {...formFlash}>
             <form
               onSubmit={formFlash.handleSubmit((values) =>
@@ -48,7 +49,16 @@ export function CheckKnowWords() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      How to translate word {prioritizedWords[wordIndex]}?
+                      {userSelectLevel === 'customL' ? (
+                        <>
+                          How to translate word{' '}
+                          {currentCustomList.listWords[wordIndex].customWord}?
+                        </>
+                      ) : (
+                        <>
+                          How to translate word {prioritizedWords[wordIndex]}?
+                        </>
+                      )}
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -57,6 +67,7 @@ export function CheckKnowWords() {
                         {...field}
                       />
                     </FormControl>
+
                     <FormDescription>
                       This is easy question, right? Right...?
                     </FormDescription>
@@ -64,14 +75,15 @@ export function CheckKnowWords() {
                   </FormItem>
                 )}
               />
+              <Button type="submit">Submit</Button>
             </form>
           </Form>
         </div>
-        <Image width={150} height={150} alt={'LoadingGif'} src={LoadingGif} />
+        <div className={'flex justify-around'}>
+          <Image width={150} height={150} alt={'LoadingGif'} src={LoadingGif} />
+        </div>
       </CardContent>
-      <CardFooter>
-        <Button type="submit">Submit</Button>
-      </CardFooter>
+      <CardFooter></CardFooter>
     </Card>
   );
 }

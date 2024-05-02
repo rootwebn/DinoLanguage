@@ -10,6 +10,7 @@ import {
 } from '@/shared/ui';
 import React from 'react';
 import { SettingsForm } from '@/entities/trainerLevel/ui/settingsForm';
+import { PresetWordsWindow } from '@/entities/trainerLevel/ui/presetWordsWindow';
 
 type FlashcardsSettingsType = {
   customListWords: boolean;
@@ -23,7 +24,7 @@ export const FlashcardsDialogSettings: React.FC<FlashcardsSettingsType> = ({
       <DialogTrigger asChild>
         <Button className={'bg-lightSpace'}>Settings</Button>
       </DialogTrigger>
-      <DialogContent className={'min-w-[600px]'}>
+      <DialogContent className={'max-h-[600px] max-w-[1000px]'}>
         <DialogHeader>
           <DialogTitle>Edit settings flashcards</DialogTitle>
           <DialogDescription>

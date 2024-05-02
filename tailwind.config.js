@@ -81,6 +81,7 @@ module.exports = {
         'flower' : '#8631b4',
         'woodsmoke' : '#110f12',
         'honeyFlower' : '#531e70',
+        'eclipseGray': '#293133',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

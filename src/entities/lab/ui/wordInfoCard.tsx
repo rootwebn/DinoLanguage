@@ -5,6 +5,7 @@ import React from 'react';
 import { DictionaryEntry } from '@/shared/api/wordInfo';
 
 export const WordInfoCard: React.FC<DictionaryEntry> = ({
+  wordTranslate,
   word,
   meanings,
   phonetics,
@@ -14,6 +15,7 @@ export const WordInfoCard: React.FC<DictionaryEntry> = ({
       <CardHeader>Information about your word!</CardHeader>
       <CardContent className={'flex flex-col gap-2'}>
         <div className={''}>Word: {word}</div>
+        <div className={''}>Translation: {wordTranslate}</div>
         <div className={'flex flex-row gap-1'}>
           Meaning:
           {meanings.length >= 0 && (

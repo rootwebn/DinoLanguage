@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const fetchResponseTranslation = async (data: string[]) => {
+export const fetchResponseTranslation = async (data: string[] | string) => {
   const configStorage = JSON.parse(
     localStorage.getItem('ConfigSaveStorage') || '{}',
   );

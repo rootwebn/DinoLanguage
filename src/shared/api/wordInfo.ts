@@ -8,6 +8,7 @@ const fetchWordInfo = async (wordRequest: string) => {
 };
 
 export type DictionaryEntry = {
+  wordTranslate: string;
   word: string;
   phonetics: {
     text: string;

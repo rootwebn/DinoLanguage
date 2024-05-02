@@ -18,7 +18,7 @@ import React from 'react';
 import { toast } from 'sonner';
 import { Checkbox } from '@/shared/ui/checkbox';
 import { PersistBoundStore } from '@/shared/helpers/persistBoundStorage';
-import Link from 'next/link';
+import { PresetWordsWindow } from '@/entities/trainerLevel/ui/presetWordsWindow';
 
 type SettingsFormType = {
   customListWords: boolean;
@@ -32,26 +32,14 @@ export const SettingsForm: React.FC<SettingsFormType> = ({
 
   return (
     <Form {...configForm}>
-      <div className={'flex flex-col'}>
+      <div className={'grid grid-cols-2 grid-rows-1 gap-6'}>
+        {customListWords && <PresetWordsWindow />}
         <form
           onSubmit={configForm.handleSubmit((configProp) =>
             onSubmit(configProp),
           )}
-          className="flex flex-col space-y-2"
+          className="flex flex-col justify-around"
         >
-          {customListWords && (
-            <>
-              <div className={'flex flex-row'}>
-                You want reject chaos and create your list words with your
-                rules?
-                <Button asChild>
-                  <Link href={'/trainers/laboratory'}>
-                    We have something special for you...
-                  </Link>
-                </Button>
-              </div>
-            </>
-          )}
           <FormField
             control={configForm.control}
             name="wordsMemo"
@@ -181,7 +169,7 @@ export const SettingsForm: React.FC<SettingsFormType> = ({
             className={'bg-lightSpace'}
             type={'submit'}
             onClick={() =>
-              toast('Settings was saved!', {
+              toast.success('Settings was saved!', {
                 description: `Words to memo: ${configForm.getValues(
                   'wordsMemo',
                 )}, Time on every stage: ${configForm.getValues(
